@@ -166,3 +166,100 @@ A: Pumped storage, because it switches between negative and positive values.
 
 Q4: Why is wind important in price analysis?
 A: Because its variability directly affects supply conditions and therefore price formation.
+
+Q1: What does a positive correlation with system price mean?
+A: It means that, within the sample, the variable tends to increase when system price increases.
+
+Q2: What does a negative correlation for wind mean?
+A: It means higher wind output tends to be associated with lower prices in the sample.
+
+Q3: Why is nuclear weakly correlated with price?
+A: Because nuclear output is generally stable and does not vary much with short-term market conditions.
+
+Q4: Why is oil_gen NaN?
+A: Because the variable likely had no variation, so correlation could not be calculated.
+
+Q5: Why can’t we treat correlation as proof?
+A: Because correlation shows association, not causal direction, and results may depend on the sample period.
+
+Q1. What is the difference between ModuleNotFoundError and ImportError?
+ModuleNotFoundError means Python cannot find the file/module.
+ImportError means Python found the file, but not the specific function or object inside it.
+
+Q2. What should analysis.py contain right now?
+Only the basic analysis function for descriptive statistics and correlation.
+
+Q1. Is data_pull.py storing data permanently by itself?
+
+No. It only pulls data into memory unless you save it.
+
+Q2. What is the purpose of data_process.py?
+
+To convert raw API data into a clean, structured research dataset.
+
+Q3. What is the purpose of analysis.py?
+
+To analyze the processed master dataset and produce research results.
+
+Q4. Where are your current saved outputs?
+
+Inside data/processed/ as CSV files.
+
+❓ Q1: Why does wind reduce electricity prices?
+
+Answer:
+Because wind has near-zero marginal cost, it enters the merit order first, displacing higher-cost generation such as gas, leading to lower clearing prices.
+
+❓ Q2: Why is gas often price-setting in GB markets?
+
+Answer:
+Gas plants are flexible and typically operate at the margin to balance supply and demand, making their marginal cost the determining factor for system prices.
+
+❓ Q3: Why can high gas generation coexist with low prices?
+
+Answer:
+Because system prices depend on marginal conditions, not total generation. If renewables like wind are abundant or demand is low, gas may still run but at lower marginal price levels.
+
+❓ Q4: What does high imbalance volume indicate?
+
+Answer:
+It indicates system stress where supply and demand are not aligned, requiring balancing actions that often involve higher-cost interventions, leading to price volatility.
+
+Q1. Why did the weekly CSV stop at 3 January?
+
+Because the processing stage still applied a hardcoded date filter from the earlier sample window.
+
+Q2. Was the API pull wrong?
+
+No. The issue was in the transformation/filtering stage, not the data collection stage.
+
+Q3. What does this teach you?
+
+In research pipelines, the extraction window and processing window must match exactly.
+
+Q1. Why did correlations weaken when moving from 1 day to 7 days?
+Because the larger sample reduces the influence of one-day-specific events and gives a more representative picture of average market behaviour.
+
+Q2. What remained the strongest relationship in the weekly sample?
+Net imbalance volume.
+
+Q3. Did wind stop mattering in the weekly sample?
+No. Its relationship stayed negative, but the magnitude became smaller because other drivers also matter.
+
+Q4. Why is the weekly dataset better for research than the 1-day dataset?
+Because it captures repeated patterns and reduces the risk of drawing conclusions from one atypical day.
+
+❓ Q1: Why does imbalance drive prices more than generation type?
+
+Answer:
+Because imbalance reflects real-time system stress and triggers balancing actions, which often involve high-cost or negative-cost interventions that directly set prices.
+
+❓ Q2: Why can prices go negative?
+
+Answer:
+When the system has excess generation, generators are willing to pay to reduce output, resulting in negative prices through accepted bids.
+
+❓ Q3: What happens when system is short?
+
+Answer:
+National Grid accepts expensive offers to increase generation, which leads to price spikes

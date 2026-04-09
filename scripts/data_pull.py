@@ -1,141 +1,152 @@
 import requests
 import pandas as pd
+from datetime import datetime, timedelta
 
-url = "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH?publishDateTimeFrom=2023-01-01&publishDateTimeTo=2023-01-03"
+from scripts.data_process import process_fuel_data, process_price_data, merge_data
+from scripts.analysis import run_basic_analysis
 
-response = requests.get(url)
-data = response.json()
 
-df = pd.json_normalize(data["data"])
+def generate_date_range(start_date, end_date):
+    start = datetime.strptime(start_date, "%Y-%m-%d")
+    end = datetime.strptime(end_date, "%Y-%m-%d")
 
-print(df.head())
-print(df.columns)
-print(df.shape)
-print(df["fuelType"].unique())
-print(df["fuelType"].nunique())
+    dates = []
+    current = start
 
-# Pivot table (long → wide)
-df_pivot = df.pivot_table(
-    index="startTime",
-    columns="fuelType",
-    values="generation",
-    aggfunc="sum"
-)
+    while current <= end:
+        dates.append(current.strftime("%Y-%m-%d"))
+        current += timedelta(days=1)
 
-print(df_pivot.head())
+    return dates
 
-df_pivot = df_pivot.reset_index()
 
-df_pivot["startTime"] = pd.to_datetime(df_pivot["startTime"])
+def fetch_price_data_range(start_date, end_date):
+    all_prices = []
+    dates = generate_date_range(start_date, end_date)
 
-df_pivot = df_pivot.sort_values("startTime")
+    for date in dates:
+        print(f"Fetching price data for {date}")
 
-print(df_pivot.head())
+        url = f"https://data.elexon.co.uk/bmrs/api/v1/balancing/settlement/system-prices/{date}"
+        response = requests.get(url)
 
-# Create grouped fuel columns
-df_pivot["gas_gen"] = df_pivot["CCGT"] + df_pivot["OCGT"]
-df_pivot["wind_gen"] = df_pivot["WIND"]
-df_pivot["nuclear_gen"] = df_pivot["NUCLEAR"]
-df_pivot["biomass_gen"] = df_pivot["BIOMASS"]
-df_pivot["hydro_gen"] = df_pivot["NPSHYD"]
-df_pivot["pumped_storage"] = df_pivot["PS"]
-df_pivot["coal_gen"] = df_pivot["COAL"]
-df_pivot["oil_gen"] = df_pivot["OIL"]
-df_pivot["other_gen"] = df_pivot["OTHER"]
+        if response.status_code != 200:
+            print(f"Failed for price date {date}: {response.status_code}")
+            continue
 
-df_pivot["interconnectors"] = (
-    df_pivot["INTELEC"]
-    + df_pivot["INTEW"]
-    + df_pivot["INTFR"]
-    + df_pivot["INTIFA2"]
-    + df_pivot["INTIRL"]
-    + df_pivot["INTNED"]
-    + df_pivot["INTNEM"]
-    + df_pivot["INTNSL"]
-)
+        data = response.json()
 
-# Keep only the research columns for now
-df_clean = df_pivot[
-    [
-        "startTime",
-        "gas_gen",
-        "wind_gen",
-        "nuclear_gen",
-        "biomass_gen",
-        "hydro_gen",
-        "pumped_storage",
-        "coal_gen",
-        "oil_gen",
-        "other_gen",
-        "interconnectors",
-    ]
-].copy()
+        if "data" not in data:
+            print(f"No price data for {date}: {data}")
+            continue
 
-print(df_clean.head())
-print(df_clean.columns)
+        df = pd.json_normalize(data["data"])
 
-# Filter required date range only
-df_clean = df_clean[
-    (df_clean["startTime"] >= "2023-01-01") &
-    (df_clean["startTime"] < "2023-01-04")
-].copy()
+        if not df.empty:
+            all_prices.append(df)
 
-print(df_clean.head())
-print(df_clean.tail())
-print(df_clean.shape)
+    if not all_prices:
+        raise ValueError("No price data returned for requested range.")
 
-print(df_clean.isna().sum())
-df_clean.to_csv("data/processed/fuel_mix_2023_sample.csv", index=False)
+    return pd.concat(all_prices, ignore_index=True)
 
-# ==============================
-# STEP 4.1 — SYSTEM PRICE DATA
-# ==============================
 
-url_price = "https://data.elexon.co.uk/bmrs/api/v1/balancing/settlement/system-prices/2023-01-01"
+def fetch_fuel_data_range(start_date, end_date):
+    all_fuels = []
+    dates = generate_date_range(start_date, end_date)
 
-response_price = requests.get(url_price)
-print(response_price.status_code)
+    # fetch fuel data one day at a time to avoid large-request failures
+    for date in dates:
+        next_date = (
+            datetime.strptime(date, "%Y-%m-%d") + timedelta(days=1)
+        ).strftime("%Y-%m-%d")
 
-data_price = response_price.json()
-print(data_price)
+        print(f"Fetching fuel data for {date}")
 
-# only do this after you confirm the JSON contains a data field
-# df_price = pd.json_normalize(data_price["data"])
-# print(df_price.head())
-# print(df_price.columns)
+        url = (
+            "https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH"
+            f"?publishDateTimeFrom={date}&publishDateTimeTo={next_date}"
+        )
 
-df_price = pd.json_normalize(data_price["data"])
+        response = requests.get(url)
 
-print(df_price.head())
-print(df_price.columns)
-print(df_price.shape)
+        if response.status_code != 200:
+            print(f"Failed for fuel date {date}: {response.status_code}")
+            continue
 
-df_price["startTime"] = pd.to_datetime(df_price["startTime"])
+        data = response.json()
 
-df_price_clean = df_price[
-    [
-        "startTime",
-        "systemSellPrice",
-        "systemBuyPrice",
-        "netImbalanceVolume",
-    ]
-].copy()
+        if "data" not in data:
+            print(f"No fuel data for {date}: {data}")
+            continue
 
-print(df_price_clean.head())
-print(df_price_clean.shape)
-print(df_price_clean.isna().sum())
+        df = pd.json_normalize(data["data"])
 
-df_master = pd.merge(
-    df_clean,
-    df_price_clean,
-    on="startTime",
-    how="inner"
-)
+        if not df.empty:
+            all_fuels.append(df)
 
-print(df_master.head())
-print(df_master.shape)
-print(df_master.isna().sum())
+    if not all_fuels:
+        raise ValueError("No fuel data returned for requested range.")
 
-df_master.to_csv("data/processed/market_master_sample.csv", index=False)
+    return pd.concat(all_fuels, ignore_index=True)
 
-print(df_master.describe())
+
+def run_data_pipeline():
+    print("Pipeline started")
+
+    start_date = "2023-01-01"
+    end_date = "2023-01-31"
+
+    # ==============================
+    # STEP 1 — FUEL DATA
+    # ==============================
+    df_fuel = fetch_fuel_data_range(start_date, end_date)
+
+    print("\nRaw fuel data shape:", df_fuel.shape)
+    print(df_fuel.head())
+
+    df_clean = process_fuel_data(df_fuel)
+
+    print("\nProcessed fuel data shape:", df_clean.shape)
+    print(df_clean.head())
+    print(df_clean.isna().sum())
+
+    df_clean.to_csv("data/processed/fuel_mix_2023_january.csv", index=False)
+
+    # ==============================
+    # STEP 2 — PRICE DATA
+    # ==============================
+    df_price = fetch_price_data_range(start_date, end_date)
+
+    print("\nRaw price data shape:", df_price.shape)
+    print(df_price.head())
+
+    df_price_clean = process_price_data(df_price)
+
+    print("\nProcessed price data shape:", df_price_clean.shape)
+    print(df_price_clean.head())
+    print(df_price_clean.isna().sum())
+
+    # ==============================
+    # STEP 3 — MERGE
+    # ==============================
+    df_master = merge_data(df_clean, df_price_clean)
+
+    print("\nMaster dataset shape:", df_master.shape)
+    print(df_master.head())
+    print(df_master.isna().sum())
+
+    print("\nDate range in master dataset:")
+    print("Min:", df_master["startTime"].min())
+    print("Max:", df_master["startTime"].max())
+
+    df_master.to_csv("data/processed/market_master_2023_january.csv", index=False)
+
+    # ==============================
+    # STEP 4 — ANALYSIS
+    # ==============================
+    run_basic_analysis(df_master)
+
+
+if __name__ == "__main__":
+    run_data_pipeline()

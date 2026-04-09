@@ -1,5 +1,10 @@
+# Ignore data files
+data/
+
+# Python cache
 __pycache__/
 *.pyc
-.env
+
+# Env / installs
 venv/
-data/raw/
+.env
