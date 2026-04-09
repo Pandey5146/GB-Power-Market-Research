@@ -47,3 +47,67 @@ GB Power Market Research/
 ├── Understandingproject.md
 ├── README.md
 └── requirements.txt
+
+Pipeline Workflow
+1. Data Collection
+Fetches daily data for:
+system prices
+fuel mix
+Aggregates into monthly datasets
+2. Data Processing
+Cleans timestamps
+Converts to half-hourly format
+Aggregates generation by fuel type
+Merges:
+price data
+generation data
+imbalance data
+3. Analysis
+Correlation analysis
+Volatility measurement
+Price distribution
+Hourly patterns
+Extreme event detection
+4. Modelling (Current Stage)
+🔹 Threshold Model
+IF imbalance > 100 → high probability of price spike
+Explains ~93% of spikes (weekly dataset)
+🔹 Hybrid Model (Key Result)
+Spike occurs if:
+    imbalance > 100
+    OR
+    (low wind AND high gas)
+Achieved 100% accuracy on weekly data
+📈 Key Insights (So Far)
+⚡ Imbalance drives price
+Strong positive correlation with price
+Extreme prices occur under system short conditions
+🌬️ Wind reduces prices
+High wind → lower prices
+Negative correlation observed
+🔥 Gas increases prices
+High gas generation → higher prices
+Indicates marginal pricing impact
+🧠 Non-linear behaviour
+Price spikes can occur at moderate imbalance levels
+Market behaviour is not linear
+⚙️ Dual Market Regimes
+Imbalance-driven spikes
+Generation-mix-driven spikes
+📅 Current Progress
+✅ Built full pipeline (data → processing → analysis)
+✅ Generated January 2023 dataset (~1484 rows)
+✅ Developed first quantitative models
+✅ Identified key market drivers
+🚧 Validating models on full monthly data
+🚀 Next Steps
+Validate models on full month & multiple months
+Extend dataset (2023 → 2025)
+Add:
+weather data
+demand forecasts
+Build:
+probability models
+regression models
+machine learning models (XGBoost / Logistic Regression)
+Develop trading strategies & signals
