@@ -98,7 +98,7 @@ def run_basic_analysis(df_master):
     
     # Conditions
     high_imbalance = df_master["netImbalanceVolume"] > 100
-    low_wind = df_master["wind_gen"] < 8000
+    low_wind = df_master["wind_gen"] < 11000
     high_gas = df_master["gas_gen"] > 8000
     
     # New logic (OR instead of AND)
@@ -113,8 +113,104 @@ def run_basic_analysis(df_master):
     print("\nImproved model results:")
     print("Explained spikes:", len(model_hits))
     print("Total spikes:", df_master["spike_flag"].sum())
-    print("Accuracy:", len(model_hits) / df_master["spike_flag"].sum())
+    print("Spike recall:", len(model_hits) / df_master["spike_flag"].sum())
 
+    missed_spikes = df_master[
+    (df_master["spike_flag"]) &
+    (~df_master["model_signal"])
+    ]
+    print("\nMissed spikes by improved model:")
+    print(missed_spikes[[
+    "startTime",
+    "systemSellPrice",
+    "netImbalanceVolume",
+    "wind_gen",
+    "gas_gen"
+    ]])
+    print("\nTHRESHOLD SENSITIVITY ANALYSIS")
+    thresholds = [200, 250, 300]
+
+    for spike_threshold in thresholds:
+        spike_flag = df_master["systemSellPrice"] >= spike_threshold
+
+        imbalance_rule = df_master["netImbalanceVolume"] > 100
+        hybrid_rule = (
+            (df_master["netImbalanceVolume"] > 100) |
+            ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 8000))
+        )
+
+        total_spikes = spike_flag.sum()
+        imbalance_hits = (spike_flag & imbalance_rule).sum()
+        hybrid_hits = (spike_flag & hybrid_rule).sum()
+
+        print(f"\nSpike threshold >= {spike_threshold}")
+        print("Total spikes:", total_spikes)
+        print("Imbalance-only hits:", imbalance_hits)
+        print("Imbalance-only recall:", imbalance_hits / total_spikes if total_spikes > 0 else 0)
+        print("Hybrid model hits:", hybrid_hits)
+        print("Hybrid model recall:", hybrid_hits / total_spikes if total_spikes > 0 else 0)
+        
+        print("\nPRECISION CHECK FOR THRESHOLD >= 250")
+        spike_flag = df_master["systemSellPrice"] >= 250
+        hybrid_rule = (
+            (df_master["netImbalanceVolume"] > 100) |
+            ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 8000))
+        )
+        true_positives = (spike_flag & hybrid_rule).sum()
+        false_positives = ((~spike_flag) & hybrid_rule).sum()
+        predicted_spikes = hybrid_rule.sum()
+        print("Predicted spike signals:", predicted_spikes)
+        print("True positives:", true_positives)
+        print("False positives:", false_positives)
+        print("Precision:", true_positives / predicted_spikes if predicted_spikes > 0 else 0)
+
+        print("\nSTRICTER RULE TEST FOR THRESHOLD >= 250")
+        
+        spike_flag = df_master["systemSellPrice"] >= 250
+        stricter_rule = (
+            (df_master["netImbalanceVolume"] > 200) |
+            ((df_master["wind_gen"] < 9000) & (df_master["gas_gen"] > 15000))
+        )
+        true_positives = (spike_flag & stricter_rule).sum()
+        false_positives = ((~spike_flag) & stricter_rule).sum()
+        predicted_spikes = stricter_rule.sum()
+        recall = true_positives / spike_flag.sum() if spike_flag.sum() > 0 else 0
+        precision = true_positives / predicted_spikes if predicted_spikes > 0 else 0
+        print("Predicted spike signals:", predicted_spikes)
+        print("True positives:", true_positives)
+        print("False positives:", false_positives)
+        print("Recall:", recall)
+        print("Precision:", precision)
+
+        print("\nMISSED SPIKES UNDER STRICTER RULE")
+        missed_stricter = df_master[
+            spike_flag & (~stricter_rule)
+        ]
+        print(missed_stricter[[
+            "startTime",
+            "systemSellPrice",
+            "netImbalanceVolume",
+            "wind_gen",
+            "gas_gen"
+        ]])
+
+        print("\nMIDDLE RULE TEST FOR THRESHOLD >= 250")
+        spike_flag = df_master["systemSellPrice"] >= 250
+        middle_rule = (
+            (df_master["netImbalanceVolume"] > 150) |
+            ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 10000))
+        )
+        true_positives = (spike_flag & middle_rule).sum()
+        false_positives = ((~spike_flag) & middle_rule).sum()
+        predicted_spikes = middle_rule.sum()
+        recall = true_positives / spike_flag.sum() if spike_flag.sum() > 0 else 0
+        precision = true_positives / predicted_spikes if predicted_spikes > 0 else 0
+        print("Predicted spike signals:", predicted_spikes)
+        print("True positives:", true_positives)
+        print("False positives:", false_positives)
+        print("Recall:", recall)
+        print("Precision:", precision)
+    
      # ==============================
      # # STEP 8 — VISUAL ANALYSIS
      # # ==============================

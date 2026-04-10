@@ -263,3 +263,139 @@ When the system has excess generation, generators are willing to pay to reduce o
 
 Answer:
 National Grid accepts expensive offers to increase generation, which leads to price spikes
+
+Question 1
+
+What is a spike?
+
+That is your definition problem.
+
+Question 2
+
+Why did the spike happen?
+
+That is your market mechanism problem.
+
+Q: Is 250 an official GB market spike definition?
+
+No. It is your research definition.
+
+Q: Could we use another number?
+
+Yes. 200 or 300 could also be tested.
+
+Q: Why not choose a very high number like 500?
+
+Because then you may have too few observations.
+
+Q: Why not choose 150?
+
+Because that may include too many merely “high” but not truly extreme periods.
+
+Q: What are we doing now?
+We are testing whether your conclusions are stable when the spike definition changes.
+
+Q: Why is this important?
+Because if the model only works at 250 and fails at 200 or 300, then it may not be robust.
+
+Q: What would be a good result?
+If the hybrid model stays strong across all 3 thresholds.
+
+hy is the model worse at 200 than at 250?
+
+Because 200 includes many more price events, including less extreme and more mixed cases.
+
+Q: Is 100% recall enough to say the model is perfect?
+
+No. It only means it caught all spike events. We still need to test false positives.
+
+Q: Why is this threshold test important?
+
+Because it checks whether the model works only for one cutoff or whether it captures a broader market mechanism.
+
+Q: What is the main lesson from this result?
+
+The generation mix matters. Imbalance alone is not enough.
+
+s the model bad?
+
+Not bad, but incomplete. It is good for detecting stressed conditions, but poor for precise spike prediction.
+
+Q: Why did recall look so good then?
+
+Because recall only asks: “Did we catch the real spikes?” It does not care how many extra false alarms you make.
+
+Q: Why is precision more important for trading?
+
+Because in trading, too many false signals can make the strategy unusable.
+
+Q: So what is the model doing well?
+
+It is identifying the market regime where spikes tend to happen.
+
+Q: Is non-spike the same as normal?
+
+Not always. A non-spike may still be a stressed or expensive period that simply did not cross your spike threshold.
+
+Q: Why is recall important?
+
+Because it tells you whether you are missing real spikes.
+
+Q: Why is precision important?
+
+Because it tells you whether the signal is usable or just full of false alarms.
+
+Q: Can a model have 100% recall and still be poor?
+
+Yes. If it predicts spikes too often, precision can be very low.
+
+Q: What is my model doing right now?
+
+It is acting more like a stress detector than a sharp spike predictor.
+
+Q: Is the stricter rule better?
+
+Better in precision, worse in recall. So it depends on your goal.
+
+Q: Why did recall fall?
+
+Because stricter thresholds exclude some real spikes that the broader rule used to catch.
+
+Q: Why did precision improve?
+
+Because the stricter rule fires less often, so it creates fewer false alarms.
+
+Q: Is 10.3% precision good?
+
+Not yet for a trading trigger. It is an improvement, but still low.
+
+Why did the stricter rule miss real spikes?
+
+Because the thresholds became too harsh, so some genuine spike conditions no longer qualified.
+
+Q: Which threshold looks most problematic?
+
+All three matter, but from this output the biggest issues seem to be:
+
+imbalance > 200 too strict
+wind < 9000 too strict
+gas > 15000 too strict
+Q: What does this teach us?
+
+That spike conditions are broader than only “very extreme stress.” Some spikes happen in moderate-but-still-tight conditions.
+
+Q: Is the middle rule better than the strict one?
+
+Better in recall, worse in precision. It is more balanced, not universally better.
+
+Q: Is the middle rule better than the broad one?
+
+Slightly better in precision, slightly worse in recall. So yes, it is a more balanced compromise.
+
+Q: Why is precision still low?
+
+Because the variables describe stressful conditions that happen often, while true spikes are rarer.
+
+Q: What does that mean practically?
+
+Your model is closer to a market stress filter than a precise spike-entry model.

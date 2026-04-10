@@ -12,6 +12,10 @@ A Data-Driven Study of Great Britain Electricity Prices and Fuel Mix: Comparing 
 
 To analyse how different fuel types and system conditions influence electricity prices in Great Britain, and to compare the role of batteries with other generation sources.
 
+Objective
+
+To test whether extreme GB system price spikes in January 2023 can be explained using a simple interpretable rule based on system imbalance and generation mix.
+
 ### Research Question
 
 How do generation mix and system conditions affect electricity prices in Great Britain, and how do batteries compare with other fuel types in this relationship?
@@ -53,7 +57,22 @@ Are price movements mainly driven by fuel mix, by imbalance/system stress, by we
 * Time Period: 2023–2025
 * Resolution: Half-hourly
 
----
+A spike threshold of £250/MWh was used to identify extreme price events. This threshold was chosen to isolate materially abnormal half-hour periods while still preserving a sufficient number of observations for analysis.
+---The spike threshold of systemSellPrice >= 250 is a modelling choice rather than a formal market rule. It is used to identify clearly extreme price periods and create a consistent event class for analysis. The threshold should later be tested for robustness against alternative values such as 200 and 300.
+
+A good spike model should not depend completely on one arbitrary threshold. Testing multiple thresholds helps check whether the model captures a real market mechanism or only fits one specific event definition.
+
+Regime A — Balancing stress regime
+
+When imbalance is large, prices spike due to real-time system tightness.
+
+Regime B — Structural scarcity regime
+
+When gas is high and wind is not strong enough to suppress the stack, prices can become extreme even without very large imbalance.
+
+That is a serious and useful insight.
+
+It means price formation is not one-dimensional.
 
 ## 2. Data Design
 
@@ -78,7 +97,20 @@ Are price movements mainly driven by fuel mix, by imbalance/system stress, by we
 | frequency        | System frequency       | Hz       |
 
 ---
+Data quality
+Expected half-hourly observations for January 2023: 1488
+Actual observations in merged dataset: 1484
+Missing timestamps: 4
+Duplicate timestamps: 0
 
+Missing timestamps occurred at:
+
+2023-01-17 20:30
+2023-01-22 04:00
+2023-01-22 04:30
+2023-01-22 05:00
+
+These gaps were small in number, but some occurred near stressed market periods, so they should be acknowledged in any formal write-up.
 ## 3. Data Sources
 
 (https://data.elexon.co.uk/bmrs/api/v1/datasets/FUELHH?publishDateTimeFrom=2023-01-01&publishDateTimeTo=2023-01-07)
@@ -259,6 +291,286 @@ The dataset was successfully expanded from a 1-day sample to a 7-day sample.
 ### Key Observation
 Compared with the 1-day sample, correlation strengths became weaker but more realistic. This indicates that the single-day results were influenced by sample-specific conditions, while the weekly sample provides a more representative view of market behaviour.
 
+Spike definition
+
+Extreme price spike defined as:
+
+systemSellPrice >= 250
+
+Under this definition:
+
+Total January spikes = 70
+Model 1 — Imbalance-only rule
+
+Rule:
+
+netImbalanceVolume > 100
+
+Result:
+
+Spikes explained: 56 / 70
+Spike recall: 0.80
+
+Interpretation:
+Imbalance is a major driver of extreme prices, but does not fully explain all spike events.
+
+Model 2 — Strict multi-factor rule
+
+Rule:
+
+high_imbalance AND low_wind AND high_gas
+
+with:
+
+high_imbalance = netImbalanceVolume > 100
+low_wind = wind_gen < 11000 or originally 8000
+high_gas = gas_gen > 8000
+
+Result with strict AND logic:
+
+Spikes explained: 39 / 70
+Recall: 0.557
+
+Interpretation:
+This rule is too restrictive and captures only a subset of spikes.
+
+Model 3 — Hybrid regime rule
+
+Rule:
+
+high_imbalance OR (low_wind AND high_gas)
+
+with:
+
+high_imbalance = netImbalanceVolume > 100
+low_wind = wind_gen < 11000
+high_gas = gas_gen > 8000
+
+Result:
+
+Spikes explained: 70 / 70
+Spike recall: 1.00
+
+Interpretation:
+This strongly supports a two-regime explanation of extreme price formation in the January 2023 sample.
+
+Market interpretation
+
+The results suggest two distinct but related spike mechanisms:
+
+Imbalance-driven spikes
+caused by real-time system stress
+associated with high positive net imbalance volume
+Generation-mix / scarcity-driven spikes
+occur even when imbalance is not extreme
+associated with elevated gas generation and wind levels insufficient to suppress marginal prices
+Important caution
+
+This result is currently based on:
+
+one month only
+in-sample testing
+recall only
+
+Therefore, the current model should be viewed as:
+
+a strong research hypothesis
+a strong descriptive rule
+not yet a production trading model
+
+Research note
+
+Threshold sensitivity testing shows that the hybrid spike model remains strong across multiple spike definitions. This suggests the model captures a real underlying market mechanism rather than fitting only one arbitrary threshold.
+
+Research note
+
+At lower thresholds such as >= 200, the event set becomes broader and includes less extreme high-price periods. This reduces model recall slightly, which is expected because moderate high-price events are more heterogeneous than severe spikes.
+
+Research note
+
+At >= 250 and >= 300, the hybrid model achieved full recall on the January 2023 sample. This supports the idea that the most extreme price events are strongly linked to either imbalance stress or high-gas / weaker-wind structural conditions.
+
+Research note
+
+The hybrid rule achieved perfect recall for January 2023 spikes at the >= 250 threshold, but precision was only 7.5%. This means the rule captures all spike events but also flags a large number of non-spike periods.
+
+Research note
+
+The current hybrid model should therefore be interpreted as a broad market stress regime detector rather than a selective spike prediction model.
+
+Research note
+
+The result suggests that imbalance and generation-mix conditions may be necessary components of spike formation, but they are not sufficient on their own. Additional filters are needed to improve precision.
+
+Research note
+
+Spike and non-spike are researcher-defined classes created by applying a threshold to a continuous price series. In this project, a spike is currently defined as systemSellPrice >= 250.
+
+Research note
+
+Recall measures the proportion of actual spikes captured by the model. It answers the question: “Of all true spike events, how many were detected?”
+
+Research note
+
+Precision measures the proportion of predicted spikes that were actually true spikes. It answers the question: “When the model signals a spike, how often is it correct?”
+
+Research note
+
+A model can have high recall and low precision if it identifies broad stressed market conditions rather than only the most extreme price events.
+
+High recall with low precision means the model catches most spike events but also signals too many non-spike periods. The next research step is to make the rule more selective and observe the recall-precision tradeoff.
+
+Research note
+
+Tightening the thresholds reduced the number of predicted spike signals from 935 to 593, improving precision from approximately 7.5% to 10.3%, but recall declined from 100% to 87.1%.
+
+Research note
+
+This confirms the expected recall–precision trade-off: stricter conditions reduce false positives, but they also exclude some true spike periods.
+
+Research note
+
+The stricter rule remains more of a stressed-regime filter than a precise spike predictor, though it is moving in a more selective direction.
+
+Group 1 — Moderate imbalance spikes
+
+Examples:
+
+2023-01-01 18:00 → imbalance 185.836
+2023-01-01 19:00 → imbalance 181.843
+2023-01-02 18:30 → imbalance 167.553
+
+These are real spikes, but your new imbalance threshold > 200 is too strict for them.
+
+So one lesson is:
+
+Research note
+
+Some spikes occur with moderately high imbalance, not only extremely high imbalance. Raising the imbalance threshold from 100 to 200 removes part of the genuine spike population.
+
+Group 2 — High price with low gas
+
+Example:
+
+2023-01-01 22:30 → price 290, imbalance 149.124, wind 4767, gas 5039
+
+This one is interesting.
+
+It is a spike, but:
+
+imbalance is below 200
+gas is not high at all
+wind is low
+
+So this suggests there may be another mechanism:
+
+low wind plus scarcity from something else
+not necessarily high gas alone
+
+This is a very important research clue.
+
+Research note
+
+Not all structural spikes are “high-gas spikes.” Some may be associated with low wind and broader system tightness even when gas generation itself is not extreme.
+
+Group 3 — Very high gas but wind cutoff too strict
+
+Examples:
+
+2023-01-19 17:30 → wind 9996, gas 22470
+2023-01-25 17:30 → wind 9473, gas 21767
+2023-01-25 19:30 → wind 10880, gas 20154
+
+These are the same kind of cases we saw before.
+
+They are missed because:
+
+wind is not below 9000 in all cases
+but gas is very high
+imbalance is low
+
+So the stricter wind threshold is now excluding real structural spikes.
+
+Research note
+
+Tightening the wind threshold from 11000 to 9000 removes genuine structural scarcity spikes where gas generation is very high but wind remains only moderately low.
+
+Group 4 — Moderate gas structural cases
+
+Example:
+
+2023-01-21 00:30 → wind 5743, gas 9286, imbalance 28.311
+
+This is also useful.
+
+It tells us:
+
+some spikes may happen with low wind and only moderately high gas
+your gas threshold > 15000 may now be too harsh
+Research note
+
+Increasing the gas threshold to 15000 may be too restrictive, because some real spikes occur with low wind and only moderate gas levels.
+
+Your stricter rule improved precision because it became more selective.
+
+But the rows you shared show that it became too selective in three ways:
+
+imbalance threshold too high
+wind threshold too low
+gas threshold too high
+
+So it is no surprise recall fell.
+
+This is a classic modelling lesson:
+
+Your original broad rule was capturing a wide stress regime.
+
+Your stricter rule tries to isolate only the most intense stress.
+
+But real spikes can happen in a middle zone too:
+
+imbalance not huge, but still meaningful
+wind not extremely low, but low enough
+gas not extreme, but still important
+
+So spike formation is not all-or-nothing.
+
+It lives in a gradient.
+
+The stricter rule improved precision a bit, but it missed real spikes because it excluded moderate imbalance cases, moderate gas cases, and structural scarcity cases where wind was not low enough to pass the new cutoff.
+
+The real research lesson
+
+You are discovering a very mature result:
+
+Current variables are good for regime detection
+
+but
+
+not sufficient for precise event timing
+
+That is not a failure.
+
+That is a serious research conclusion.
+
+It means your next modelling improvement probably needs:
+
+more variables
+or better engineered features
+not just endless threshold tweaking
+
+Small research notes
+Research note
+
+The middle rule improves precision slightly relative to the original broad rule while retaining high recall. This suggests that moderate threshold tightening can reduce false alarms without destroying event coverage.
+
+Research note
+
+However, precision remains low across all threshold configurations. This indicates that the current feature set identifies stressed market conditions better than it predicts the exact timing of extreme price spikes.
+
+Research note
+
+The imbalance–wind–gas framework appears to capture broad market regimes rather than a narrow execution-grade trading signal.
 ---
 
 ## 5. Findings
@@ -444,6 +756,38 @@ The January 2023 master dataset was constructed successfully.
 
 ### Interpretation
 The monthly pipeline is functioning correctly and has produced an almost complete half-hourly dataset for January 2023. A small number of timestamps appear to be missing and should be investigated before final model validation.
+
+Regime 1 — imbalance shock regime
+
+When:
+
+net imbalance is strongly positive
+system is operationally stressed
+balancing price can spike sharply
+Regime 2 — structural scarcity / marginal fuel regime
+
+When:
+
+wind is relatively low
+gas is relatively high
+the system is already sitting on an expensive generation stack
+
+That is a very solid research interpretation
+
+Regime 1 — Operational stress / imbalance regime
+
+When netImbalanceVolume is high, the system is tight in real time, and balancing prices spike.
+
+This is the classic short-term balancing stress mechanism.
+
+Regime 2 — Structural scarcity / thermal stack regime
+
+When gas generation is high and wind is not sufficiently suppressing the stack, prices can spike even without very high imbalance.
+
+This is more like a system-wide marginal cost / scarcity condition.
+
+That is a serious research insight.
+It is much better than saying only “imbalance causes spikes.”
 ---
 ## 7. Debuuging Notes
 ## Debugging Note: Python Imports
