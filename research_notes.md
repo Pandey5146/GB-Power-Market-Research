@@ -571,7 +571,131 @@ However, precision remains low across all threshold configurations. This indicat
 Research note
 
 The imbalance–wind–gas framework appears to capture broad market regimes rather than a narrow execution-grade trading signal.
+
+Small research note
+
+False positives are not always meaningless errors. In power markets, a false positive can represent a stressed or expensive period that did not quite cross the spike threshold. Studying their price distribution helps distinguish a useful stress detector from a poor classifier.
+
+Small research notes
+Research note
+
+Inspection of the highest false positives shows that many occur at prices very close to the spike threshold, such as 242–249 £/MWh. This suggests that a substantial portion of the model’s false positives are actually borderline extreme-price events rather than low-value errors.
+
+Research note
+
+The current low precision is therefore partly influenced by the sharp binary threshold at 250 £/MWh. In practical market terms, periods priced at 245–249 £/MWh may still represent materially stressed conditions.
+
+Research note
+
+This supports interpreting the model as a detector of stressed and near-extreme market regimes, rather than a pure binary spike classifier.
+
+our middle rule seems to identify periods where the market is already under economic stress:
+
+gas stack elevated
+wind relatively insufficient
+imbalance materially positive
+
+Those conditions often lead to:
+
+high prices
+near-spikes
+spikes
+
+So the rule is picking up the environment in which spikes are likely, not always the exact boundary crossing itself.
+
+That is actually valuable.
+
+Small research notes
+Research note
+
+Price-band analysis shows that the middle-rule signals are concentrated overwhelmingly in medium-to-high price periods rather than in low-price or negative-price hours.
+
+Research note
+
+Only 61 of 828 middle-rule signals occurred in the 0_to_100 band, and none occurred in negative-price periods. This suggests the model is not randomly activating during benign market conditions.
+
+Research note
+
+A large share of rule activations occurred in the 200_to_250 and 250_plus regions, supporting the interpretation that the model is detecting stressed and near-extreme pricing regimes rather than noise.
+
+Small research note
+
+A useful regime signal should activate in periods with materially higher average prices than the unconditional market average, even if it does not always identify only formal spikes.
+
+Small research notes
+Research note
+
+The middle-rule signal periods have an average price of £175.93/MWh, compared with £134.93/MWh across the full sample. This indicates that the rule identifies materially more expensive market conditions, even when it does not isolate only formal spikes.
+
+Research note
+
+The average price during actual spike periods is £269.11/MWh, which confirms that the model signal sits between normal market conditions and true extreme-price events. This supports a regime-based interpretation.
+
+Regime logic emerging
+Normal periods: lower prices, higher wind, lower gas, low/neutral imbalance
+Signal periods: elevated prices, tighter system, reduced wind, higher gas
+Spike periods: extreme prices, strong imbalance stress, much lower wind, very high gas
 ---
+Small research notes
+Research note
+
+Driver comparison reveals a strong monotonic pattern from all periods to signal periods to spike periods. As prices rise, average imbalance becomes more positive, wind generation declines, and gas generation increases substantially.
+
+Research note
+
+Signal periods represent an intermediate regime between normal market conditions and full price spikes. This supports interpreting the rule as a detector of stressed market states rather than only a binary spike classifier.
+
+Research note
+
+The spike regime is characterized by a combination of strong positive imbalance, materially lower wind output, and significantly higher gas generation, consistent with both operational stress and structural scarcity mechanisms.
+
+Research note
+
+Signal periods are distributed across the full day but become more frequent during morning and evening active system windows, especially around hours 17–19.
+
+Research note
+
+Spike periods are much more concentrated than signal periods, with a strong clustering in late afternoon and evening hours. This suggests that time-of-day acts as an additional conditioning factor in extreme price formation.
+
+Research note
+
+The results support a layered regime interpretation: fuel mix and imbalance define the stress environment, while time-of-day helps determine when that stress is most likely to convert into an extreme spike.
+
+Research note
+
+January 2023 should be treated as a pilot methodology window in which candidate quantitative models are tested before scaling the framework to full multi-year analysis.
+
+Research note
+
+The most appropriate next mathematical models are interpretable models that strengthen causal and regime-based understanding, especially conditional probability analysis, logistic regression, and stress-index construction.
+
+Research note
+
+The January 2023 pilot study reveals a monotonic transition from all periods to signal periods to spike periods. Extreme price formation is associated with increasingly positive imbalance, lower wind output, and higher gas generation.
+
+Research note
+
+The signal-period group acts as an intermediate stressed regime between ordinary market conditions and full spike events, supporting a regime-based interpretation of GB balancing price dynamics.
+
+Research note
+
+Conditional probability measures the likelihood of a spike under a specific market condition, such as high imbalance or low wind. It is more informative than unconditional spike frequency because it quantifies how much a condition changes spike risk.
+
+Research note
+
+In this project, conditional probabilities help translate qualitative market intuition into measurable regime relationships.
+
+Research note
+
+The unconditional probability of a spike in January 2023 is 4.72%. All tested conditions increase spike probability materially above this baseline.
+
+Research note
+
+The strongest single conditions in the January pilot are imbalance > 150 and gas > 15000, both of which raise spike probability to above 11%.
+
+Research note
+
+No single market condition alone produces a very high spike probability, supporting the view that extreme prices emerge from multi-factor stressed regimes rather than one-dimensional triggers.
 
 ## 5. Findings
 

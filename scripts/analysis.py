@@ -1,3 +1,4 @@
+import pandas as pd
 import matplotlib.pyplot as plt
 
 def run_basic_analysis(df_master):
@@ -210,6 +211,180 @@ def run_basic_analysis(df_master):
         print("False positives:", false_positives)
         print("Recall:", recall)
         print("Precision:", precision)
+
+        print("\nFALSE POSITIVE PRICE ANALYSIS FOR MIDDLE RULE")
+        
+        spike_flag = df_master["systemSellPrice"] >= 250
+        
+        middle_rule = (
+            (df_master["netImbalanceVolume"] > 150) |
+            ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 10000))
+        )
+        
+        false_positive_rows = df_master[(~spike_flag) & (middle_rule)].copy()
+        print("Total false positives:", len(false_positive_rows))
+        print("\nFalse positive price summary:")
+        print(false_positive_rows["systemSellPrice"].describe())
+        print("\nTop 10 highest false positive prices:")
+        print(false_positive_rows.nlargest(10, "systemSellPrice")[[
+            "startTime",
+            "systemSellPrice",
+            "netImbalanceVolume",
+            "wind_gen",
+            "gas_gen"
+        ]])
+
+        print("\nPRICE BAND ANALYSIS FOR MIDDLE RULE")
+        
+        middle_rule = (
+            (df_master["netImbalanceVolume"] > 150) |
+            ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 10000))
+        )
+        
+        df_band = df_master.copy()
+        
+        df_band["price_band"] = pd.cut(
+            df_band["systemSellPrice"],
+            bins=[-9999, 0, 100, 200, 250, 9999],
+            labels=["negative", "0_to_100", "100_to_200", "200_to_250", "250_plus"]
+        )
+        
+        signal_band_counts = df_band[middle_rule]["price_band"].value_counts().sort_index()
+        
+        print(signal_band_counts)
+
+        print("\nAVERAGE PRICE COMPARISON")
+        
+        middle_rule = (
+            (df_master["netImbalanceVolume"] > 150) |
+            ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 10000))
+        )
+        
+        all_avg_price = df_master["systemSellPrice"].mean()
+        signal_avg_price = df_master.loc[middle_rule, "systemSellPrice"].mean()
+        spike_avg_price = df_master.loc[df_master["systemSellPrice"] >= 250, "systemSellPrice"].mean()
+        print("Average price - all periods:", round(all_avg_price, 2))
+        print("Average price - model signal periods:", round(signal_avg_price, 2))
+        print("Average price - spike periods:", round(spike_avg_price, 2))
+
+        print("\nDRIVER COMPARISON: ALL vs SIGNAL vs SPIKE")
+        
+        middle_rule = (
+            (df_master["netImbalanceVolume"] > 150) |
+            ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 10000))
+        )
+        
+        spike_flag = df_master["systemSellPrice"] >= 250
+        summary_table = pd.DataFrame({
+            "group": ["all_periods", "signal_periods", "spike_periods"],
+            "avg_price": [
+                df_master["systemSellPrice"].mean(),
+                df_master.loc[middle_rule, "systemSellPrice"].mean(),
+                df_master.loc[spike_flag, "systemSellPrice"].mean()
+            ],
+            
+            "avg_imbalance": [
+                df_master["netImbalanceVolume"].mean(),
+                df_master.loc[middle_rule, "netImbalanceVolume"].mean(),
+                df_master.loc[spike_flag, "netImbalanceVolume"].mean()
+            ],
+            
+            "avg_wind": [
+                df_master["wind_gen"].mean(),
+                df_master.loc[middle_rule, "wind_gen"].mean(),
+                df_master.loc[spike_flag, "wind_gen"].mean()
+            ],
+            
+            "avg_gas": [
+                df_master["gas_gen"].mean(),
+                df_master.loc[middle_rule, "gas_gen"].mean(),
+                df_master.loc[spike_flag, "gas_gen"].mean()
+            ]
+        })
+        
+        print(summary_table.round(2))
+
+        print("\nTIME-OF-DAY COMPARISON: ALL vs SIGNAL vs SPIKE")
+        
+        middle_rule = (
+            (df_master["netImbalanceVolume"] > 150) |
+            ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 10000))
+        )
+        
+        spike_flag = df_master["systemSellPrice"] >= 250
+        df_master["hour"] = df_master["startTime"].dt.hour
+        
+        print("\nAverage price by hour - all periods:")
+        print(df_master.groupby("hour")["systemSellPrice"].mean().round(2))
+        print("\nSignal count by hour:")
+        print(df_master.loc[middle_rule].groupby("hour").size())
+        print("\nSpike count by hour:")
+        print(df_master.loc[spike_flag].groupby("hour").size())
+
+        print("\nJANUARY REGIME SUMMARY TABLE")
+        
+        middle_rule = (
+            (df_master["netImbalanceVolume"] > 150) |
+            ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 10000))
+        )
+        
+        spike_flag = df_master["systemSellPrice"] >= 250
+        summary_table = pd.DataFrame({
+            "group": ["all_periods", "signal_periods", "spike_periods"],
+            "count": [
+                len(df_master),
+                middle_rule.sum(),
+                spike_flag.sum()
+            ],
+        
+        "avg_price": [
+            df_master["systemSellPrice"].mean(),
+            df_master.loc[middle_rule, "systemSellPrice"].mean(),
+            df_master.loc[spike_flag, "systemSellPrice"].mean()
+            ],
+        
+        "avg_imbalance": [
+            df_master["netImbalanceVolume"].mean(),
+            df_master.loc[middle_rule, "netImbalanceVolume"].mean(),
+            df_master.loc[spike_flag, "netImbalanceVolume"].mean()
+            ],
+        
+        "avg_wind": [
+            df_master["wind_gen"].mean(),
+            df_master.loc[middle_rule, "wind_gen"].mean(),
+            df_master.loc[spike_flag, "wind_gen"].mean()
+            ],
+        
+        "avg_gas": [
+            df_master["gas_gen"].mean(),
+            df_master.loc[middle_rule, "gas_gen"].mean(),
+            df_master.loc[spike_flag, "gas_gen"].mean()
+            ]
+        })
+        
+        print(summary_table.round(2))
+
+        print("\nCONDITIONAL SPIKE PROBABILITY ANALYSIS")
+        
+        spike_flag = df_master["systemSellPrice"] >= 250
+        
+        conditions = {
+            "imbalance_gt_100": df_master["netImbalanceVolume"] > 100,
+            "imbalance_gt_150": df_master["netImbalanceVolume"] > 150,
+            "wind_lt_11000": df_master["wind_gen"] < 11000,
+            "wind_lt_8000": df_master["wind_gen"] < 8000,
+            "gas_gt_10000": df_master["gas_gen"] > 10000,
+            "gas_gt_15000": df_master["gas_gen"] > 15000,
+        }
+        for name, condition in conditions.items():
+            total_condition_periods = condition.sum()
+            spike_given_condition = (spike_flag & condition).sum()
+            probability = spike_given_condition / total_condition_periods if total_condition_periods > 0 else 0
+            
+            print(f"\nCondition: {name}")
+            print("Periods meeting condition:", total_condition_periods)
+            print("Spike periods within condition:", spike_given_condition)
+            print("P(spike | condition):", round(probability, 4))
     
      # ==============================
      # # STEP 8 — VISUAL ANALYSIS

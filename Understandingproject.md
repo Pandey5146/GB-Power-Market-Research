@@ -399,3 +399,138 @@ Because the variables describe stressful conditions that happen often, while tru
 Q: What does that mean practically?
 
 Your model is closer to a market stress filter than a precise spike-entry model.
+
+Q: Why are we studying false positives now?
+Because low precision means too many extra signals, and we need to see whether those signals are still economically meaningful.
+
+Q: What would be a good sign?
+If many false positives are high-price non-spike periods close to 250.
+
+Q: Are these false positives actually bad?
+
+Some are not truly bad. Many are near-spikes and likely represent genuine stress periods.
+
+Q: Why does this happen?
+
+Because your label says 249 is a non-spike, even though it is almost identical to 250 in market terms.
+
+Q: What does this mean for the model?
+
+It means the model may be better at detecting stressed regimes than the raw precision number suggests.
+
+Q: Is this good news?
+
+Yes. It means the model is not firing randomly in calm periods.
+
+Q: Why are there so many signals in 100_to_200?
+
+Because the model is capturing broader system stress, and not every stressed period becomes a formal spike.
+
+Q: What does the 200_to_250 bucket tell us?
+
+That many “false positives” are actually near-spikes.
+
+Q: So what is the model really doing?
+
+It is identifying a high-risk pricing regime rather than making a sharp binary spike call.
+
+Small Q&A
+
+Q: Why are we doing this?
+To check whether the model’s signals are economically meaningful.
+
+Q: What would be a strong result?
+If average price during signal periods is much higher than average price across all periods
+
+Small Q&A
+Q: Does this mean the model is good?
+
+It means the model is useful, but for regime detection more than exact spike classification.
+
+Q: Why is this better than just looking at precision?
+
+Because precision alone treats all non-spikes as equally unimportant, but here many signal periods are still economically expensive.
+
+Q: What is the key lesson?
+
+The model is finding high-price conditions, not just rare extreme events.
+
+Q: What is the single biggest thing this table proves?
+
+That there is a clear structured difference between normal, stressed, and spike periods.
+
+Q: Why is this better than only looking at recall and precision?
+
+Because this shows the model has real economic meaning even when binary classification is imperfect.
+
+Q: What is the role of wind here?
+
+Wind clearly falls as we move from all periods to spikes, which supports the idea that weaker renewable output increases price stress.
+
+Q: What is the role of gas here?
+
+Gas rises sharply across the same progression, suggesting stronger thermal-stack dependence during stressed and extreme periods.
+
+Q: What is the biggest takeaway from this result?
+
+Spikes are not only about imbalance/wind/gas. They are also strongly linked to timing.
+
+Q: Why do signals appear all day but spikes cluster in the evening?
+
+Because stress conditions can exist more broadly, but extreme price realization seems more likely during peak system hours.
+
+Q: Does this help the paper?
+
+Yes. A lot. It adds a temporal structure to your regime framework.
+
+Q: Should we move to full 2023 immediately?
+
+Not yet. First test the best quantitative methods on January.
+
+Q: Should we try all mathematical models?
+
+No. We should use a focused set of interpretable models.
+
+Q: What is the best first mathematical model after the summary table?
+
+Conditional probability analysis.
+
+Q: Why is this table important?
+
+Because it turns your analysis into a structured result rather than scattered observations.
+
+Q: What is the biggest insight from it?
+
+Spike periods are not random. They sit at the extreme end of a clear market-stress gradient.
+
+Q: What does “conditional” mean?
+
+It means “under a condition” or “given that something is true.”
+
+Q: What does P(spike | imbalance > 100) mean?
+
+It means the probability of a spike given that imbalance is greater than 100.
+
+Q: Why is this better than correlation?
+
+Because it directly tells us how likely a spike is when a condition happens.
+
+Q: Why is this useful for quant trading research?
+
+Because it connects market conditions to event risk in a clear and measurable way.
+
+Q: What is the main lesson?
+
+Each condition increases spike risk, but none fully explains spikes alone.
+
+Q: Which single condition looks strongest?
+
+imbalance > 150, very closely followed by gas > 15000.
+
+Q: What does this say about wind?
+
+Lower wind clearly matters, and more severe wind weakness raises spike risk further.
+
+Q: Why is this important?
+
+Because it moves your paper from “correlation” to measurable event-risk analysis.
