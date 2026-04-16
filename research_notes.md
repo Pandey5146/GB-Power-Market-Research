@@ -432,6 +432,10 @@ Research note
 
 The stricter rule remains more of a stressed-regime filter than a precise spike predictor, though it is moving in a more selective direction.
 
+Small research note
+
+Triple-condition probability analysis tests whether extreme prices arise most strongly when multiple market stresses and timing effects occur simultaneously. This is often closer to real power-market behaviour than single-factor analysis.
+
 Group 1 — Moderate imbalance spikes
 
 Examples:
@@ -696,6 +700,94 @@ The strongest single conditions in the January pilot are imbalance > 150 and gas
 Research note
 
 No single market condition alone produces a very high spike probability, supporting the view that extreme prices emerge from multi-factor stressed regimes rather than one-dimensional triggers.
+
+Small research note
+
+Combined conditional probabilities test whether spike formation is driven more strongly by interacting market stresses than by isolated variables. This is especially important in power markets, where extreme prices often emerge when multiple conditions align.
+
+Small research notes
+Research note
+
+Combined-condition analysis shows that spike probabilities rise much more sharply under interacting stress conditions than under any single variable alone.
+
+Research note
+
+The strongest January pilot combinations involve low wind, positive imbalance, and late afternoon to evening timing, with conditional spike probabilities rising to roughly 29–39%.
+
+Research note
+
+These results support a regime-based and interaction-based interpretation of GB balancing price formation, rather than a one-factor explanation.
+
+Small research notes
+Research note
+
+In the current pilot study, a spike is defined as an extreme price-level event rather than a period-to-period price jump. Specifically, spike periods are those in which systemSellPrice >= 250.
+
+Research note
+
+This definition allows the analysis to focus on extreme-price regimes and their associated market conditions, including imbalance, wind, gas, and time-of-day effects.
+
+Research note
+
+A jump-based definition could be introduced later as a separate event class, but it should not be confused with the current extreme-price threshold framework.
+
+In the January 2023 pilot, single stress conditions roughly doubled spike risk, double conditions raised spike probabilities into the 20–40% range, and the strongest triple condition — high imbalance, low wind, and the 16:00–19:00 window — produced a spike probability of 82.8%
+Research note
+
+Triple-condition analysis shows that spike risk rises sharply when system stress, renewable weakness, and vulnerable timing coincide. The strongest January 2023 pilot condition — imbalance > 150, wind < 8000, and hour 16 to 19 — produced a spike probability of 82.76%.
+
+Research note
+
+This result suggests that time-of-day is not merely descriptive but acts as an important conditioning factor that converts broad stress into realized extreme-price events.
+
+Research note
+
+The January pilot therefore supports a layered regime interpretation in which imbalance and generation mix define the stress environment, while the late afternoon/evening window sharply increases the probability of spike realization.
+
+Research note
+
+The January 2023 pilot has now moved beyond exploratory analysis and produced a coherent regime-based findings section suitable for use in a formal paper draft.
+
+Research note
+
+The strongest pilot result is the very high spike probability observed under the joint condition of high imbalance, low wind, and late-day timing.
+
+Research note
+
+The first logistic regression model confirms the expected directional effects of the main explanatory variables: imbalance and gas enter positively, while wind enters negatively. Time-of-day also contributes positively, consistent with the concentration of spike events in later hours.
+
+Research note
+
+At the default 0.5 probability threshold, the model achieves high spike precision (0.600) but low spike recall (0.214). This indicates that the model is selective and conservative, identifying a smaller subset of high-confidence spike periods.
+
+Research note
+
+The logistic model therefore complements the earlier rule-based analysis: rule-based methods were broad and high-recall, while logistic regression is narrower and higher-precision.
+In rare-event modelling, the classification threshold matters as much as the model itself. A 0.5 cutoff is often too conservative for rare spikes, so threshold testing is needed to understand the precision–recall trade-off.
+
+You now have two layers of modelling:
+
+Layer 1 — Regime filter
+
+Rule-based logic identifies broad stressed conditions.
+
+Layer 2 — Probabilistic spike filter
+
+Logistic regression assigns a sharper probability of actual spike realization.
+
+This is very good for a paper and very good for future trading logic
+
+Research note
+
+Threshold testing shows that the logistic regression model exhibits the expected precision–recall trade-off. Lower probability thresholds improve spike recall, while higher thresholds improve spike precision.
+
+Research note
+
+A 0.5 threshold is too conservative for the January 2023 rare-event setting. More informative pilot thresholds are in the range of 0.10 to 0.30.
+
+Research note
+
+Compared with the earlier rule-based model, logistic regression provides materially higher precision at the cost of lower recall. This suggests that the two approaches serve different purposes: regime detection versus selective spike classification.
 
 ## 5. Findings
 
@@ -978,3 +1070,322 @@ Fix:
 ## 8. Policy Notes
 
 (To be filled)
+
+anuary 2023 Pilot Findings
+1. Purpose of the pilot study
+
+January 2023 was used as a pilot sample to develop and test the initial quantitative research framework for GB balancing price analysis. The purpose of this pilot was not to make final multi-year claims, but to establish whether interpretable market variables such as net imbalance volume, wind generation, gas generation, and time-of-day could explain stressed and extreme price behaviour in a meaningful way.
+
+The pilot therefore served three functions:
+
+to validate the data engineering and preprocessing workflow
+to identify candidate price drivers and market regimes
+to test whether simple quantitative rules could capture extreme-price conditions in an interpretable way
+2. Data and sample overview
+
+The January 2023 pilot dataset was constructed from half-hourly Elexon BMRS data, combining:
+
+system prices
+net imbalance volume
+fuel mix generation data
+
+The cleaned master dataset contained 1,484 half-hourly observations for the month. A timestamp validation exercise showed that the dataset was largely complete, with only four missing timestamps and no duplicate periods. This was considered sufficiently robust for pilot-stage analysis, although the missing periods should be acknowledged in any formal write-up.
+
+The analytical dataset included the following core variables:
+
+systemSellPrice
+systemBuyPrice
+netImbalanceVolume
+wind_gen
+gas_gen
+other fuel-mix variables including nuclear, biomass, hydro, pumped storage, coal, oil, other generation, and interconnectors
+3. Initial market structure findings
+
+The pilot analysis showed that January 2023 balancing prices were not random, but displayed clear structure in relation to both system conditions and generation mix.
+
+The main descriptive findings were:
+
+higher imbalance was associated with higher prices
+lower wind generation was associated with higher prices
+higher gas generation was associated with higher prices
+extreme prices were concentrated in late afternoon and evening hours
+negative prices and high-price spikes both appeared in the sample, indicating strong regime variation within the month
+
+These results suggested that price formation could not be explained using a single linear factor alone. Instead, the market appeared to move through different pricing states, ranging from normal conditions to stressed conditions and finally to extreme-price spike conditions.
+
+4. Spike definition and baseline event frequency
+
+For the pilot study, an extreme-price spike was defined as:
+
+systemSellPrice >= 250
+
+This definition was chosen as a practical research threshold for identifying clearly extreme half-hour periods. Under this rule, the January 2023 sample contained:
+
+70 spike periods
+out of 1,484 total periods
+
+This implies an unconditional spike probability of:
+
+70 / 1484 = 4.72%
+
+This baseline is important because it provides the reference point against which all later conditional and regime-based probabilities were compared.
+
+5. Rule-based pilot model results
+Imbalance-only rule
+
+A simple imbalance-based rule was tested first. This showed that imbalance alone explained a meaningful share of extreme events, confirming that operational system stress is an important driver of high prices. However, imbalance on its own did not explain all spike events.
+
+This was an important early result, because it showed that while imbalance is a major factor, spike formation is not purely an imbalance-only phenomenon.
+
+Hybrid rule
+
+A broader hybrid rule was then tested, combining:
+
+high imbalance, or
+lower wind together with higher gas
+
+This rule achieved very high spike recall in the pilot sample, meaning it captured most or all true spike periods depending on the threshold calibration used. However, precision remained low, meaning the rule also flagged many non-spike periods.
+
+This initially appeared to weaken the model, but further inspection showed that many of the so-called false positives were actually near-spike or materially elevated price periods. This led to a more refined interpretation: the rule was not merely a spike detector, but a detector of a broader stressed-price regime.
+
+6. Regime-based interpretation
+
+One of the strongest findings of the January pilot was that the market appears to move through a structured progression rather than a simple binary spike/non-spike split.
+
+A regime-style comparison was made across three groups:
+
+all periods
+signal periods identified by the middle-rule stress filter
+spike periods (systemSellPrice >= 250)
+
+The average values across these groups were:
+
+Group	Count	Avg Price	Avg Imbalance	Avg Wind	Avg Gas
+All periods	1484	134.93	-8.42	10807.04	10041.62
+Signal periods	828	175.93	125.64	8997.17	13454.68
+Spike periods	70	269.11	318.61	6420.39	18230.99
+
+This table shows a clear monotonic progression:
+
+prices rise from normal to stressed to spike conditions
+imbalance becomes more positive
+wind falls materially
+gas rises materially
+
+This is strong evidence for a regime-based interpretation of January 2023 price behaviour.
+
+7. Time-of-day effects
+
+The pilot also showed that timing plays an important role in spike realization.
+
+Signal periods were distributed across much of the day, but spike periods were much more concentrated in late afternoon and evening hours, especially:
+
+16:00
+17:00
+18:00
+19:00
+
+This suggests that time-of-day acts as more than a descriptive pattern. It appears to function as a conditioning factor that helps convert broad stress into realized extreme-price events.
+
+In other words:
+
+imbalance, wind, and gas help define the stress environment
+time-of-day helps determine when that stress is most likely to turn into a true spike
+8. Conditional probability results
+Single-condition probabilities
+
+The pilot first tested whether individual market conditions raised spike probability above the unconditional baseline of 4.72%.
+
+Examples included:
+
+imbalance > 100
+imbalance > 150
+wind < 11000
+wind < 8000
+gas > 10000
+gas > 15000
+
+All single conditions raised spike probability to roughly 9.5% to 11.5%, showing that each factor individually increases event risk. However, no single variable alone produced a very high spike probability. This indicated that spike formation is not one-dimensional.
+
+Double-condition probabilities
+
+The analysis then tested combinations of two conditions. These raised spike probability substantially, in some cases into the 20% to 39% range.
+
+Strong examples included:
+
+imbalance > 150 and wind < 8000
+imbalance > 150 and hour 16 to 19
+wind < 8000 and hour 16 to 19
+
+This showed that interacting conditions explain spikes much better than isolated variables.
+
+Triple-condition probabilities
+
+The strongest pilot result came from triple-condition analysis.
+
+The most important condition was:
+
+imbalance > 150
+wind < 8000
+hour 16 to 19
+
+This condition occurred in 29 periods, and 24 of those were spikes, giving:
+
+P(spike | imbalance > 150 and wind < 8000 and hour 16 to 19) = 82.76%
+
+This is a very strong pilot result. It suggests that when system shortness, weak wind, and the vulnerable late-day time window align, extreme price realization becomes highly likely.
+
+Other triple conditions also increased spike probability meaningfully, but none were as strong as the low-wind, high-imbalance, evening combination.
+
+9. Interpretation of the January pilot
+
+The January 2023 pilot supports the following working interpretation of GB balancing price behaviour:
+
+Extreme prices are not explained by imbalance alone.
+Wind and gas materially influence whether stressed conditions emerge.
+Time-of-day plays a major conditioning role in whether stress converts into an actual spike.
+Many model false positives are not meaningless errors, but near-spike or elevated-price stressed periods.
+The balancing market is better understood through a regime-based framework than through a simple binary event model alone.
+
+The strongest pilot evidence points toward a layered market mechanism in which:
+
+imbalance and generation mix define the stress environment
+late afternoon and evening timing sharpens the probability of extreme-price realization
+10. Pilot limitations
+
+The January findings are strong, but they remain pilot-stage evidence and should be interpreted carefully.
+
+The main limitations are:
+
+only one month was analyzed in full detail
+some conditional and triple-condition sample sizes are small
+the spike definition is based on a research threshold rather than an official market label
+the current framework focuses on interpretable rule-based analysis rather than full probabilistic regression or forecasting models
+
+Because of this, the January pilot should be treated as:
+
+a methodology validation stage
+a first regime-identification exercise
+a foundation for full-year and multi-year analysis
+
+rather than a final proof of market behaviour across all periods.
+
+11. Conclusion of the pilot stage
+
+The January 2023 pilot has successfully established a strong initial quantitative framework for the project.
+
+It has shown that:
+
+the data pipeline is robust enough for serious research
+the GB balancing market exhibits identifiable stressed and extreme-price regimes
+imbalance, wind, gas, and time-of-day interact in meaningful ways
+the strongest spike conditions arise when multiple stress factors align
+
+This provides a strong foundation for the next stage of the project, which should extend the same methodology to broader historical samples and test whether the January regime structure remains stable across 2023, 2024, and 2025.
+
+January 2023 Probabilistic Modelling Findings
+1. Introduction
+
+Following the descriptive and rule-based analysis of the January 2023 pilot sample, a formal probabilistic modelling stage was introduced using logistic regression. The purpose of this stage was to move beyond threshold rules and estimate spike probability directly as a function of key market variables.
+
+The pilot logistic model used the following explanatory variables:
+
+net imbalance volume
+wind generation
+gas generation
+hour of day
+
+The target variable remained the pilot spike definition:
+
+systemSellPrice >= 250
+
+This stage was intended to test whether the regime relationships identified earlier could also be confirmed within a formal statistical probability framework.
+
+2. Logistic regression coefficient interpretation
+
+The estimated model coefficients were directionally consistent with the broader January findings.
+
+Net imbalance volume entered positively
+Wind generation entered negatively
+Gas generation entered positively
+Hour of day entered positively
+
+These signs are economically intuitive and strongly aligned with the earlier rule-based and descriptive results.
+
+In particular, the model confirms that:
+
+more positive imbalance is associated with higher spike risk
+stronger wind output reduces spike risk
+higher gas generation raises spike risk
+later hours in the day are associated with greater spike likelihood
+
+This is an important validation result because it shows that the pilot regime story is not only descriptive, but also supported by a formal probabilistic model.
+
+3. Probability ranking and near-spike behaviour
+
+The highest predicted-probability periods included both true spikes and several near-spike periods just below the 250 threshold. This is consistent with the earlier false-positive analysis from the rule-based framework.
+
+This suggests that the logistic model is not simply identifying arbitrary binary labels. It is detecting the same broader stressed-price environment identified earlier in the pilot, where many high-risk periods sit very close to the formal spike threshold.
+
+As a result, the model should be interpreted as estimating the probability of extreme-price realization within a broader stressed regime, rather than as a purely mechanical binary classifier.
+
+4. Threshold trade-off results
+
+Because spike events are rare in the January sample, the classification threshold applied to predicted probabilities was found to be critically important.
+
+At the default threshold of 0.5, the model was highly selective:
+
+spike precision was relatively high
+spike recall was low
+
+This showed that the default threshold was too conservative for the January rare-event setting.
+
+Threshold testing across 0.10, 0.20, 0.30, 0.40, and 0.50 showed a clear precision–recall trade-off:
+
+0.10 threshold: high recall, lower precision
+0.20 threshold: better balance between coverage and selectivity
+0.30 threshold: more balanced precision and recall
+0.50 threshold: too strict for broad spike capture
+
+This result is important because it shows that the logistic framework is flexible. It can be tuned depending on whether the goal is:
+
+broader stress detection
+balanced research classification
+or more selective spike flagging
+5. Comparison with rule-based models
+
+The probabilistic model complements the earlier rule-based approach rather than replacing it.
+
+The rule-based model:
+
+captures broad stressed market states
+achieves very high recall
+but has low precision
+
+The logistic model:
+
+produces more selective predictions
+materially improves precision
+but captures fewer spikes at higher thresholds
+
+This distinction is useful for research interpretation.
+
+It suggests that the two modelling approaches operate at different levels:
+
+the rule-based framework acts as a stressed-regime detector
+the logistic regression model acts as a sharper spike-probability filter
+
+This layered interpretation is particularly promising for later quantitative trading work, where regime identification and event-probability estimation can play different roles.
+
+6. Pilot conclusion
+
+The January 2023 logistic regression stage successfully provided the first formal probabilistic confirmation of the pilot regime hypothesis.
+
+The main conclusions are:
+
+The signs of the model coefficients strongly support the earlier market-structure interpretation.
+Rare-event threshold choice materially affects classification behaviour.
+Logistic regression offers a more selective alternative to rule-based filtering.
+The strongest research value may come from combining the broad regime filter with a sharper probabilistic model.
+
+Overall, the probabilistic modelling stage strengthens the pilot by showing that the January spike environment can be described not only through rules and conditional probabilities, but also through a formal statistical probability model.

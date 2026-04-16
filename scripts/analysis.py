@@ -1,5 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
 
 def run_basic_analysis(df_master):
 
@@ -385,6 +387,143 @@ def run_basic_analysis(df_master):
             print("Periods meeting condition:", total_condition_periods)
             print("Spike periods within condition:", spike_given_condition)
             print("P(spike | condition):", round(probability, 4))
+        
+        print("\nCOMBINED CONDITIONAL SPIKE PROBABILITY ANALYSIS")
+        spike_flag = df_master["systemSellPrice"] >= 250
+        hour = df_master["startTime"].dt.hour
+        
+        combined_conditions = {
+            "imbalance_gt_150_and_gas_gt_15000":
+            (df_master["netImbalanceVolume"] > 150) & (df_master["gas_gen"] > 15000),
+            
+            "wind_lt_8000_and_gas_gt_15000":
+            (df_master["wind_gen"] < 8000) & (df_master["gas_gen"] > 15000),
+            
+            "imbalance_gt_150_and_wind_lt_8000":
+            (df_master["netImbalanceVolume"] > 150) & (df_master["wind_gen"] < 8000),
+            
+            "imbalance_gt_150_and_hour_16_to_19":
+            (df_master["netImbalanceVolume"] > 150) & (hour >= 16) & (hour <= 19),
+            
+            "wind_lt_8000_and_hour_16_to_19":
+            (df_master["wind_gen"] < 8000) & (hour >= 16) & (hour <= 19),
+            
+            "gas_gt_15000_and_hour_16_to_19":
+            (df_master["gas_gen"] > 15000) & (hour >= 16) & (hour <= 19),
+        }
+        
+        for name, condition in combined_conditions.items():
+            total_condition_periods = condition.sum()
+            spike_given_condition = (spike_flag & condition).sum()
+            probability = spike_given_condition / total_condition_periods if total_condition_periods > 0 else 0
+            
+            print(f"\nCondition: {name}")
+            print("Periods meeting condition:", total_condition_periods)
+            print("Spike periods within condition:", spike_given_condition)
+            print("P(spike | combined condition):", round(probability, 4))
+        
+        print("\nTRIPLE-CONDITION SPIKE PROBABILITY ANALYSIS")
+        spike_flag = df_master["systemSellPrice"] >= 250
+        hour = df_master["startTime"].dt.hour
+        
+        triple_conditions = {
+            "imbalance_gt_150_and_wind_lt_8000_and_hour_16_to_19":
+            (df_master["netImbalanceVolume"] > 150) &
+            (df_master["wind_gen"] < 8000) &
+            (hour >= 16) & (hour <= 19),
+            
+            "imbalance_gt_150_and_gas_gt_15000_and_hour_16_to_19":
+            (df_master["netImbalanceVolume"] > 150) &
+            (df_master["gas_gen"] > 15000) &
+            (hour >= 16) & (hour <= 19),
+            
+            "wind_lt_8000_and_gas_gt_15000_and_hour_16_to_19":
+            (df_master["wind_gen"] < 8000) &
+            (df_master["gas_gen"] > 15000) &
+            (hour >= 16) & (hour <= 19),
+            
+            "imbalance_gt_150_and_wind_lt_8000_and_gas_gt_15000":
+            (df_master["netImbalanceVolume"] > 150) &
+            (df_master["wind_gen"] < 8000) &
+            (df_master["gas_gen"] > 15000),
+        }
+        
+        for name, condition in triple_conditions.items():
+            total_condition_periods = condition.sum()
+            spike_given_condition = (spike_flag & condition).sum()
+            probability = spike_given_condition / total_condition_periods if total_condition_periods > 0 else 0
+            
+            print(f"\nCondition: {name}")
+            print("Periods meeting condition:", total_condition_periods)
+            print("Spike periods within condition:", spike_given_condition)
+            print("P(spike | triple condition):", round(probability, 4))
+
+        print("\nLOGISTIC REGRESSION: SPIKE PROBABILITY MODEL")
+        # target
+        df_logit = df_master.copy()
+        df_logit["spike_flag"] = (df_logit["systemSellPrice"] >= 250).astype(int)
+        df_logit["hour"] = df_logit["startTime"].dt.hour
+        
+        # features
+        feature_cols = ["netImbalanceVolume", "wind_gen", "gas_gen", "hour"]
+        X = df_logit[feature_cols]
+        y = df_logit["spike_flag"]
+        
+        # fit model
+        logit_model = LogisticRegression(max_iter=1000)
+        logit_model.fit(X, y)
+        
+        # coefficients
+        coef_table = pd.DataFrame({
+            "feature": feature_cols,
+            "coefficient": logit_model.coef_[0]
+        })
+        
+        print("\nModel coefficients:")
+        print(coef_table)
+        
+        # predicted probabilities
+        df_logit["predicted_spike_probability"] = logit_model.predict_proba(X)[:, 1]
+        print("\nAverage predicted spike probability:")
+        print(round(df_logit["predicted_spike_probability"].mean(), 4))
+        
+        print("\nTop 10 periods by predicted spike probability:")
+        print(
+            df_logit.sort_values("predicted_spike_probability", ascending=False)[[
+                "startTime",
+                "systemSellPrice",
+                "netImbalanceVolume",
+                "wind_gen",
+                "gas_gen",
+                "hour",
+                "predicted_spike_probability"
+            ]].head(10)
+        )
+        
+        # optional binary prediction at 0.5 threshold
+        df_logit["predicted_spike_class"] = (df_logit["predicted_spike_probability"] >= 0.5).astype(int)
+        print("\nConfusion matrix at 0.5 probability threshold:")
+        print(confusion_matrix(y, df_logit["predicted_spike_class"]))
+        print("\nClassification report at 0.5 probability threshold:")
+        print(classification_report(y, df_logit["predicted_spike_class"], digits=3))
+
+        print("\nLOGISTIC REGRESSION THRESHOLD TEST")
+        thresholds = [0.10, 0.20, 0.30, 0.40, 0.50]
+        
+        for threshold in thresholds:
+            predicted_class = (df_logit["predicted_spike_probability"] >= threshold).astype(int)
+            cm = confusion_matrix(y, predicted_class)
+            tn, fp, fn, tp = cm.ravel()
+            precision = tp / (tp + fp) if (tp + fp) > 0 else 0
+            recall = tp / (tp + fn) if (tp + fn) > 0 else 0
+            
+            print(f"\nThreshold: {threshold}")
+            print("True Positives:", tp)
+            print("False Positives:", fp)
+            print("False Negatives:", fn)
+            print("True Negatives:", tn)
+            print("Precision:", round(precision, 4))
+            print("Recall:", round(recall, 4))
     
      # ==============================
      # # STEP 8 — VISUAL ANALYSIS

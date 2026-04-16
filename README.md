@@ -247,4 +247,8 @@ Notes
 
 This repository is being developed as a research-first project. The emphasis is currently on interpretable market understanding, robust methodology, and regime-based analysis rather than immediate black-box forecasting.
 
+<<<<<<< HEAD
 The long-term objective is to build a rigorous foundation for quantitative power market research and trading analysis in the GB market.
+=======
+The long-term objective is to build a rigorous foundation for quantitative power market research and trading analysis in the GB market.
+>>>>>>> 8f8e677 (Add January pilot probabilistic modelling and logistic regression analysis)

@@ -534,3 +534,138 @@ Lower wind clearly matters, and more severe wind weakness raises spike risk furt
 Q: Why is this important?
 
 Because it moves your paper from “correlation” to measurable event-risk analysis.
+
+Q: Why are combined conditions stronger than single conditions?
+
+Because spikes usually happen when several stress factors occur together, not when only one variable is unusual.
+
+Q: What would be a strong result?
+
+If some combined conditions produce spike probabilities much higher than the single-condition values of around 10–11%.
+
+Small Q&A
+Q: What is the main lesson here?
+
+Spikes are much more likely when multiple stress factors align.
+
+Q: Which combination is strongest?
+
+wind < 8000 and hour 16 to 19 with spike probability 38.82%.
+
+Q: Why is this better than single-condition analysis?
+
+Because it shows that the market reacts most strongly to interactions, not isolated variables.
+
+Q: Is this strong enough for the paper?
+
+Yes. This is one of the first clearly strong mathematical results in your pilot.
+
+Small Q&A
+Q: Does spike mean price jump?
+
+Not in the current study. Right now it means price is in an extreme high level.
+
+Q: How did we mark a spike in the data?
+
+By checking whether systemSellPrice >= 250 for each half-hour row.
+
+Q: Are we studying jump behaviour yet?
+
+No. We are studying extreme-price behaviour.
+
+Q: Can a non-spike still be expensive?
+
+Yes. A price like 249 is still very expensive, just below the chosen threshold
+
+Small Q&A
+Q: What are we measuring here?
+
+The chance of a spike when three stress conditions are all true at once.
+
+Q: What would be a strong result?
+
+If spike probability rises much higher than the double-condition values, because that would support a tightly defined high-risk regime.
+
+Q: What is the strongest regime so far?
+
+imbalance > 150 and wind < 8000 and hour 16 to 19
+
+Q: Why is this such a big result?
+
+Because spike probability rises from a baseline of 4.72% to 82.76% under that triple condition.
+
+Q: What does this tell us about gas?
+
+Gas matters, but in this January pilot, the strongest sharpening seems to come from low wind and evening timing combined with imbalance.
+
+Q: Is this enough to prove the market rule?
+
+Not yet. It is strong pilot evidence that must later be tested on larger samples.
+
+Q: Is this already paper-quality writing?
+
+It is a strong draft section for the paper, but later we can tighten the wording further into formal academic style.
+
+Q: What is the main contribution of this pilot?
+
+It shows that GB balancing spikes are interaction-driven and regime-based, not well explained by a single factor.
+
+Q: What comes next after this section?
+
+Either logistic regression on January as the next mathematical model, or scaling this exact framework to full 2023.
+
+Q: Is sklearn different from scikit-learn?
+
+The package is called scikit-learn, but you import it in Python as sklearn.
+
+Q: Is the code wrong?
+
+No, the code is fine. The package is just missing.
+
+Q: What do I do after installing it?
+
+Run the same pipeline again and send me the logistic regression output.
+
+Q: Is this logistic regression result good?
+
+Yes. It is a strong first formal model because the coefficients make market sense and the model is much more selective than the rule-based filters.
+
+Q: Why is recall so low?
+
+Because at a 0.5 threshold, the model only labels a period as a spike when it is very confident.
+
+Q: Why is precision much higher than before?
+
+Because the logistic model is not flagging broad stress regimes as aggressively as the rule-based models.
+
+Q: What is the most important success here?
+
+The model confirms the regime logic mathematically with the correct coefficient signs.
+
+Q: Are we retraining the model?
+
+No. Same model, different threshold.
+
+Q: What would be a good result?
+
+Usually, lower thresholds should increase recall, while higher thresholds should improve precision.
+
+Q: Why is this important for the paper?
+
+Because it shows how a formal probabilistic model can be tuned depending on whether the goal is broader detection or stricter signal quality.
+
+Q: Why is 0.5 not good here?
+
+Because spikes are rare, so demanding a 50% probability is too strict.
+
+Q: Which threshold looks best?
+
+For the pilot, 0.20 and 0.30 look the most useful.
+
+Q: What is the biggest gain from logistic regression?
+
+Much better precision than the rule-based models.
+
+Q: What is the biggest loss?
+
+It does not catch as many spikes as the broad rule-based regime filter.
