@@ -50,10 +50,10 @@ def process_fuel_data(df):
         ]
     ].copy()
 
-    df_clean = df_clean[
-        (df_clean["startTime"] >= "2023-01-01") &
-        (df_clean["startTime"] < "2023-02-01")
-    ].copy()
+    #df_clean = df_clean[
+        #(df_clean["startTime"] >= "2023-01-01") &
+        #(df_clean["startTime"] < "2023-02-01")
+    #].copy()
 
     return df_clean
 

@@ -436,6 +436,60 @@ Small research note
 
 Triple-condition probability analysis tests whether extreme prices arise most strongly when multiple market stresses and timing effects occur simultaneously. This is often closer to real power-market behaviour than single-factor analysis.
 
+Research note
+
+The regime structure identified in the January 2023 pilot generalizes well to the full-year 2023 sample. Signal periods and spike periods remain clearly distinguishable from the unconditional market baseline by higher prices, more positive imbalance, lower wind generation, and higher gas generation.
+
+Research note
+
+Spike frequency in full-year 2023 is materially lower than in the January pilot sample, indicating that January represented a relatively spike-rich stress window rather than an average month. This strengthens the value of scaling from pilot analysis to full-year validation.
+
+Research note
+
+The full-year 2023 summary provides the first strong evidence that the regime-based framework is not merely month-specific, but may reflect a more persistent structural feature of GB balancing price behaviour.
+
+The January pilot suggested a broad multi-factor stress mechanism, while full-year 2023 results show that very high gas generation is the strongest single-condition indicator of spike risk, with imbalance also playing a major role.
+
+Important nuance about wind
+
+The wind conditions still matter, but not strongly enough on their own across the whole year.
+
+That likely means:
+
+low wind is an important supporting condition
+but its strongest effect may appear in combination with:
+time-of-day
+imbalance
+gas
+
+So wind may be more powerful in interactions than as a standalone full-year variable.
+
+That is actually very plausible in power markets.
+
+Research note
+
+The unconditional full-year 2023 spike probability is approximately 0.69%, much lower than in the January pilot. This confirms that January was a spike-rich pilot window rather than a representative spike frequency for the whole year.
+
+Research note
+
+Across the full-year sample, gas > 15000 is the strongest single-condition spike indicator, raising spike probability to 2.69%, or nearly four times the full-year baseline.
+
+Research note
+
+Imbalance remains an important spike driver at full-year scale, while wind appears weaker as a standalone predictor and may play a more important role through interaction effects.
+
+Research note
+
+Full-year 2023 triple-condition analysis shows that spike risk increases sharply when multiple stress conditions align. The strongest full-year regime is imbalance > 150, gas > 15000, and hour 16 to 19, with a spike probability of 11.8%.
+
+Research note
+
+This result indicates that evening timing acts as a strong conditioning factor, materially amplifying the spike risk associated with system shortness and thermal-stack stress.
+
+Research note
+
+Compared with the January pilot, the full-year sample places relatively greater emphasis on gas-driven structural scarcity, while still confirming the importance of interaction effects and time-of-day concentration.
+
 Group 1 — Moderate imbalance spikes
 
 Examples:
@@ -764,6 +818,14 @@ Research note
 
 The logistic model therefore complements the earlier rule-based analysis: rule-based methods were broad and high-recall, while logistic regression is narrower and higher-precision.
 In rare-event modelling, the classification threshold matters as much as the model itself. A 0.5 cutoff is often too conservative for rare spikes, so threshold testing is needed to understand the precision–recall trade-off.
+
+Small research note
+
+The 2023 full-year merged dataset is near-complete, with only 8 missing half-hour periods out of 17,520 and no duplicate timestamps. This is sufficiently robust for full-year regime and probabilistic modelling.
+
+The January pilot analysis file has now become too large and mixed for safe extension. For full-year scaling, the correct approach is to temporarily simplify the analysis layer and then rebuild it in modular form once the 2023 framework is validated.
+
+The project has now moved beyond pilot validation. A clean full-year 2023 dataset has been constructed and validated, which means the next stage is to test whether the January regime structure generalizes to the full-year sample.
 
 You now have two layers of modelling:
 

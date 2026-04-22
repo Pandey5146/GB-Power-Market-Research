@@ -95,7 +95,7 @@ def run_data_pipeline():
     print("Pipeline started")
 
     start_date = "2023-01-01"
-    end_date = "2023-01-31"
+    end_date = "2023-12-31"
 
     # ==============================
     # STEP 1 — FUEL DATA
@@ -111,7 +111,7 @@ def run_data_pipeline():
     print(df_clean.head())
     print(df_clean.isna().sum())
 
-    df_clean.to_csv("data/processed/fuel_mix_2023_january.csv", index=False)
+    df_clean.to_csv("data/processed/fuel_mix_2023_full_year.csv", index=False)
 
     # ==============================
     # STEP 2 — PRICE DATA
@@ -140,11 +140,12 @@ def run_data_pipeline():
     print("Min:", df_master["startTime"].min())
     print("Max:", df_master["startTime"].max())
 
-    df_master.to_csv("data/processed/market_master_2023_january.csv", index=False)
+    df_master.to_csv("data/processed/market_master_2023_full_year.csv", index=False)
 
     # ==============================
     # STEP 4 — ANALYSIS
     # ==============================
+    print("\nABOUT TO RUN ANALYSIS")
     run_basic_analysis(df_master)
 
 

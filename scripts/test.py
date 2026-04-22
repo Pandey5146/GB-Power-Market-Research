@@ -1,41 +1,24 @@
 import pandas as pd
 
-df = pd.read_csv("data/processed/market_master_2023_january.csv")
+df = pd.read_csv("data/processed/market_master_2023_full_year.csv")
 df["startTime"] = pd.to_datetime(df["startTime"])
 df = df.sort_values("startTime").reset_index(drop=True)
 
-# define spike
-SPIKE_THRESHOLD = 250
-df["spike"] = (df["systemSellPrice"] > SPIKE_THRESHOLD).astype(int)
+expected_index = pd.date_range(
+    start="2023-01-01 00:00:00+00:00",
+    end="2023-12-31 23:30:00+00:00",
+    freq="30min"
+)
 
-# define simple imbalance rule
-df["imbalance_rule"] = (df["netImbalanceVolume"] > 100).astype(int)
+actual_index = pd.DatetimeIndex(df["startTime"])
 
-# only look at actual spikes
-spikes = df[df["spike"] == 1].copy()
+missing_timestamps = expected_index.difference(actual_index)
+duplicate_timestamps = actual_index[actual_index.duplicated()]
 
-# among spike rows, check whether rule captured them
-captured = spikes[spikes["imbalance_rule"] == 1]
-missed = spikes[spikes["imbalance_rule"] == 0]
+print("Expected rows:", len(expected_index))
+print("Actual rows:", len(df))
+print("Missing rows:", len(missing_timestamps))
+print("Duplicate rows:", len(duplicate_timestamps))
 
-print("Total spikes:", len(spikes))
-print("Captured by imbalance > 100:", len(captured))
-print("Missed by imbalance > 100:", len(missed))
-
-print("\nCaptured spikes:")
-print(captured[[
-    "startTime",
-    "systemSellPrice",
-    "netImbalanceVolume",
-    "wind_gen",
-    "gas_gen"
-]])
-
-print("\nMissed spikes:")
-print(missed[[
-    "startTime",
-    "systemSellPrice",
-    "netImbalanceVolume",
-    "wind_gen",
-    "gas_gen"
-]])
+print("\nFirst 20 missing timestamps:")
+print(missing_timestamps[:20])

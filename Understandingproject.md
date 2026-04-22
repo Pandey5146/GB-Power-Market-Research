@@ -669,3 +669,40 @@ Much better precision than the rule-based models.
 Q: What is the biggest loss?
 
 It does not catch as many spikes as the broad rule-based regime filter.
+
+Q: Is this a good result?
+
+Yes. Very good. The regime logic survived the move from one month to the full year.
+
+Q: What is the most important takeaway?
+
+The January regime structure appears real, not accidental.
+
+Q: What changed from January?
+
+Spike frequency is much lower in the full year, which means January was unusually stress-heavy.
+
+Q: Why are these percentages much lower than January?
+
+Because full-year 2023 has a much lower overall spike frequency than the January pilot.
+
+Q: What is the most important full-year result here?
+
+Very high gas generation is the strongest single-condition spike signal.
+
+Q: Does wind stop mattering?
+
+No. It matters less as a standalone condition, but likely matters more in combined conditions.
+
+Small Q&A
+Q: What is the strongest full-year regime?
+
+High imbalance + high gas + hour 16 to 19.
+
+Q: Is this stronger than January?
+
+Not in raw probability terms, because January was a stress-heavy month. But for the full year, this is the strongest and most robust annual regime result.
+
+Q: What is the biggest new lesson?
+
+Evening timing greatly sharpens spike risk when combined with imbalance and gas stress.
