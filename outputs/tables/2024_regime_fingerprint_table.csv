@@ -1,0 +1,5 @@
+regime_group,rows,spikes,spike_probability,avg_price,avg_imbalance,avg_wind,avg_gas,strongest_single_condition,strongest_combined_condition,strongest_triple_condition,interpretation
+apr_sep_quiet,8784,0,0.0,66.0372,-26.6825,6169.1697,6289.3763,,,,Extended low-stress regime with no spike activity
+dec_stress,1488,14,0.0094,86.2649,-38.5761,10742.4254,10187.8145,,,,Main annual stress month in 2024 with highest spike concentration
+oct_nov_transition,2928,10,0.0034,87.5927,-27.8689,7667.1732,11268.7298,,,,Transition regime where spike activity re-emerges
+q1_quiet,4368,0,0.0,65.3282,-2.8579,9474.457,10109.9116,,,,Quiet opening quarter with no spike activity

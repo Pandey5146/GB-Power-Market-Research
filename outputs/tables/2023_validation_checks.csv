@@ -1,0 +1,10 @@
+check,value
+total_rows,17512
+duplicate_timestamps,0
+min_date,2023-01-01 00:00:00+00:00
+max_date,2023-12-31 23:30:00+00:00
+total_spikes,120
+sum_monthly_rows,17512
+sum_monthly_spikes,120
+sum_regime_rows,17512
+sum_regime_spikes,120

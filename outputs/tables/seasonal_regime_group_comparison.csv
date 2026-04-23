@@ -1,0 +1,5 @@
+regime_group,rows,spikes,spike_probability,avg_price,avg_imbalance,avg_wind,avg_gas
+apr_sep_quiet,8783,1,0.0001,81.5121,-45.9212,5391.412,9867.0607
+dec_windy,1487,2,0.0013,69.0231,-45.602,11384.4707,9382.1392
+oct_nov_transition,2928,6,0.002,90.6703,17.9536,8604.2715,9574.681
+q1_stress,4314,111,0.0257,132.5373,3.6,9242.3197,11016.175

@@ -1,0 +1,5 @@
+regime_group,rows,spikes,spike_probability,avg_price,avg_imbalance,avg_wind,avg_gas,strongest_single_condition,strongest_combined_condition,strongest_triple_condition,interpretation
+apr_sep_quiet,8783,1,0.0001,81.5121,-45.9212,5391.412,9867.0607,,,,Low-stress regime with near-zero spike activity despite frequent low-wind periods
+dec_windy,1487,2,0.0013,69.0231,-45.602,11384.4707,9382.1392,,,,High-wind winter regime with low average price and low spike frequency
+oct_nov_transition,2928,6,0.002,90.6703,17.9536,8604.2715,9574.681,,,,Moderate transition regime with limited spike re-emergence
+q1_stress,4314,111,0.0257,132.5373,3.6,9242.3197,11016.175,gas_gt_15000,wind_lt_8000_and_hour_16_to_19,imbalance_gt_150_and_wind_lt_8000_and_hour_16_to_19,Main annual stress regime with concentrated winter spike activity

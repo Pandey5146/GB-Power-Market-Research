@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 from scripts.data_process import process_fuel_data, process_price_data, merge_data
-from scripts.analysis import run_basic_analysis
+#from scripts.analysis import run_basic_analysis
 
 
 def generate_date_range(start_date, end_date):
@@ -94,8 +94,8 @@ def fetch_fuel_data_range(start_date, end_date):
 def run_data_pipeline():
     print("Pipeline started")
 
-    start_date = "2023-01-01"
-    end_date = "2023-12-31"
+    start_date = "2024-01-01"
+    end_date = "2024-12-31"
 
     # ==============================
     # STEP 1 — FUEL DATA
@@ -111,7 +111,7 @@ def run_data_pipeline():
     print(df_clean.head())
     print(df_clean.isna().sum())
 
-    df_clean.to_csv("data/processed/fuel_mix_2023_full_year.csv", index=False)
+    df_clean.to_csv("data/processed/fuel_mix_2024_full_year.csv", index=False)
 
     # ==============================
     # STEP 2 — PRICE DATA
@@ -140,13 +140,13 @@ def run_data_pipeline():
     print("Min:", df_master["startTime"].min())
     print("Max:", df_master["startTime"].max())
 
-    df_master.to_csv("data/processed/market_master_2023_full_year.csv", index=False)
+    df_master.to_csv("data/processed/market_master_2024_full_year.csv", index=False)
 
     # ==============================
     # STEP 4 — ANALYSIS
     # ==============================
     print("\nABOUT TO RUN ANALYSIS")
-    run_basic_analysis(df_master)
+    #run_basic_analysis(df_master)
 
 
 if __name__ == "__main__":

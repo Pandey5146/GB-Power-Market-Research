@@ -706,3 +706,143 @@ Not in raw probability terms, because January was a stress-heavy month. But for 
 Q: What is the biggest new lesson?
 
 Evening timing greatly sharpens spike risk when combined with imbalance and gas stress.
+
+Small Q&A
+Q: What is the biggest result from this table?
+
+January was highly unusual, and 2023 is clearly split into very different monthly regimes.
+
+Q: Does this help the paper?
+
+A lot. It adds seasonality and regime evolution across the year.
+
+Q: Does this change our modelling logic?
+
+Yes. It suggests we should not rely only on one full-year aggregate model.
+
+Q: What is the strongest combined condition inside Q1?
+
+wind < 8000 and hour 16 to 19 with spike probability 19.81%.
+
+Q: What does that mean in plain English?
+
+In Q1, when wind is weak and the market is in the late afternoon/evening window, the chance of a spike becomes much higher.
+
+Q: Why is time-of-day appearing again and again?
+
+Because late afternoon/evening seems to be the window where broader market stress is most likely to turn into an actual extreme price event.
+
+Q: Does this mean wind is more important than gas in Q1?
+
+As a combined condition with timing, yes, wind looks especially powerful in Q1.
+But as a single condition, gas was still slightly stronger.
+So the correct statement is:
+
+gas is very important as a standalone indicator
+wind becomes very powerful when combined with timing
+Q: What is the difference between full-year and Q1 results?
+full-year 2023 strongest combined conditions leaned more toward gas + timing and imbalance + gas
+Q1 strongest combined condition leaned toward low wind + timing
+
+This suggests that the annual market structure and the concentrated winter stress regime are not identical.
+
+Q: Why is this useful for Paper 1?
+
+Because it shows that:
+
+the market is regime-dependent
+the dominant interaction changes depending on the regime
+a single fixed story for the whole year would miss that nuance
+Q: What is the deeper takeaway?
+
+The market is not driven by one variable.
+The drivers interact, and the important interaction can change by season/regime.
+
+Q: What is the strongest Q1 triple condition?
+
+imbalance > 150 and wind < 8000 and hour 16 to 19
+
+Q: What does 34.06% mean in plain English?
+
+In Q1, when those three conditions happen together, about 1 in 3 such half-hours becomes a spike.
+
+Q: Why is this stronger than the gas-based Q1 triple condition?
+
+Because in the concentrated winter stress regime, weak wind seems to play a bigger role when combined with imbalance and evening timing.
+
+Q: Does gas stop mattering in Q1?
+
+No. Gas is still very important, but the sharpest Q1 configuration is the wind-based triple condition.
+
+Q: What is the deeper takeaway?
+
+The strongest spike mechanism is not constant across the whole year. It changes depending on the regime.
+
+Small Q&A
+Q: What is the most important row in this table?
+
+q1_stress, because it contains almost all the annual spike behaviour and the strongest identified regime mechanism.
+
+Q: What is the strongest conceptual result from the quiet regime row?
+
+That frequent low-wind periods can exist without spike formation, so wind weakness alone does not explain extreme prices.
+
+Q: Why is this table strong for Paper 1?
+
+Because it moves the work from isolated calculations into a structured market-regime framework.
+
+Q: Are there already papers close to this area?
+Yes. Especially on GB imbalance forecasting, balancing-cost effects, and imbalance-price drivers.
+
+Q: Is your exact approach already crowded?
+Less so. The literature looks much thinner once you narrow it to GB balancing-market + regime structure + multi-year interaction analysis + model suitability + stress-index direction.
+
+Q: What would make it ordinary?
+Only doing correlations, some spike rules, and one forecasting model.
+
+Q: What would make it outstanding?
+Building a regime atlas / fingerprint framework for 2023–2025 and showing that the dominant spike mechanism changes by regime and year, then later formalizing that into a GB balancing stress index.
+
+Q: What is the biggest 2024 result?
+
+There are no spikes from January to September, and the year’s stress is concentrated in Q4.
+
+Q: Why is this important for Paper 1?
+
+Because it proves the market’s stress structure changes across years, not just across months.
+
+Q: Is 2024 less stressful than 2023?
+
+Yes, clearly, at least by spike frequency.
+
+Q: What is the deepest takeaway so far?
+
+The dominant stress window in GB balancing prices is not fixed. It can shift from Q1 in one year to Q4 in another.
+
+Q: What is the biggest 2024 result?
+
+There is no Q1 spike regime at all. Stress appears mainly in October–December.
+
+Q: Why is this important?
+
+Because it proves the market’s dominant stress window is not fixed from year to year.
+
+Q: What does this add to Paper 1?
+
+It gives you a real cross-year structural comparison, not just one-year description.
+
+Q: What is the biggest result from this table?
+
+The main stress regime changed from Q1 in 2023 to December/Q4 in 2024.
+
+Q: Does this mean the market has no stable structure?
+
+No. It has recurring regime categories, but the timing and severity of those regimes can shift.
+
+Q: What is the strongest contrast?
+
+2023 q1_stress versus 2024 q1_quiet.
+
+Q: Why is this important for Paper 1?
+
+Because it turns the paper from a one-year story into a true cross-year structural regime study.

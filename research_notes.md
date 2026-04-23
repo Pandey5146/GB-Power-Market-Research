@@ -490,6 +490,164 @@ Research note
 
 Compared with the January pilot, the full-year sample places relatively greater emphasis on gas-driven structural scarcity, while still confirming the importance of interaction effects and time-of-day concentration.
 
+Research note
+
+Monthly 2023 analysis shows that extreme-price behaviour was highly concentrated in Q1, especially January, with a sharp decline in spike frequency from April onward.
+
+Research note
+
+The 2023 market is better understood as a sequence of monthly stress regimes rather than a single homogeneous annual sample.
+
+Research note
+
+January 2023 should be treated as a stress-rich pilot month, while April to September represent a much quieter low-spike regime. This strengthens the case for regime-dependent modelling and seasonal interpretation.
+Most important monthly pattern
+
+You can now describe 2023 as three broad seasonal regimes:
+
+Regime A — Winter/Q1 stress regime
+January, February, March
+highest prices
+highest spike probabilities
+relatively high gas
+still meaningful wind, but not enough to suppress stress
+Regime B — Spring/Summer low-stress regime
+April to September
+almost no spikes
+much lower average prices
+more negative average imbalance in several months
+Regime C — Autumn transition regime
+October and November
+some spikes return
+prices rise relative to summer
+stress returns, but not like Q1
+
+December sits somewhat separately because it is:
+
+winter calendar-wise
+but high-wind and low-price structurally
+
+Small research notes
+Research note
+
+Monthly 2023 analysis shows that extreme-price activity was highly concentrated in Q1, especially January, while April to September formed a much quieter low-spike regime.
+
+Research note
+
+The year 2023 is better understood as a sequence of monthly market environments rather than a single stationary process. This supports a regime-based research framework.
+
+Research note
+
+Monthly averages alone do not fully explain spike realization, indicating that within-month event structure, timing, and interaction effects remain important even after seasonal regime classification.
+
+Research note
+
+Seasonal grouping confirms that Q1 2023 was the dominant stress regime, accounting for 111 of the 120 annual spikes.
+
+Research note
+
+April to September formed a very quiet regime with only one spike across 8783 half-hour periods, indicating a structurally different low-risk market environment.
+
+Research note
+
+December behaved as a distinct wind-heavy low-price regime, despite being a winter month, highlighting the importance of generation mix rather than calendar season alone.
+
+Research note
+
+The Q1 stress regime is not characterized by the lowest wind conditions. In fact, the quieter April–September regime shows a much higher share of half-hours with wind < 8000, yet almost no extreme spikes.
+
+Research note
+
+This indicates that weak wind alone is insufficient to explain extreme price formation. The stronger distinguishing features of the Q1 stress regime are a higher incidence of large positive imbalance and materially greater thermal-stack stress, reflected in the higher share of gas > 15000.
+
+Research note
+
+The result strengthens the interaction-based interpretation of GB balancing prices and argues against one-factor explanations of spike behaviour.
+Research note
+
+Within the Q1 stress regime, the strongest single-condition spike indicators are gas > 15000 and imbalance > 150, with conditional spike probabilities above 6%.
+
+Research note
+
+Wind remains relevant, but its standalone spike signal is weaker than the strongest gas- and imbalance-based conditions, reinforcing the view that weak wind is more important as part of an interacting stress structure than as a sole driver.
+esearch note
+
+Within the Q1 stress regime, the strongest combined-condition spike signal is wind < 8000 and hour 16 to 19, with a conditional spike probability of 19.81%.
+
+Research note
+
+The strongest Q1 pairs all include the late afternoon / evening window, confirming time-of-day as a major conditioning factor in spike realization.
+
+Research note
+
+The Q1 results differ subtly from the full-year annual structure, suggesting that low-wind conditions play a more prominent role inside concentrated winter stress regimes than they do across the broader annual sample.
+Research note
+
+Within the Q1 stress regime, the late afternoon/evening window acts as a strong conditioning factor, sharply increasing spike probability when combined with weak wind, high imbalance, or high gas.
+
+Research note
+
+The strongest Q1 pair differs from the strongest full-year pair, which supports the argument that GB balancing price formation is regime-dependent rather than fully stable across the year.
+This is one of the strongest results in the whole project so far because it supports all of your core ideas:
+
+the market is regime-dependent
+drivers are interaction-based
+time-of-day is a major amplifier
+the strongest stress mechanism changes by regime
+
+That is much stronger than just saying:
+
+“gas matters”
+“wind matters”
+“imbalance matters”
+
+Now you can say:
+
+In the Q1 stress regime, extreme-price formation is most sharply associated with the joint occurrence of strong positive imbalance, weak wind output, and late afternoon/evening timing.
+
+Research note
+
+Within the Q1 stress regime, the strongest triple-condition spike configuration is imbalance > 150, wind < 8000, and hour 16 to 19, producing a conditional spike probability of 34.06%.
+
+Research note
+
+This result suggests that winter stress spikes are best understood as a joint product of system shortness, renewable weakness, and vulnerable evening timing.
+
+Research note
+
+The strongest Q1 triple condition differs from the strongest full-year triple condition, reinforcing the conclusion that GB balancing price formation is regime-dependent and seasonally variable
+
+Q: Why are we doing this now?
+
+Because this becomes the template table for 2024 and 2025 too.
+
+Q: Is this final?
+
+Not fully. This is the first structured fingerprint table. We will refine it.
+
+Q: Why only Q1 has strongest-condition fields filled?
+
+Because that is the regime we have analyzed deeply so far. We will fill the others as we progress.
+
+Research note
+
+The 2023 regime fingerprint table confirms that the GB balancing market in 2023 is best understood as a set of distinct seasonal regimes rather than a single annual process.
+
+Research note
+
+Q1 is the main annual stress regime and contains the overwhelming majority of annual spikes, while April to September forms a structurally quiet low-risk regime.
+
+Research note
+
+The strongest Q1 spike mechanism is not a single variable but an interacting regime defined by positive imbalance, weak wind, and late afternoon/evening timing.
+Small Q&A
+Q: Do we need timestamp validation for 2024?
+
+Not now. The row count is exactly complete for a leap year.
+
+Q: What is the next research question?
+
+Whether 2024 has the same monthly stress structure as 2023 or a different one.
 Group 1 — Moderate imbalance spikes
 
 Examples:
@@ -1344,8 +1502,37 @@ imbalance, wind, gas, and time-of-day interact in meaningful ways
 the strongest spike conditions arise when multiple stress factors align
 
 This provides a strong foundation for the next stage of the project, which should extend the same methodology to broader historical samples and test whether the January regime structure remains stable across 2023, 2024, and 2025.
+Research note
 
+The monthly 2024 regime table shows a sharply different annual structure from 2023, with no spike activity from January to September and stress concentrated instead in Q4.
+
+Research note
+
+This indicates that GB balancing-market stress is not only regime-dependent within a year, but also temporally variable across years, with the seasonal timing of stress shifting materially between 2023 and 2024.
+
+Research note
+
+December 2024 emerges as the main stress month of the year, contrasting strongly with January 2023 as the dominant stress month in the previous year.
 January 2023 Probabilistic Modelling Findings
+
+Research note
+
+The 2024 regime fingerprint table confirms that the annual stress structure is materially different from 2023. There is no Q1 stress regime in 2024; instead, spike activity is concentrated in late-year transition and December stress periods.
+
+Research note
+
+This supports the view that GB balancing-market stress is not only regime-dependent within a year, but also time-shifting across years.
+Research note
+
+The cross-year regime fingerprint comparison shows that the dominant annual stress window shifted from Q1 in 2023 to Q4, especially December, in 2024.
+
+Research note
+
+The main 2024 stress regime was materially weaker than the main 2023 stress regime, indicating that annual spike intensity as well as seasonal timing can vary substantially across years.
+
+Research note
+
+The presence of recurring broad regimes such as quiet, transition, and stress periods suggests structural regularity, but the internal composition of those regimes remains year-dependent.
 1. Introduction
 
 Following the descriptive and rule-based analysis of the January 2023 pilot sample, a formal probabilistic modelling stage was introduced using logistic regression. The purpose of this stage was to move beyond threshold rules and estimate spike probability directly as a function of key market variables.

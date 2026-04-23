@@ -1,137 +1,57 @@
 import pandas as pd
 
-def run_basic_analysis(df_master):
-    print("\nFULL 2023 BASIC SUMMARY")
+# 2023
+df_2023 = pd.read_csv("data/processed/market_master_2023_full_year.csv")
+df_2023["startTime"] = pd.to_datetime(df_2023["startTime"])
+df_2023["month"] = df_2023["startTime"].dt.month
+df_2023["spike_flag"] = (df_2023["systemSellPrice"] >= 250).astype(int)
+df_2023["regime_group"] = "other"
+df_2023.loc[df_2023["month"].isin([1, 2, 3]), "regime_group"] = "q1_stress"
+df_2023.loc[df_2023["month"].isin([4, 5, 6, 7, 8, 9]), "regime_group"] = "apr_sep_quiet"
+df_2023.loc[df_2023["month"].isin([10, 11]), "regime_group"] = "oct_nov_transition"
+df_2023.loc[df_2023["month"].isin([12]), "regime_group"] = "dec_windy"
 
-    df_master["spike_flag"] = (df_master["systemSellPrice"] >= 250).astype(int)
+table_2023 = df_2023.groupby("regime_group").agg(
+    rows=("startTime", "count"),
+    spikes=("spike_flag", "sum"),
+    spike_probability=("spike_flag", "mean"),
+    avg_price=("systemSellPrice", "mean"),
+    avg_imbalance=("netImbalanceVolume", "mean"),
+    avg_wind=("wind_gen", "mean"),
+    avg_gas=("gas_gen", "mean")
+).reset_index()
+table_2023["year"] = 2023
 
-    print("Total rows:", len(df_master))
-    print("Total spikes:", int(df_master["spike_flag"].sum()))
+# 2024
+df_2024 = pd.read_csv("data/processed/market_master_2024_full_year.csv")
+df_2024["startTime"] = pd.to_datetime(df_2024["startTime"])
+df_2024["month"] = df_2024["startTime"].dt.month
+df_2024["spike_flag"] = (df_2024["systemSellPrice"] >= 250).astype(int)
+df_2024["regime_group"] = "other"
+df_2024.loc[df_2024["month"].isin([1, 2, 3]), "regime_group"] = "q1_quiet"
+df_2024.loc[df_2024["month"].isin([4, 5, 6, 7, 8, 9]), "regime_group"] = "apr_sep_quiet"
+df_2024.loc[df_2024["month"].isin([10, 11]), "regime_group"] = "oct_nov_transition"
+df_2024.loc[df_2024["month"].isin([12]), "regime_group"] = "dec_stress"
 
-    middle_rule = (
-        (df_master["netImbalanceVolume"] > 150) |
-        ((df_master["wind_gen"] < 11000) & (df_master["gas_gen"] > 10000))
-    )
+table_2024 = df_2024.groupby("regime_group").agg(
+    rows=("startTime", "count"),
+    spikes=("spike_flag", "sum"),
+    spike_probability=("spike_flag", "mean"),
+    avg_price=("systemSellPrice", "mean"),
+    avg_imbalance=("netImbalanceVolume", "mean"),
+    avg_wind=("wind_gen", "mean"),
+    avg_gas=("gas_gen", "mean")
+).reset_index()
+table_2024["year"] = 2024
 
-    summary_table = pd.DataFrame({
-        "group": ["all_periods", "signal_periods", "spike_periods"],
-        "count": [
-            len(df_master),
-            int(middle_rule.sum()),
-            int(df_master["spike_flag"].sum())
-        ],
-        "avg_price": [
-            df_master["systemSellPrice"].mean(),
-            df_master.loc[middle_rule, "systemSellPrice"].mean(),
-            df_master.loc[df_master["spike_flag"] == 1, "systemSellPrice"].mean()
-        ],
-        "avg_imbalance": [
-            df_master["netImbalanceVolume"].mean(),
-            df_master.loc[middle_rule, "netImbalanceVolume"].mean(),
-            df_master.loc[df_master["spike_flag"] == 1, "netImbalanceVolume"].mean()
-        ],
-        "avg_wind": [
-            df_master["wind_gen"].mean(),
-            df_master.loc[middle_rule, "wind_gen"].mean(),
-            df_master.loc[df_master["spike_flag"] == 1, "wind_gen"].mean()
-        ],
-        "avg_gas": [
-            df_master["gas_gen"].mean(),
-            df_master.loc[middle_rule, "gas_gen"].mean(),
-            df_master.loc[df_master["spike_flag"] == 1, "gas_gen"].mean()
-        ]
-    })
+comparison = pd.concat([table_2023, table_2024], ignore_index=True)
+comparison = comparison[[
+    "year", "regime_group", "rows", "spikes", "spike_probability",
+    "avg_price", "avg_imbalance", "avg_wind", "avg_gas"
+]].round(4)
 
-    print("\nFULL 2023 DRIVER COMPARISON")
-    print(summary_table.round(2))
+comparison.to_csv("outputs/tables/2023_2024_regime_fingerprint_comparison.csv", index=False)
 
-    print("\nFULL 2023 CONDITIONAL SPIKE PROBABILITY ANALYSIS")
-
-    spike_flag = df_master["systemSellPrice"] >= 250
-
-    conditions = {
-        "imbalance_gt_100": df_master["netImbalanceVolume"] > 100,
-        "imbalance_gt_150": df_master["netImbalanceVolume"] > 150,
-        "wind_lt_11000": df_master["wind_gen"] < 11000,
-        "wind_lt_8000": df_master["wind_gen"] < 8000,
-        "gas_gt_10000": df_master["gas_gen"] > 10000,
-        "gas_gt_15000": df_master["gas_gen"] > 15000,
-    }
-
-    for name, condition in conditions.items():
-        total_condition_periods = condition.sum()
-        spike_given_condition = (spike_flag & condition).sum()
-        probability = spike_given_condition / total_condition_periods if total_condition_periods > 0 else 0
-
-        print(f"\nCondition: {name}")
-        print("Periods meeting condition:", int(total_condition_periods))
-        print("Spike periods within condition:", int(spike_given_condition))
-        print("P(spike | condition):", round(probability, 4))
-
-    print("\nFULL 2023 COMBINED CONDITIONAL SPIKE PROBABILITY ANALYSIS")
-
-    hour = df_master["startTime"].dt.hour
-
-    combined_conditions = {
-        "imbalance_gt_150_and_gas_gt_15000":
-            (df_master["netImbalanceVolume"] > 150) & (df_master["gas_gen"] > 15000),
-
-        "wind_lt_8000_and_gas_gt_15000":
-            (df_master["wind_gen"] < 8000) & (df_master["gas_gen"] > 15000),
-
-        "imbalance_gt_150_and_wind_lt_8000":
-            (df_master["netImbalanceVolume"] > 150) & (df_master["wind_gen"] < 8000),
-
-        "imbalance_gt_150_and_hour_16_to_19":
-            (df_master["netImbalanceVolume"] > 150) & (hour >= 16) & (hour <= 19),
-
-        "wind_lt_8000_and_hour_16_to_19":
-            (df_master["wind_gen"] < 8000) & (hour >= 16) & (hour <= 19),
-
-        "gas_gt_15000_and_hour_16_to_19":
-            (df_master["gas_gen"] > 15000) & (hour >= 16) & (hour <= 19),
-    }
-
-    for name, condition in combined_conditions.items():
-        total_condition_periods = condition.sum()
-        spike_given_condition = (spike_flag & condition).sum()
-        probability = spike_given_condition / total_condition_periods if total_condition_periods > 0 else 0
-
-        print(f"\nCondition: {name}")
-        print("Periods meeting condition:", int(total_condition_periods))
-        print("Spike periods within condition:", int(spike_given_condition))
-        print("P(spike | combined condition):", round(probability, 4))
-
-    print("\nFULL 2023 TRIPLE-CONDITION SPIKE PROBABILITY ANALYSIS")
-
-    triple_conditions = {
-        "imbalance_gt_150_and_wind_lt_8000_and_hour_16_to_19":
-            (df_master["netImbalanceVolume"] > 150) &
-            (df_master["wind_gen"] < 8000) &
-            (hour >= 16) & (hour <= 19),
-
-        "imbalance_gt_150_and_gas_gt_15000_and_hour_16_to_19":
-            (df_master["netImbalanceVolume"] > 150) &
-            (df_master["gas_gen"] > 15000) &
-            (hour >= 16) & (hour <= 19),
-
-        "wind_lt_8000_and_gas_gt_15000_and_hour_16_to_19":
-            (df_master["wind_gen"] < 8000) &
-            (df_master["gas_gen"] > 15000) &
-            (hour >= 16) & (hour <= 19),
-
-        "imbalance_gt_150_and_wind_lt_8000_and_gas_gt_15000":
-            (df_master["netImbalanceVolume"] > 150) &
-            (df_master["wind_gen"] < 8000) &
-            (df_master["gas_gen"] > 15000),
-    }
-
-    for name, condition in triple_conditions.items():
-        total_condition_periods = condition.sum()
-        spike_given_condition = (spike_flag & condition).sum()
-        probability = spike_given_condition / total_condition_periods if total_condition_periods > 0 else 0
-
-        print(f"\nCondition: {name}")
-        print("Periods meeting condition:", int(total_condition_periods))
-        print("Spike periods within condition:", int(spike_given_condition))
-        print("P(spike | triple condition):", round(probability, 4))
+print("\n2023 VS 2024 REGIME FINGERPRINT COMPARISON")
+print(comparison)
+print("\nSaved: outputs/tables/2023_2024_regime_fingerprint_comparison.csv")

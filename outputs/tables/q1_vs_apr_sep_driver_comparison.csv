@@ -1,0 +1,3 @@
+regime_group,rows,spikes,spike_probability,share_imbalance_gt_150,share_wind_lt_8000,share_gas_gt_15000,avg_price,avg_imbalance,avg_wind,avg_gas
+apr_sep_quiet,8783,1,0.0001,0.2142,0.783,0.1099,81.5121,-45.9212,5391.412,9867.0607
+q1_stress,4314,111,0.0257,0.3016,0.4386,0.3027,132.5373,3.6,9242.3197,11016.175

@@ -1,0 +1,7 @@
+condition,periods_meeting_condition,spike_periods_within_condition,spike_probability_given_condition
+imbalance_gt_100,1563,93,0.0595
+imbalance_gt_150,1301,79,0.0607
+wind_lt_11000,2671,111,0.0416
+wind_lt_8000,1892,91,0.0481
+gas_gt_10000,2197,101,0.046
+gas_gt_15000,1306,82,0.0628
