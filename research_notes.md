@@ -1533,6 +1533,177 @@ The main 2024 stress regime was materially weaker than the main 2023 stress regi
 Research note
 
 The presence of recurring broad regimes such as quiet, transition, and stress periods suggests structural regularity, but the internal composition of those regimes remains year-dependent.
+
+Research note
+
+In 2024, gas > 15000 is the strongest single-condition spike indicator, with a conditional spike probability of 1.05%, well above all other standalone conditions.
+
+Research note
+
+All 24 observed 2024 spikes occurred under gas > 15000, suggesting that very high thermal-stack stress was a near-universal background feature of spike periods in that year.
+
+Research note
+
+This contrasts with 2023, where the dominant stress mechanism was more clearly tied to a Q1 winter regime and later interaction effects involving low wind and evening timing.
+
+Research note
+
+In 2024, the strongest combined-condition spike signals are imbalance > 150 and gas > 15000 and gas > 15000 and hour 16 to 19, both with conditional spike probabilities of about 1.5%.
+
+Research note
+
+This reinforces the view that 2024 spike formation was more strongly centered on thermal-stack stress than the 2023 Q1 regime, where low wind and evening timing played a more dominant combined role.
+
+Research note
+
+Weak wind remains relevant in 2024, but appears less decisive than very high gas generation as the core stress environment.
+
+Research note
+
+The strongest 2024 triple-condition spike regime is imbalance > 150, gas > 15000, and hour 16 to 19, with a conditional spike probability of 2.29%.
+
+Research note
+
+Unlike 2023 Q1, where weak wind played the leading role in the sharpest triple interaction, the 2024 spike structure is more clearly anchored in thermal-stack stress, with gas > 15000 appearing in all of the strongest triple conditions.
+
+Research note
+
+This suggests that the dominant GB balancing-market spike mechanism is not stable across years: 2023 was more winter-wind-sensitive, while 2024 was more gas-centered and materially less intense.
+
+The GB balancing market has a recurring intra-day stress window in the evening peak, but the severity of that window changes materially across years.
+
+Research note
+
+The 2023–2024 time-band comparison shows that the evening peak is the dominant intra-day stress window in both years, with the highest spike probabilities, highest average prices, strongest positive imbalance, and highest gas generation.
+
+Research note
+
+Although the dangerous time window is structurally stable across years, its intensity is not. Evening-peak spike probability is much higher in 2023 than in 2024, indicating that recurring time-of-day vulnerability is modulated by broader annual regime conditions.
+
+Research note
+
+Night periods in both years show strongly negative average imbalance and near-zero spike activity, suggesting a recurring low-risk system-long environment.
+
+A strong final paper should treat both the spike threshold and the explanatory variable set as methodological choices to be tested, rather than fixed truths. The current framework uses price >= 250 and the core variables of imbalance, wind, and gas as a first structural basis, but later robustness checks should widen both the event definition and the driver set.
+
+Spikes are usually not isolated one-step events. They emerge from a short pre-spike build-up process, but the nature of that build-up differs across years.
+
+Pre-spike build-up analysis shows that both 2023 and 2024 spikes were preceded by progressive tightening over the prior four half-hours, with rising prices, strengthening imbalance, increasing gas generation, and declining wind output.
+
+Research note
+
+The structure of pre-spike tightening differs across years. In 2023, spikes appear more closely associated with stronger imbalance escalation, whereas in 2024 spikes arise within an already extreme low-wind, high-gas environment.
+
+Research note
+
+The final half-hour before the spike is especially important in both years, indicating that spike realization often occurs through a late acceleration phase rather than an entirely abrupt one-period shock.
+
+Near-spikes and spikes do not emerge from completely different worlds.
+
+They often share a common stressed background, but real spikes are distinguished by:
+
+more severe wind weakness,
+more severe gas stress,
+and/or a sharper final escalation in imbalance and price.
+
+Research note
+
+Near-spikes in both years already occur under stressed conditions, indicating that extreme price formation is not a binary transition from normality but an escalation from an already tightened state.
+
+Research note
+
+In 2023, the main separation between spikes and near-spikes is associated with materially lower wind and higher gas in real spike periods, alongside stronger imbalance escalation.
+
+Research note
+
+In 2024, both spikes and near-spikes occur in an already extreme low-wind, high-gas environment, suggesting that the distinction between them is more strongly related to the intensity of final escalation rather than the mere presence of structural stress.
+
+Research note
+
+These results support a layered interpretation of GB balancing stress in which background conditions, amplifiers, and final triggers all play distinct roles.
+
+Extreme balancing-price events in GB are usually not isolated half-hours. In both 2023 and 2024, the majority of spikes occurred as part of clustered sequences, indicating persistence in stressed market states.
+
+Research note
+
+In both 2023 and 2024, most spike periods are clustered rather than isolated, indicating that extreme balancing-price conditions often persist over multiple consecutive settlement periods.
+
+Research note
+
+This suggests that GB balancing stress is not merely episodic but frequently exhibits short-run persistence, consistent with sustained tightness rather than purely instantaneous shocks.
+
+Research note
+
+Although 2024 was much quieter overall than 2023, the clustered nature of spike events remained broadly similar, implying that persistence is a recurring structural feature even when total spike frequency changes.
+
+The spike clustering table shows whether extreme price periods occur as isolated settlement periods or as parts of longer consecutive stress runs. This helps distinguish random one-off spikes from persistent stress episodes.
+
+Cluster length distribution helps distinguish brief spike events from sustained stress episodes, which is essential for understanding whether extreme balancing prices are transient shocks or persistent regime states.
+
+Research note
+
+Cluster-length analysis shows that 2023 contained a broader distribution of spike episode lengths, including a substantial number of 2-, 3-, and 4+ period clusters, consistent with a more intense and persistent stress environment.
+
+Research note
+
+Although 2024 was quieter overall, it still exhibited long multi-period spike clusters, indicating that persistent balancing-market stress can arise even in lower-spike years.
+
+Research note
+
+The contrast between 2023 and 2024 suggests that year-to-year differences in spike intensity are reflected not only in total spike counts but also in the distribution of event persistence.
+
+Research note
+
+The price-band driver table shows that GB balancing prices are set in clearly different physical and market environments across the price distribution, rather than varying smoothly within one homogeneous regime.
+
+Research note
+
+Negative-price periods in both 2023 and 2024 are associated with strongly negative imbalance, very high wind generation, and very low gas generation, indicating system-long renewable-heavy conditions.
+
+Research note
+
+The transition from 0_to_100 to 100_to_150 marks a major structural shift, with average imbalance turning sharply positive and gas generation increasing materially in both years.
+
+Research note
+
+The 250_plus regime represents a distinct extreme-price state in both years, characterized by strong positive imbalance, elevated gas generation, and reduced wind output. In 2024 this upper-tail regime is rarer but more thermally extreme than in 2023.
+
+GB balancing prices are not only associated with different system states across price bands, but the transitions between price regimes themselves reveal distinct escalation mechanisms, and those escalation mechanisms vary across years.
+
+Research note
+
+The transition from 0_to_100 to 100_to_150 appears to be the clearest entry point into a stress regime in both 2023 and 2024, marked by a large positive shift in imbalance and a meaningful rise in gas generation.
+
+Research note
+
+The upper-tail transitions differ materially across years. In 2023, the jump from 200_to_250 to 250_plus is associated with a stronger collapse in wind and a larger gas increase, while in 2024 the same jump is characterized by a more explosive price increase within an already gas-heavy environment.
+
+Research note
+
+These results suggest that price formation in the GB balancing market is not governed by one fixed escalation path. Different years appear to move through the upper price ladder through different mechanisms.
+
+Adding interconnectors to the price-band driver table shows that interconnector conditions vary systematically across price regimes, indicating that cross-border system context is relevant to balancing price formation.
+
+Research note
+
+The interconnector pattern differs between years. In 2023, higher-price bands are associated with higher aggregate interconnector levels, while in 2024 upper-tail price bands are associated with lower interconnector levels relative to the normal-price regime.
+
+Research note
+
+This suggests that interconnectors may play different structural roles across years, potentially acting as a stress-accompanying variable in some regimes and as a stress-relief-limited variable in others.
+
+Research note
+
+Interconnector condition analysis shows a marked cross-year contrast. In 2023, spikes are more associated with the upper interconnector distribution, whereas in 2024 no spikes occur in the high-interconnector regimes.
+
+Research note
+
+This suggests that aggregate interconnector conditions may play different structural roles across years: accompanying stress in some periods, while appearing more protective or stress-relieving in others.
+
+Research note
+
+The result strengthens the case for including interconnectors in the price-setting framework, while also highlighting the need for careful event-level interpretation and eventual flow-direction refinement.
+
 1. Introduction
 
 Following the descriptive and rule-based analysis of the January 2023 pilot sample, a formal probabilistic modelling stage was introduced using logistic regression. The purpose of this stage was to move beyond threshold rules and estimate spike probability directly as a function of key market variables.

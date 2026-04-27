@@ -846,3 +846,358 @@ Q: What is the strongest contrast?
 Q: Why is this important for Paper 1?
 
 Because it turns the paper from a one-year story into a true cross-year structural regime study.
+
+Q: What is the strongest 2024 single condition?
+
+gas > 15000
+
+Q: What does it mean that all 24 spikes happened under gas > 15000?
+
+It means very high gas generation was present in every 2024 spike period, so it looks like a core background condition for spike realization in 2024.
+
+Q: Does this mean wind is not important in 2024?
+
+Not necessarily. It means wind is weaker as a standalone signal. It may still matter strongly in interactions.
+
+Q: What is the main difference from 2023?
+
+2024 looks more strongly gas-led at the single-condition level.
+
+Q: What is the strongest 2024 combined condition?
+
+imbalance > 150 and gas > 15000, very slightly above gas > 15000 and hour 16 to 19.
+
+Q: What does this say in plain English?
+
+In 2024, spikes were most associated with very high gas generation, especially when the system was also short or in the evening peak window.
+
+Q: Does wind stop mattering in 2024?
+
+No. It matters less as the main combined driver, but it still appears in useful gas-linked stressed subsets.
+
+Q: What is the key difference from 2023?
+
+2024 combined conditions look more gas-led, while 2023 Q1 looked more wind-plus-timing led.
+
+Q: What is the strongest 2024 triple condition?
+
+imbalance > 150 and gas > 15000 and hour 16 to 19
+
+Q: What does that mean in plain English?
+
+In 2024, spikes were most likely when the system was short, gas generation was very high, and the market was in the late afternoon/evening window.
+
+Q: Is 2024 weaker than 2023 even at the triple-condition level?
+
+Yes. Much weaker. The strongest 2024 triple probability is far below the strongest 2023 Q1 triple probability.
+
+Q: What is the biggest cross-year mechanism difference?
+
+2023’s sharpest regime was more low-wind driven; 2024’s sharpest regime is more gas-driven.
+
+Q: What is the most dangerous time band?
+
+Evening peak in both 2023 and 2024.
+
+Q: What does that mean in plain English?
+
+Late afternoon and early evening is where the market is most likely to turn stress into a spike.
+
+Q: Does this pattern repeat across years?
+
+Yes. The dangerous window repeats, but its severity changes.
+
+Q: Is evening peak dangerous only because of time?
+
+No. It also coincides with:
+
+higher gas
+more positive imbalance
+higher prices
+Q: What is the key cross-year lesson?
+
+Some market structures are stable, like the dangerous evening window, but the magnitude of risk inside that window is year-dependent.
+
+Q: Is this code likely to be wrong?
+
+The logic is simple and auditable:
+
+identify spike rows,
+look back fixed numbers of half-hours,
+average the variables.
+So this is a low-risk calculation structurally.
+Q: What can still go wrong?
+
+The main thing is interpretation:
+
+t-1 means one half-hour before a spike row in the saved master dataset,
+not necessarily a “causal trigger,” just a lead-period average.
+Q: Why is this a strong next step?
+
+Because papers often stop at correlations or static conditions. Pre-spike build-up adds dynamic mechanism, which is much stronger.
+
+Q: Is 250 the final truth?
+
+No. It is a first working spike definition.
+
+Q: Why did we start with it then?
+
+Because it is easy to interpret and clearly identifies extreme price periods.
+
+Q: Should we test other definitions?
+
+Yes. Definitely.
+
+Q: Why did we start with gas, imbalance, and wind?
+
+Because they are the most economically meaningful and immediately available core drivers in the current dataset.
+
+Q: Are they enough for the final paper?
+
+No. They are the core starting variables, not the final full set
+
+Q: What is pre-spike build-up showing in plain English?
+
+It shows what the market typically looks like in the few half-hours leading into a spike.
+
+Q: Are spikes random?
+
+Not usually. This table suggests they usually build up over time.
+
+Q: What is the biggest difference between 2023 and 2024?
+
+2023 looks more imbalance-driven during build-up, while 2024 looks much more gas-heavy and wind-poor even before the final spike.
+
+Q: What is special about t-1?
+
+It is the last half-hour before the spike, and it seems to be the strongest escalation window in both years.
+
+Q: Why is this important for the paper?
+
+Because it moves the work from static association to dynamic mechanism.
+
+Q: What is t?
+
+The spike period itself.
+
+Q: What is t-4?
+
+Four half-hours before the spike, which is 2 hours before.
+
+Q: Why not use exact timestamps instead?
+
+Because this relative format lets us average many spike events together and study the common build-up pattern.
+
+Q: Is t-1 the most important one?
+
+Often yes, because it is the last half-hour before the spike and can show the final escalation.
+
+If you want, next I’ll give you the near-spike / false alarm build-up analysis in the same format.
+
+Q: What is a near-spike?
+
+A half-hour where price is very high but does not cross the spike threshold. Here we defined it as:
+
+200 <= price < 250
+Q: Why compare near-spikes with spikes?
+
+Because it tells us what turns “strong stress” into “full extreme stress.”
+
+Q: Are near-spikes important?
+
+Yes. They are very important because they show us what almost became a spike.
+
+Q: What is the biggest difference in 2023?
+
+Real spikes had much lower wind and much higher gas than near-spikes.
+
+Q: What is the biggest difference in 2024?
+
+Both spikes and near-spikes are already very gas-heavy and low-wind, so the main separator seems to be stronger final escalation.
+
+Q: Why is this useful for the paper?
+
+Because it helps explain the mechanism of spike realization, not just the conditions associated with spikes.
+
+Q: What is an isolated spike?
+
+A spike half-hour with no spike immediately before or after it.
+
+Q: What is a clustered spike?
+
+A spike half-hour that is part of a consecutive run of spikes.
+
+Q: What is the main result here?
+
+Most spikes in both years are clustered, not isolated.
+
+Q: Why is this important?
+
+Because it means many spike events reflect persistent stress rather than one-off random jumps.
+
+Q: Does 2024 behave totally differently from 2023?
+
+Not in clustering structure. It is quieter overall, but spikes still tend to occur in runs.
+
+Q: Is total_spikes counting events or half-hours?
+
+It is counting spike half-hours, not spike episodes.
+
+Q: Is an isolated spike one full event?
+
+Yes, one spike half-hour on its own.
+
+Q: Is a cluster one event?
+
+A cluster is a run of multiple spike half-hours together.
+
+Q: Can clustered spikes mean the system stayed stressed for longer?
+
+Yes, exactly.
+
+Q: Why do we care?
+
+Because this tells us whether stress is:
+
+brief and random
+or
+persistent and structured
+
+Q: Is cluster length about the number of spikes or the number of spike episodes?
+
+It is about spike episodes / runs, not just total spike half-hours.
+
+Q: If I have 4 spikes in a row, is that one cluster or four?
+
+That is one cluster of length 4.
+
+Q: Why do we group 4 and above together?
+
+Because long runs are rarer, and grouping them makes the table cleaner and easier to interpret.
+
+Q: Why is this useful for the paper?
+
+Because it shows whether stress tends to disappear quickly or stay persistent over multiple settlement periods.
+
+Q: What is cluster_count?
+
+The number of spike episodes in that length group.
+
+Q: What does 1 mean again?
+
+A spike cluster of exactly one half-hour, so an isolated spike event.
+
+Q: What does 4_plus mean?
+
+A spike episode lasting 4 or more consecutive half-hours, meaning 2 hours or longer.
+
+Q: What is the biggest difference between 2023 and 2024 here?
+
+2023 had many more medium and long clusters in absolute terms, while 2024 had fewer clusters overall and a larger share of isolated ones.
+
+Q: What is the deeper takeaway?
+
+Stress in GB balancing prices is not just about whether spikes happen, but also about how long spike episodes persist once they begin.
+
+Q: What is the most important result from this table?
+
+It shows how different combinations of imbalance, wind, and gas correspond to different price-setting regimes.
+
+Q: What sets negative prices?
+
+Very high wind, very low gas, and strongly negative imbalance.
+
+Q: What sets normal prices?
+
+Moderate gas and wind, without strong system shortness.
+
+Q: What changes when price goes above 100?
+
+Imbalance becomes clearly positive and gas rises, which signals entry into a stress regime.
+
+Q: What sets extreme prices above 250?
+
+High gas, strong positive imbalance, and lower wind. In 2024, this upper tail is especially gas-heavy and wind-poor.
+
+Q: Why is this better than only doing spike analysis?
+
+Because it explains the whole price-setting structure first, and then spikes become the top extreme of that structure rather than an isolated phenomenon.
+
+Q: What is the most important transition?
+
+0_to_100 -> 100_to_150, because it looks like the cleanest entry into stress.
+
+Q: Why?
+
+Because that is where imbalance turns sharply more positive and gas rises strongly in both years.
+
+Q: What is the biggest year-to-year difference?
+
+The upper-tail transitions. 2023 and 2024 do not reach extreme prices in exactly the same way.
+
+Q: What does this add beyond the price-band table?
+
+The price-band table shows the states. This transition table shows the movement between states.
+
+Q: Why is this important for the paper?
+
+Because it turns the analysis from static description into a price formation process.
+
+: What is the main new thing interconnectors add?
+
+They show that price regimes are not just about wind, gas, and imbalance. Cross-border system context also varies across the price ladder.
+
+Q: Are interconnectors clearly important?
+
+Yes. They differ materially across price bands and across years.
+
+Q: Can we already say they caused stress?
+
+Not yet. We can say they are structurally associated with different price regimes, but causality needs more work and event context.
+
+Q: Why do we need caution?
+
+Because the current variable is aggregate interconnectors, not a clean import/export-by-link decomposition.
+
+Q: Is adding them still worth it?
+
+Yes, absolutely. It makes the paper more complete and more system-aware.
+
+Q: What is p10?
+
+The value below which 10% of observations lie.
+
+Q: What is p25?
+
+The value below which 25% of observations lie.
+
+Q: Why use percentiles?
+
+Because they create thresholds based on the actual data distribution, not arbitrary guesses.
+
+Q: What is better for “low interconnectors” — p10 or p25?
+p25 is good for a broader “low” definition
+p10 is good for a stricter “very low” definition
+Q: What does the table suggest overall?
+
+2024 generally had higher interconnector levels than 2023
+
+Q: What is the biggest result from this table?
+
+2023 and 2024 behave very differently with respect to interconnectors.
+
+Q: In 2023, do higher interconnectors prevent spikes?
+
+Not from this table. In fact, spikes are more common in the higher interconnector conditions.
+
+Q: In 2024, what happens under high interconnectors?
+
+There are no spikes in the high-interconnector bands.
+
+Q: Does this mean interconnectors caused the difference?
+
+Not yet. It means they are associated differently across years. Causality needs more context.
+
+Q: Should interconnectors now be included in deeper mechanism analysis?
+
+Yes — but selectively.

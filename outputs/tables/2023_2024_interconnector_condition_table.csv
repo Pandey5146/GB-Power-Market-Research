@@ -1,0 +1,9 @@
+year,condition,threshold_value,periods_meeting_condition,spike_periods_within_condition,spike_probability_given_condition
+2023,interconnectors_lt_p25,715.5,4378,19,0.0043
+2023,interconnectors_lt_p10,-1328.0,1750,0,0.0
+2023,interconnectors_gt_p75,4964.0,4377,38,0.0087
+2023,interconnectors_gt_p90,6062.0,1748,13,0.0074
+2024,interconnectors_lt_p25,2246.0,4390,9,0.0021
+2024,interconnectors_lt_p10,299.4,1757,1,0.0006
+2024,interconnectors_gt_p75,4974.5,4392,0,0.0
+2024,interconnectors_gt_p90,5746.0,1755,0,0.0

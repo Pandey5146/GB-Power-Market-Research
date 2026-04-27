@@ -1,57 +1,54 @@
 import pandas as pd
 
-# 2023
-df_2023 = pd.read_csv("data/processed/market_master_2023_full_year.csv")
-df_2023["startTime"] = pd.to_datetime(df_2023["startTime"])
-df_2023["month"] = df_2023["startTime"].dt.month
-df_2023["spike_flag"] = (df_2023["systemSellPrice"] >= 250).astype(int)
-df_2023["regime_group"] = "other"
-df_2023.loc[df_2023["month"].isin([1, 2, 3]), "regime_group"] = "q1_stress"
-df_2023.loc[df_2023["month"].isin([4, 5, 6, 7, 8, 9]), "regime_group"] = "apr_sep_quiet"
-df_2023.loc[df_2023["month"].isin([10, 11]), "regime_group"] = "oct_nov_transition"
-df_2023.loc[df_2023["month"].isin([12]), "regime_group"] = "dec_windy"
+def build_interconnector_condition_table(file_path, year):
+    df = pd.read_csv(file_path)
+    df["startTime"] = pd.to_datetime(df["startTime"])
+    df["spike_flag"] = (df["systemSellPrice"] >= 250).astype(int)
 
-table_2023 = df_2023.groupby("regime_group").agg(
-    rows=("startTime", "count"),
-    spikes=("spike_flag", "sum"),
-    spike_probability=("spike_flag", "mean"),
-    avg_price=("systemSellPrice", "mean"),
-    avg_imbalance=("netImbalanceVolume", "mean"),
-    avg_wind=("wind_gen", "mean"),
-    avg_gas=("gas_gen", "mean")
-).reset_index()
-table_2023["year"] = 2023
+    p10 = df["interconnectors"].quantile(0.10)
+    p25 = df["interconnectors"].quantile(0.25)
+    p75 = df["interconnectors"].quantile(0.75)
+    p90 = df["interconnectors"].quantile(0.90)
 
-# 2024
-df_2024 = pd.read_csv("data/processed/market_master_2024_full_year.csv")
-df_2024["startTime"] = pd.to_datetime(df_2024["startTime"])
-df_2024["month"] = df_2024["startTime"].dt.month
-df_2024["spike_flag"] = (df_2024["systemSellPrice"] >= 250).astype(int)
-df_2024["regime_group"] = "other"
-df_2024.loc[df_2024["month"].isin([1, 2, 3]), "regime_group"] = "q1_quiet"
-df_2024.loc[df_2024["month"].isin([4, 5, 6, 7, 8, 9]), "regime_group"] = "apr_sep_quiet"
-df_2024.loc[df_2024["month"].isin([10, 11]), "regime_group"] = "oct_nov_transition"
-df_2024.loc[df_2024["month"].isin([12]), "regime_group"] = "dec_stress"
+    conditions = {
+        "interconnectors_lt_p25": df["interconnectors"] < p25,
+        "interconnectors_lt_p10": df["interconnectors"] < p10,
+        "interconnectors_gt_p75": df["interconnectors"] > p75,
+        "interconnectors_gt_p90": df["interconnectors"] > p90,
+    }
 
-table_2024 = df_2024.groupby("regime_group").agg(
-    rows=("startTime", "count"),
-    spikes=("spike_flag", "sum"),
-    spike_probability=("spike_flag", "mean"),
-    avg_price=("systemSellPrice", "mean"),
-    avg_imbalance=("netImbalanceVolume", "mean"),
-    avg_wind=("wind_gen", "mean"),
-    avg_gas=("gas_gen", "mean")
-).reset_index()
-table_2024["year"] = 2024
+    rows = []
+    for name, condition in conditions.items():
+        periods_meeting_condition = int(condition.sum())
+        spike_periods_within_condition = int((df["spike_flag"] & condition).sum())
+        probability = (
+            spike_periods_within_condition / periods_meeting_condition
+            if periods_meeting_condition > 0 else 0
+        )
 
-comparison = pd.concat([table_2023, table_2024], ignore_index=True)
-comparison = comparison[[
-    "year", "regime_group", "rows", "spikes", "spike_probability",
-    "avg_price", "avg_imbalance", "avg_wind", "avg_gas"
-]].round(4)
+        rows.append({
+            "year": year,
+            "condition": name,
+            "threshold_value": round(
+                p25 if name == "interconnectors_lt_p25"
+                else p10 if name == "interconnectors_lt_p10"
+                else p75 if name == "interconnectors_gt_p75"
+                else p90,
+                4
+            ),
+            "periods_meeting_condition": periods_meeting_condition,
+            "spike_periods_within_condition": spike_periods_within_condition,
+            "spike_probability_given_condition": round(probability, 4)
+        })
 
-comparison.to_csv("outputs/tables/2023_2024_regime_fingerprint_comparison.csv", index=False)
+    return pd.DataFrame(rows)
 
-print("\n2023 VS 2024 REGIME FINGERPRINT COMPARISON")
-print(comparison)
-print("\nSaved: outputs/tables/2023_2024_regime_fingerprint_comparison.csv")
+table_2023 = build_interconnector_condition_table("data/processed/market_master_2023_full_year.csv", 2023)
+table_2024 = build_interconnector_condition_table("data/processed/market_master_2024_full_year.csv", 2024)
+
+table = pd.concat([table_2023, table_2024], ignore_index=True)
+table.to_csv("outputs/tables/2023_2024_interconnector_condition_table.csv", index=False)
+
+print("\n2023 VS 2024 INTERCONNECTOR CONDITION TABLE")
+print(table)
+print("\nSaved: outputs/tables/2023_2024_interconnector_condition_table.csv")
