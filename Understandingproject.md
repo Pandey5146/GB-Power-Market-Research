@@ -1201,3 +1201,54 @@ Not yet. It means they are associated differently across years. Causality needs 
 Q: Should interconnectors now be included in deeper mechanism analysis?
 
 Yes — but selectively.
+
+Q: What is the biggest result from this table?
+
+In 2024, high interconnectors plus stress drivers produced zero spikes, while in 2023 spikes still occurred under high interconnector conditions.
+
+Q: What does that mean in plain English?
+
+Interconnectors seem to have helped contain stress more in 2024 than in 2023.
+
+Q: Does this prove causality?
+
+No. It proves association, not causation.
+
+Q: What is the strongest 2023 interconnector combined condition?
+
+imbalance_gt_150_and_interconnectors_gt_p75
+
+Q: What is the strongest 2024 interconnector combined condition?
+
+gas_gt_15000_and_interconnectors_lt_p25
+
+Q: Should we now force interconnectors into many more combinations?
+
+Not many more. We should stay selective.
+
+Q: Why include £100 and £150?
+Because the paper is not only about spikes. It is about how the market enters stress.
+
+Q: Why include £300?
+Because £300+ helps test whether the most extreme events are simply stronger £250+ events or a separate extreme regime.
+
+Q: Why include interconnectors here?
+Because we now know interconnectors behave differently across years and price regimes. This table checks whether that difference strengthens as prices rise.
+
+Q: What should you do after running this?
+Send me the printed table. Then we will write the paper interpretation and decide whether the next table should be:
+
+Q: Did this table support our paper direction?
+Yes. Strongly.
+
+Q: Did it show that £250 is arbitrary?
+No. It showed £250 is part of a clear severity ladder.
+
+Q: What is the biggest 2023 insight?
+Evening timing becomes a very strong amplifier as prices become extreme.
+
+Q: What is the biggest 2024 insight?
+All £250+ spikes happened under high gas and low wind conditions.
+
+Q: What is the cross-year insight?
+2023 had broader stress; 2024 had fewer but more physically extreme spike conditions.

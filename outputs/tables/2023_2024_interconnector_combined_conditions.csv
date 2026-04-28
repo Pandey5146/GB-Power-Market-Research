@@ -1,0 +1,13 @@
+year,condition,periods_meeting_condition,spike_periods_within_condition,spike_probability_given_condition
+2023,gas_gt_15000_and_interconnectors_gt_p75,558,10,0.0179
+2023,gas_gt_15000_and_interconnectors_lt_p25,962,19,0.0198
+2023,wind_lt_8000_and_interconnectors_gt_p75,3030,35,0.0116
+2023,wind_lt_8000_and_interconnectors_lt_p25,1861,3,0.0016
+2023,imbalance_gt_150_and_interconnectors_gt_p75,1162,33,0.0284
+2023,imbalance_gt_150_and_interconnectors_lt_p25,975,16,0.0164
+2024,gas_gt_15000_and_interconnectors_gt_p75,230,0,0.0
+2024,gas_gt_15000_and_interconnectors_lt_p25,928,9,0.0097
+2024,wind_lt_8000_and_interconnectors_gt_p75,2865,0,0.0
+2024,wind_lt_8000_and_interconnectors_lt_p25,1337,9,0.0067
+2024,imbalance_gt_150_and_interconnectors_gt_p75,1143,0,0.0
+2024,imbalance_gt_150_and_interconnectors_lt_p25,983,4,0.0041

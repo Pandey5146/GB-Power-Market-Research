@@ -1704,6 +1704,42 @@ Research note
 
 The result strengthens the case for including interconnectors in the price-setting framework, while also highlighting the need for careful event-level interpretation and eventual flow-direction refinement.
 
+Research note
+
+Interconnector combined-condition analysis reveals a strong year-specific contrast. In 2024, no spikes occur under the high-interconnector quartile when combined with major stress drivers, while spikes in 2023 remain compatible with high interconnector conditions.
+
+Research note
+
+This suggests that high interconnector conditions may have been more protective in 2024, whereas in 2023 interconnectors appear more as a stress-accompanying system feature than a reliable stress-relief condition.
+
+Research note
+
+The results support a broader interpretation of price formation in which interconnectors are neither uniformly benign nor uniformly stress-inducing, but instead play a regime-dependent structural role.
+
+Price-band structure
+↓
+Threshold robustness
+↓
+Spike realization
+↓
+Dynamic build-up
+
+In 2023, the transition from broad stress to extreme imbalance prices was marked by a clear tightening of physical system conditions. Average gas generation rose from around 11.4 GW in the £100+ regime to 19.0 GW in the £250+ regime, while average wind generation fell from 7.1 GW to 5.5 GW. The evening-peak share also increased sharply, from 22.9% to 69.2%, indicating that time-of-day acted as a major amplifier of scarcity pricing.
+
+In 2024, the stress ladder was much steeper than in 2023. Only 0.88% of periods exceeded £150/MWh, but those periods were already characterised by very high gas generation and low wind output. At the £250+ threshold, every spike occurred with gas generation above 15 GW and wind generation below 8 GW, indicating a much more thermally concentrated extreme-price regime than in 2023.
+
+normal price regime
+↓
+broad stress regime
+↓
+strong stress regime
+↓
+near-spike regime
+↓
+spike regime
+↓
+extreme spike regime
+
 1. Introduction
 
 Following the descriptive and rule-based analysis of the January 2023 pilot sample, a formal probabilistic modelling stage was introduced using logistic regression. The purpose of this stage was to move beyond threshold rules and estimate spike probability directly as a function of key market variables.
