@@ -1,10 +1,30 @@
 import requests
 import pandas as pd
 from datetime import datetime, timedelta
+from pathlib import Path
 
 from scripts.data_process import process_fuel_data, process_price_data, merge_data
-#from scripts.analysis import run_basic_analysis
+# from scripts.analysis import run_basic_analysis
 
+
+# ==============================
+# CONFIG
+# ==============================
+
+YEAR = 2024
+START_DATE = "2024-01-01"
+END_DATE = "2024-12-31"
+
+OUTPUT_DIR = Path("data/processed")
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+FUEL_OUTPUT_FILE = OUTPUT_DIR / f"fuel_mix_{YEAR}_full_year.csv"
+MASTER_OUTPUT_FILE = OUTPUT_DIR / f"market_master_{YEAR}_full_year.csv"
+
+
+# ==============================
+# HELPERS
+# ==============================
 
 def generate_date_range(start_date, end_date):
     start = datetime.strptime(start_date, "%Y-%m-%d")
@@ -28,7 +48,7 @@ def fetch_price_data_range(start_date, end_date):
         print(f"Fetching price data for {date}")
 
         url = f"https://data.elexon.co.uk/bmrs/api/v1/balancing/settlement/system-prices/{date}"
-        response = requests.get(url)
+        response = requests.get(url, timeout=30)
 
         if response.status_code != 200:
             print(f"Failed for price date {date}: {response.status_code}")
@@ -55,7 +75,7 @@ def fetch_fuel_data_range(start_date, end_date):
     all_fuels = []
     dates = generate_date_range(start_date, end_date)
 
-    # fetch fuel data one day at a time to avoid large-request failures
+    # Fetch fuel data one day at a time to avoid large-request failures
     for date in dates:
         next_date = (
             datetime.strptime(date, "%Y-%m-%d") + timedelta(days=1)
@@ -68,7 +88,7 @@ def fetch_fuel_data_range(start_date, end_date):
             f"?publishDateTimeFrom={date}&publishDateTimeTo={next_date}"
         )
 
-        response = requests.get(url)
+        response = requests.get(url, timeout=30)
 
         if response.status_code != 200:
             print(f"Failed for fuel date {date}: {response.status_code}")
@@ -91,16 +111,21 @@ def fetch_fuel_data_range(start_date, end_date):
     return pd.concat(all_fuels, ignore_index=True)
 
 
+# ==============================
+# PIPELINE
+# ==============================
+
 def run_data_pipeline():
     print("Pipeline started")
-
-    start_date = "2024-01-01"
-    end_date = "2024-12-31"
+    print(f"Building dataset for {YEAR}")
+    print(f"Start date: {START_DATE}")
+    print(f"End date: {END_DATE}")
 
     # ==============================
     # STEP 1 — FUEL DATA
     # ==============================
-    df_fuel = fetch_fuel_data_range(start_date, end_date)
+
+    df_fuel = fetch_fuel_data_range(START_DATE, END_DATE)
 
     print("\nRaw fuel data shape:", df_fuel.shape)
     print(df_fuel.head())
@@ -111,12 +136,14 @@ def run_data_pipeline():
     print(df_clean.head())
     print(df_clean.isna().sum())
 
-    df_clean.to_csv("data/processed/fuel_mix_2024_full_year.csv", index=False)
+    df_clean.to_csv(FUEL_OUTPUT_FILE, index=False)
+    print(f"\nSaved fuel file: {FUEL_OUTPUT_FILE}")
 
     # ==============================
     # STEP 2 — PRICE DATA
     # ==============================
-    df_price = fetch_price_data_range(start_date, end_date)
+
+    df_price = fetch_price_data_range(START_DATE, END_DATE)
 
     print("\nRaw price data shape:", df_price.shape)
     print(df_price.head())
@@ -130,6 +157,7 @@ def run_data_pipeline():
     # ==============================
     # STEP 3 — MERGE
     # ==============================
+
     df_master = merge_data(df_clean, df_price_clean)
 
     print("\nMaster dataset shape:", df_master.shape)
@@ -140,13 +168,16 @@ def run_data_pipeline():
     print("Min:", df_master["startTime"].min())
     print("Max:", df_master["startTime"].max())
 
-    df_master.to_csv("data/processed/market_master_2024_full_year.csv", index=False)
+    df_master.to_csv(MASTER_OUTPUT_FILE, index=False)
+    print(f"\nSaved master file: {MASTER_OUTPUT_FILE}")
 
     # ==============================
     # STEP 4 — ANALYSIS
     # ==============================
-    print("\nABOUT TO RUN ANALYSIS")
-    #run_basic_analysis(df_master)
+
+    print("\nDATA PULL COMPLETE")
+    print("Do not run analysis here. Use scripts/analysis.py or validation scripts separately.")
+    # run_basic_analysis(df_master)
 
 
 if __name__ == "__main__":
