@@ -1740,6 +1740,2310 @@ spike regime
 ↓
 extreme spike regime
 
+In 2023, time-of-day amplification was central to spike realization. While £100+ and £150+ prices occurred across all time bands, the upper tail became progressively concentrated in the evening peak. By the £250+ threshold, 83 of 120 spike periods occurred during 16:00–19:59, and by the £300+ threshold, 18 of 21 extreme periods were in the evening peak. This indicates that evening demand conditions acted as a major amplifier converting stressed system states into extreme imbalance prices.
+
+In 2024, evening peak remained the highest-risk time band at lower thresholds, but the extreme price tail was less exclusively evening-driven than in 2023. At the £250+ threshold, 11 periods occurred during evening peak, but 13 occurred across morning ramp, midday, and afternoon. This suggests that 2024 spikes were linked to a broader physical scarcity environment, with very high gas generation and very low wind output across several active system periods, rather than only evening demand amplification.
+
+Research note 1
+
+Do not say evening peak “causes” spikes.
+
+Say:
+
+Evening peak acts as an amplifier of already stressed system conditions.
+
+Research note 2
+
+In 2024, the key is not that evening disappeared. It is that the extreme regime became less dependent on evening concentration.
+
+Research note 3
+
+Night remains structurally low risk in both years.
+
+Late evening is also much weaker than evening peak.
+
+That matters because it shows that the danger is not simply “after dark”; it is the specific 16:00–19:59 system peak window.
+
+The annual location of spike risk shifted materially between years. In 2023, almost all £250+ periods were concentrated in Q1. In 2024, all £250+ periods were concentrated in the late-year Oct-Nov transition and December stress regimes, with no £250+ periods in Q1 or Apr-Sep.
+
+Q1 regime-level stress
++
+evening peak amplification
++
+imbalance / low-wind / high-gas combinations
+=
+broad and concentrated spike formation
+
+Q1 regime-level stress
++
+evening peak amplification
++
+imbalance / low-wind / high-gas combinations
+=
+broad and concentrated spike formation
+
+Threshold-by-regime analysis confirms that high-price periods were strongly regime-dependent rather than randomly distributed across the year. In 2023, the Q1 stress regime accounted for 111 of 120 annual £250+ periods and 18 of 21 £300+ periods, demonstrating that the 2023 price tail was overwhelmingly concentrated in the first-quarter stress environment. By contrast, 2024 showed no £250+ periods during Q1 or Apr-Sep. All 24 annual £250+ periods occurred in the Oct-Nov transition and December stress regimes. This indicates a clear shift in the annual location of spike risk, from early-year stress in 2023 to late-year stress in 2024.
+
+Research note 1
+
+This table validates our regime groups. They are not arbitrary monthly buckets. They explain where stress actually appears.
+
+Research note 2
+
+2023 and 2024 both had spike clustering, but the calendar location of clustering changed.
+
+This becomes important later when we add external event/policy/outage overlays.
+
+Research note 3
+
+The December 2023 row is interesting because the wider regime was windy, but its rare spikes occurred under extremely low wind and very high gas.
+
+That supports a useful concept:
+
+regime background ≠ local event condition
+
+Oct-Nov 2024 should not be ignored. It produced 10 of 24 annual £250+ spikes and 6 of 17 £300+ periods.
+
+So the 2024 story is not only December. It is:
+
+Oct-Nov transition + December stress
+
+The 7 March 2023 £1950/MWh event occurred during an already stressed internal system state: low wind, high gas generation, strongly positive imbalance, evening peak timing, and relatively low interconnector support. REMIT messages also indicate contemporaneous interconnector restrictions and thermal generation unavailability, suggesting the price event coincided with a wider scarcity and availability-stress context.
+
+The 14 October 2024 spike occurred in the Oct-Nov transition regime under very low wind, high gas generation, very positive imbalance, and lower interconnector support. REMIT messages show multiple contemporaneous generation availability reductions, including fossil gas and wind units. This supports classifying the event as a high-confidence scarcity-context event, although causality should be framed as association rather than a single-unit cause.
+
+The 11 December 2024 midday spike appears more strongly linked to the physical background of very low wind and extreme gas dependence than to imbalance escalation alone. REMIT messages show several generation and flexibility asset unavailabilities during the broader window, while interconnector restrictions became more relevant later in the afternoon.
+
+The 12 December 2024 evening spike occurred during very low wind and very high gas generation, with moderate aggregate interconnector flow. REMIT messages show simultaneous Moyle and EWIC interconnector restrictions, with periods of zero capacity during the spike window. This suggests the event sat within a low-wind, high-thermal, reduced-cross-border-flexibility context.
+
+The 7 March 2023 £1950/MWh event occurred during a compound scarcity context: low wind, high gas generation, strongly positive imbalance, evening-peak timing, reduced interconnector availability, and multiple thermal generation availability reductions. REMIT evidence therefore supports a high-confidence association between the price event and wider asset-availability stress, although the analysis does not attribute causality to any single unit.
+
+In 2024, priority spike events also coincided with REMIT-reported capacity events. Thermal generation unavailability showed high-confidence association with price events up to £669/MWh, while interconnector unavailability showed high-confidence association around December stress episodes. This supports the interpretation that 2024’s spike formation was linked to physical scarcity and reduced flexibility rather than imbalance alone.
+
+Earlier, we were doing mainly structural analysis:
+
+price bands
+thresholds
+time bands
+regime groups
+interconnectors
+spike build-up
+near-spikes
+clusters
+
+That explained what kind of market conditions are linked with different price regimes.
+
+But then you correctly clarified that you wanted to go deeper:
+
+If a wind turbine, gas turbine, interconnector, or other asset went into outage/maintenance/unavailability, did that coincide with the price jump? And what were wind, gas, imbalance, and interconnector flow at that moment?
+
+That shifted the work from broad regime analysis into:
+
+event-level price formation
++
+asset/event-led explanation
++
+REMIT availability evidence
+
+This was the right move.
+
+1. Main research note: why event-level analysis matters
+
+The earlier tables showed that high prices are associated with:
+
+high gas
+low wind
+positive imbalance
+evening peak
+interconnector context
+specific annual regimes
+
+But this does not fully answer:
+
+Why did the price jump at that exact moment?
+
+The event-level analysis starts answering that by checking whether specific price events coincided with:
+
+gas unit unavailability
+wind asset unavailability
+interconnector restriction
+planned maintenance
+unplanned outage
+capacity reduction
+system flexibility constraints
+
+This is important because imbalance price spikes are not only about average system conditions. They can form when an already stressed system loses marginal flexibility or has reduced available capacity.
+
+2. What we built in the event-analysis branch
+
+We built a sequence of tables.
+
+A. Price event candidates
+
+File:
+
+outputs/tables/2023_2024_price_event_candidates.csv
+
+Purpose:
+
+To identify exact windows where price behaviour was interesting.
+
+Event types included:
+
+positive_spike_cluster      price >= 250
+extreme_spike_cluster       price >= 300
+near_spike_cluster          200 <= price < 250
+negative_price_cluster      price < 0
+large_upward_jump           price jump >= +100 from previous period
+large_downward_reversal     price fall <= -100 from previous period
+
+Research note:
+
+This table moved the project away from yearly averages and into exact price-event windows.
+
+B. Priority price events for external check
+
+File:
+
+outputs/tables/2023_2024_priority_price_events_for_external_check.csv
+
+Purpose:
+
+The full event-candidate table had 1,872 rows, which was too many to check manually against REMIT.
+
+So we shortlisted:
+
+top positive spikes
+all extreme spikes
+top negative price clusters
+largest upward jumps
+largest downward reversals
+
+Research note:
+
+This table helped us avoid random event research. It told us which price events were most worth checking externally.
+
+C. Priority price event windows
+
+File:
+
+outputs/tables/2023_2024_priority_price_event_windows.csv
+
+Purpose:
+
+For each priority event, we created external checking windows:
+
+2 hours before event start
+event period itself
+2 hours after event end
+
+Research note:
+
+This gave a clean time window for REMIT / outage / maintenance checks.
+
+D. REMIT query windows
+
+File:
+
+outputs/tables/2023_2024_remit_query_windows.csv
+
+Purpose:
+
+This converted price-event windows into API-ready windows.
+
+Important dates identified:
+
+2023-01-02
+2023-01-25
+2023-01-26
+2023-03-07
+2023-06-12
+2023-10-16
+2023-12-01
+
+2024-10-14
+2024-11-05
+2024-12-11
+2024-12-12
+
+Research note:
+
+The most important windows were:
+
+2023-03-07
+2024-10-14
+2024-12-11
+2024-12-12
+
+These became our first case-study set.
+
+E. Filtered REMIT events near price events
+
+File:
+
+outputs/tables/2023_2024_filtered_remit_events_near_price_events.csv
+
+Purpose:
+
+To pull REMIT messages around the main price-event windows and filter them for meaningful availability/capacity events.
+
+Important REMIT fields included:
+
+remit_eventType
+remit_unavailabilityType
+remit_assetType
+remit_affectedUnit
+remit_fuelType
+remit_normalCapacity
+remit_availableCapacity
+remit_unavailableCapacity
+remit_eventStatus
+remit_eventStartTime
+remit_eventEndTime
+remit_cause
+remit_relatedInformation
+remit_outageProfile
+
+Research note:
+
+This confirmed that REMIT data can directly support the paper’s structural overlay layer.
+
+F. Asset-event price impact table
+
+File:
+
+outputs/tables/2023_2024_asset_event_price_impact.csv
+
+Purpose:
+
+To summarise REMIT events by price event and external event type.
+
+This table connected:
+
+price event
+internal market state
+external asset/interconnector event
+unavailable capacity
+association strength
+
+This was the first proper event-level impact table.
+
+G. Price event case studies
+
+File:
+
+outputs/tables/2023_2024_price_event_case_studies.csv
+
+Purpose:
+
+To turn technical REMIT outputs into paper-readable case studies.
+
+Cases:
+
+Case 1: 2023-03-07 £1950/MWh event
+Case 2: 2024-10-14 £669.21/MWh event
+Case 3: 2024-12-11 £590.45/MWh event
+Case 4: 2024-12-12 £521.09/MWh event
+H. Case-study research notes
+
+File:
+
+outputs/tables/2023_2024_case_study_research_notes.csv
+
+Purpose:
+
+To lock the case studies into paper-ready research notes and future scenario labels.
+
+Scenario labels:
+
+compound_scarcity_with_asset_and_interconnector_stress
+
+imbalance_amplified_scarcity_with_generation_availability_stress
+
+physical_scarcity_low_wind_high_gas_less_imbalance_driven
+
+physical_scarcity_with_interconnector_restriction_and_low_wind
+
+Research note:
+
+These scenario labels can later be used for 2025 comparison and eventually a 2026/2027 scenario-risk framework.
+
+3. Main event-level findings
+Finding 1: 7 March 2023 was a compound scarcity event
+
+The key 2023 event was:
+
+2023-03-07
+max price: £1950/MWh
+regime: q1_stress
+time band: evening peak
+
+Internal market state:
+
+very high gas generation
+very low wind
+strong positive imbalance
+relatively low interconnector support
+evening peak timing
+
+REMIT evidence showed:
+
+thermal gas unavailability
+interconnector unavailability
+wind unavailability
+maintenance/de-load
+other capacity events
+
+The summary table showed:
+
+interconnector_unavailability: high confidence, 500 MW
+thermal_gas_unavailability: high confidence, 4825 MW
+wind_unavailability: medium confidence, 882 MW
+maintenance_or_deload: medium confidence, 492 MW
+other capacity changes: medium confidence, 2210 MW
+Research note
+
+This is probably the strongest single case study in the whole 2023–2024 analysis.
+
+It connects nearly every layer of the paper:
+
+Q1 stress regime
+evening peak amplification
+low wind
+high gas
+positive imbalance
+reduced interconnector support
+thermal generation unavailability
+interconnector restrictions
+Paper-safe interpretation
+
+The 7 March 2023 £1950/MWh event occurred during a compound scarcity context. The price event coincided with low wind, high gas generation, strongly positive imbalance, evening-peak timing, relatively low interconnector support, and REMIT-reported thermal and interconnector availability constraints. This supports a high-confidence association between the price event and wider scarcity/availability stress, but does not prove causality from any single asset.
+
+Finding 2: 14 October 2024 was an imbalance-amplified scarcity event
+
+The key October 2024 event was:
+
+2024-10-14
+max price: £669.212/MWh
+regime: oct_nov_transition
+time band: evening peak
+
+Internal market state:
+
+very positive imbalance
+very low wind
+high gas generation
+lower interconnector support
+evening peak timing
+
+REMIT evidence showed:
+
+thermal gas availability reductions
+wind unavailability
+other capacity reductions
+
+Examples from the REMIT output included gas and wind unit availability reductions around the event window.
+
+Research note
+
+This event proves that 2024 stress did not begin only in December.
+
+The oct_nov_transition regime was a real stress-transition regime, not just a mild seasonal label.
+
+Paper-safe interpretation
+
+The 14 October 2024 spike occurred in the Oct-Nov transition regime under very low wind, high gas generation, strongly positive imbalance, lower interconnector support, and REMIT-reported generation availability reductions. This supports interpreting the event as an imbalance-amplified scarcity episode.
+
+Finding 3: 11 December 2024 was more physical-scarcity driven than imbalance driven
+
+The 11 December 2024 event was:
+
+2024-12-11
+max price: £590.45/MWh
+regime: dec_stress
+time band: midday
+
+Internal market state:
+
+very low wind
+extremely high gas generation
+imbalance not extremely high
+interconnectors still moderate/high in the midday event
+
+This is important because the price was high even without a huge imbalance signal.
+
+REMIT evidence included:
+
+thermal gas unavailability
+wind unavailability
+hydro/pumped storage unavailability
+biomass availability events
+interconnector events becoming relevant later in the day
+Research note
+
+This event supports the idea that December 2024 was a physical scarcity regime.
+
+In this case, the system was already stretched by very low wind and extremely high gas dependence. The price did not require a very large imbalance trigger to move into the upper tail.
+
+Paper-safe interpretation
+
+The 11 December 2024 event occurred in the December stress regime. Price reached £590.45/MWh while wind was very low and gas generation was extremely high. Unlike the October event, imbalance was not the dominant signal. REMIT records show generation, wind, flexibility and interconnector-related capacity events in the wider window. This supports the interpretation that the event was mainly a physical scarcity / low-wind high-gas episode.
+
+Finding 4: 12 December 2024 combined physical scarcity with interconnector restrictions
+
+The 12 December 2024 event was:
+
+2024-12-12
+max price: £521.09/MWh
+regime: dec_stress
+time band: evening peak
+
+Internal market state:
+
+very low wind
+very high gas generation
+moderate imbalance
+interconnectors lower than 11 Dec midday
+evening peak
+
+REMIT evidence showed:
+
+EWIC interconnector restriction
+Moyle interconnector restriction
+thermal gas unavailability
+wind unavailability
+other generation availability events
+
+Important REMIT details from the output:
+
+EWIC unavailable/restricted around 13:00–20:00
+Moyle unavailable/restricted around 14:00–21:00
+both had periods with zero available capacity during the afternoon/evening window
+Research note
+
+This is the best 2024 case for the interconnector layer.
+
+It supports the idea that interconnectors were not just a background variable. During some high-price events, reduced cross-border flexibility coincided with very low wind and high gas generation.
+
+Paper-safe interpretation
+
+The 12 December 2024 event occurred during the December stress regime. Price reached £521.09/MWh with very low wind and very high gas generation. REMIT evidence shows interconnector restrictions and generation availability reductions during the event window. This supports interpreting the event as a low-wind, high-thermal, reduced-flexibility scarcity episode.
+
+4. Key cross-year research notes
+Research note 1: 2023 and 2024 had different event architectures
+
+2023’s main case was:
+
+compound scarcity
++
+positive imbalance
++
+evening peak
++
+interconnector restriction
++
+thermal availability stress
+
+2024 had two types:
+
+October 2024:
+imbalance-amplified scarcity
+
+December 2024:
+physical scarcity / low-wind high-gas stress
+with interconnector restrictions becoming important
+
+So the paper should not say:
+
+“Spikes are caused by low wind and high gas.”
+
+It should say:
+
+“Extreme imbalance prices emerge through different event architectures depending on the year and regime.”
+
+Research note 2: REMIT evidence strengthens but does not prove causality
+
+The REMIT layer is powerful because it shows that price events coincided with real asset and interconnector availability conditions.
+
+But we must be careful.
+
+Correct wording:
+
+coincided with
+occurred during
+is consistent with
+suggests contribution
+supports a high-confidence association
+
+Avoid:
+
+caused by
+proved by
+directly caused
+
+Because a price event can be influenced by multiple interacting factors:
+
+wind output
+gas generation
+imbalance
+time of day
+interconnector flows
+asset availability
+BM bid stack
+reserve scarcity
+demand level
+network constraints
+Research note 3: December 2024 was not mainly an imbalance story
+
+This is very important.
+
+In the December 2024 case studies, imbalance was not always extreme.
+
+But prices were still high because:
+
+wind was extremely low
+gas generation was extremely high
+asset/flexibility availability was reduced
+interconnectors were restricted in some windows
+
+So December 2024 should be described as:
+
+physical scarcity / low-wind high-gas regime
+
+not only:
+
+positive imbalance regime
+Research note 4: October 2024 was different from December 2024
+
+October 2024 had:
+
+very positive imbalance
+low wind
+high gas
+availability stress
+evening peak
+
+December 2024 had:
+
+very low wind
+extreme gas
+interconnector/flexibility restrictions
+but not always extreme imbalance
+
+So 2024 has at least two late-year mechanisms:
+
+Oct-Nov transition: imbalance-amplified scarcity
+December stress: physical scarcity / high gas dependence
+
+This is a strong finding.
+
+Research note 5: Interconnector restrictions matter at event level
+
+Earlier, our interconnector tables showed that interconnectors behaved differently across years.
+
+Now the REMIT layer gives event-level support.
+
+Examples:
+
+7 March 2023:
+Moyle / EWIC restrictions around the high-price window
+
+12 December 2024:
+Moyle / EWIC restrictions around the high-price window
+
+So we can now say:
+
+Interconnector conditions were not only associated with price regimes statistically; in key case-study windows, REMIT records also showed interconnector restrictions.
+
+That is a strong bridge between quantitative analysis and external evidence.
+
+Research note 6: This branch prepares the future scenario model
+
+The case-study notes produced four scenario labels:
+
+compound_scarcity_with_asset_and_interconnector_stress
+
+imbalance_amplified_scarcity_with_generation_availability_stress
+
+physical_scarcity_low_wind_high_gas_less_imbalance_driven
+
+physical_scarcity_with_interconnector_restriction_and_low_wind
+
+These are exactly the labels we can later use when applying the framework to 2025 and then building a 2026/2027 scenario outlook.
+
+The future model should not blindly predict exact prices.
+
+It should classify market states into scenario types.
+
+Example:
+
+low wind
+high gas
+positive imbalance
+low interconnector support
+REMIT thermal outage
+evening peak
+
+Scenario:
+
+compound scarcity / high spike-risk event
+5. What this means for 2025
+
+When we analyse 2025, we should test whether events resemble:
+
+2023-03-07 compound scarcity
+2024-10-14 imbalance-amplified scarcity
+2024-12-11 physical low-wind/high-gas scarcity
+2024-12-12 physical scarcity with interconnector restriction
+
+The question for 2025 is not only:
+
+How many spikes happened?
+
+The better question is:
+
+Which event architecture did 2025 follow?
+
+Possible outcomes:
+
+2025 looks like 2023:
+broader compound scarcity with imbalance and evening amplification
+
+2025 looks like 2024 October:
+transition-season imbalance-amplified scarcity
+
+2025 looks like 2024 December:
+physical scarcity under low wind and high gas
+
+2025 is different:
+new structure, perhaps more negative prices or more interconnector-driven behaviour
+6. Event-analysis Q&A
+Q1: Did we find evidence that outages or maintenance coincided with price spikes?
+
+Yes. For the main case-study windows, REMIT data showed asset or interconnector availability events around the same periods as major price events.
+
+Examples included:
+
+thermal gas unavailability
+wind unavailability
+interconnector restrictions
+maintenance / de-load events
+other generation capacity changes
+Q2: Did we prove that one gas turbine or one wind farm caused the price spike?
+
+No.
+
+We should not claim that.
+
+The correct conclusion is:
+
+The price event occurred during stressed internal market conditions and coincided with REMIT-reported availability constraints.
+
+That is association, not single-asset causality.
+
+Q3: Why is the 7 March 2023 case so important?
+
+Because it combines almost every stress layer:
+
+Q1 stress regime
+evening peak
+low wind
+high gas
+positive imbalance
+lower interconnector support
+thermal generation unavailability
+interconnector unavailability
+
+It is the best example of a compound scarcity event.
+
+Q4: Why is 14 October 2024 important?
+
+Because it shows 2024 stress began before December.
+
+The Oct-Nov transition regime was not just a mild transition. It produced a major spike under:
+
+low wind
+high gas
+very positive imbalance
+lower interconnector support
+generation availability stress
+Q5: Why are 11 and 12 December 2024 important?
+
+Because they show a different mechanism.
+
+The December 2024 events were more about:
+
+very low wind
+extreme gas generation
+reduced flexibility
+interconnector restrictions
+
+rather than purely extreme imbalance.
+
+Q6: What is the difference between October 2024 and December 2024?
+
+October 2024 looked more like:
+
+imbalance-amplified scarcity
+
+December 2024 looked more like:
+
+physical scarcity / low-wind high-gas regime
+
+This distinction is important for the paper.
+
+Q7: Why include REMIT data?
+
+Because REMIT gives real external evidence of:
+
+planned outages
+unplanned outages
+availability reductions
+interconnector restrictions
+capacity changes
+asset-level events
+
+This lets us connect market-price behaviour with real system events.
+
+Q8: What does “high confidence association” mean?
+
+It means:
+
+the price event was severe
+internal scarcity indicators were strong
+and relevant REMIT availability events were present in the event window
+
+It does not mean:
+
+the REMIT event directly caused the price
+Q9: Why did we not pull every REMIT event for every price event?
+
+Because the REMIT API returned hundreds of messages per window.
+
+Pulling all 23 windows fully would be slow and noisy.
+
+So we focused first on the four strongest case-study windows:
+
+2023-03-07
+2024-10-14
+2024-12-11
+2024-12-12
+
+This was the correct research approach.
+
+Q10: What should we do later with negative price events?
+
+Negative prices need a separate event-analysis branch.
+
+For negative prices, the mechanism is different:
+
+high wind
+low gas
+negative imbalance
+low demand / surplus conditions
+downward balancing pressure
+possible export/interconnector constraints
+
+We have not fully done that yet.
+
+That should come later, likely after 2025 or as a separate paper subsection.
+
+Q11: How will this help with 2026 or 2027?
+
+It gives scenario templates.
+
+Instead of predicting exact prices, we can say:
+
+If 2026 has conditions similar to the 7 March 2023 compound scarcity case, the system is in a high spike-risk scenario.
+
+Or:
+
+If 2026 has low wind, high gas, and interconnector restrictions like 12 December 2024, the system resembles a physical scarcity / reduced-flexibility scenario.
+
+This is more credible than exact price forecasting.
+
+Q12: What is the best wording for the paper?
+
+Use:
+
+Event-level REMIT analysis shows that the largest price events coincided with both stressed internal market conditions and external asset/interconnector availability constraints.
+
+Avoid:
+
+The outage caused the price spike.
+
+7. Final event-layer conclusion
+
+The event-analysis branch has added a major new layer to the paper.
+
+The research story is now:
+
+Price regimes show where stress forms.
+
+Thresholds show how stress becomes extreme.
+
+Time bands show when stress is amplified.
+
+Regime groups show where annual stress concentrates.
+
+Interconnector analysis shows cross-year differences in flexibility context.
+
+Event-level REMIT analysis shows that the largest price events coincided with real asset and interconnector availability constraints.
+
+That is a much stronger research paper than a simple correlation study.
+
+The next big step is now:
+
+Build 2025 full-year dataset
+validate it
+apply the same framework
+compare 2023–2024–2025
+then build scenario labels for 2026/2027 outlook
+
+For 2023–2024, we focused heavily on upper-tail price spikes. But the 2025 validation result is already telling us not to ignore the lower tail.
+
+2025 may become important for:
+
+negative-price frequency
+high-wind / low-gas surplus conditions
+downward balancing pressure
+price volatility around surplus regimes
+
+This does not replace the spike analysis. It expands the paper into both:
+
+scarcity price formation
+and
+surplus / negative-price formation
+
+“GB imbalance prices form through multiple annual architectures: 2023 Q1 scarcity stress, 2024 late-year physical scarcity, and 2025 mixed-tail behaviour with both January scarcity spikes and frequent negative-price regimes.”
+
+2025 must not be treated as merely a moderate year. Its annual average is lower than 2023, but its maximum event is more extreme.
+2025 does not have as many broad £250+ spike periods as 2023, but it has a more severe extreme tail at the £300+ level.
+The lower tail became progressively more frequent across the three years, suggesting that surplus/downward-price regimes became more prominent alongside upper-tail scarcity episodes.
+2025 looks like a mixed year: lower average price than 2023 but higher than 2024, with both increased negative-price frequency and a severe extreme-price tail.
+2025 combines higher average wind and more negative average imbalance with a higher frequency of negative prices, which supports a stronger surplus/downward-price regime. But it also has a severe upper tail, meaning scarcity episodes still occur inside a more renewable/surplus-prone year.
+
+Across 2023–2025, GB imbalance price formation shows a shift from broad scarcity stress toward increasingly mixed-tail behaviour. 2023 had the highest average price and the largest number of £250+/MWh periods, consistent with a broad Q1 scarcity regime. 2024 was quieter overall, with lower average prices and fewer upper-tail events, but late-year physical scarcity still produced concentrated spikes. 2025 had fewer £250+ periods than 2023 but more £300+ periods than either prior year, while also recording the highest number of negative-price periods. This indicates that 2025 combined more frequent surplus/downward-price conditions with a severe upper-tail risk.
+
+From the annual table, 2025 looked like a mixed-tail year. Now we need to prove where that mixed-tail behaviour came from:
+
+January 2025 likely = upper-tail scarcity
+June 2025 likely = mixed-tail / dual-tail volatility
+September 2025 likely = negative-price dominant
+October 2025 likely = transition stress
+
+major_spike_months: Jan, Feb, Mar
+total £250+ spikes in major spike months: 111
+max price: £1950/MWh
+
+2023 was dominated by Q1 scarcity. This matches our earlier 2023 framework.
+
+Research note:
+2023’s spike risk was broad and concentrated early in the year. The year’s main story remains Q1 stress, not a late-year or mixed-tail structure.
+
+quiet_or_normal_months: 5
+negative_price_dominant_months: 3
+spike_active_months: Oct, Nov, Dec
+total £250+ spikes in spike-active months: 24
+max price: £669.212/MWh
+
+2024 had no major spike month under this rule, but Q4 activated spike risk.
+
+Research note:
+2024 was not broadly stressed. Its upper-tail events were concentrated in late-year transition/winter stress, especially October to December.
+
+major_spike_months: Jan only
+mixed_tail_months: Jun and Oct
+negative_price_dominant_months: May, Aug, Sep
+max price: £2900/MWh
+
+This confirms the earlier interpretation. 2025 is not simply a scarcity year or a quiet year.
+
+It has:
+
+January scarcity shock
+June and October mixed-tail volatility
+May/Aug/Sep negative-price dominance
+
+Research note:
+2025 is a mixed-tail year: it combines a severe upper-tail event structure with more frequent lower-tail negative-price periods.
+
+2. Important comparison across years
+Major spike months
+2023: 3 months — Jan, Feb, Mar
+2024: 0 months
+2025: 1 month — Jan
+
+This says:
+
+2023 had the broadest scarcity regime. 2025 had a concentrated January scarcity regime. 2024 did not have a broad major-spike month but still had late-year spike-active months.
+
+Negative-price dominant months
+2023: 1 month
+2024: 3 months
+2025: 3 months
+
+This confirms that negative-price regimes became more prominent after 2023.
+
+Research note:
+The lower tail became more structurally important in 2024 and 2025. This supports adding a surplus/negative-price formation section to the paper.
+
+Mixed-tail months
+2023: Oct, Dec
+2024: none under this label
+2025: Jun, Oct
+
+This is important.
+
+2025 has two months where both negative prices and spikes appeared. June is especially interesting because summer months are often thought of as surplus/low-price periods, yet June still produced £250+ and £300+ events.
+
+Research note:
+2025 shows that surplus-prone months can still contain scarcity episodes. This is important for any future scenario model.
+
+3. Paper-ready interpretation
+
+You can write:
+
+The monthly comparison shows that annual averages conceal sharply different within-year architectures. In 2023, upper-tail price risk was concentrated in a broad Q1 scarcity regime, with January to March classified as major spike months. In 2024, most months were quiet or negative-price dominated, while upper-tail stress appeared only in late-year spike-active months. In 2025, the structure changed again: January became a major spike month, while June and October displayed mixed-tail behaviour, combining negative-price frequency with upper-tail spike events. This indicates that GB imbalance price formation is increasingly characterised by both scarcity and surplus extremes rather than a single annual stress pattern.
+
+2023 = Q1 compound scarcity architecture
+2024 = late-year physical scarcity architecture
+2025 = mixed-tail scarcity/surplus architecture
+
+Why this next?
+
+Because monthly comparison tells us when regimes occurred. Price-band comparison tells us what system conditions set each price regime in 2025.
+
+It will answer:
+
+At negative prices in 2025, what were wind, gas, imbalance, interconnectors?
+At £100–150 in 2025, what changed?
+At £250+ and £300+ in 2025, what were system conditions?
+
+Do negative prices in 2025 occur under high wind, low gas and negative imbalance?
+
+Does the £300+ band occur under very low wind, very high gas, positive imbalance and evening peak?
+
+Is the £250–300 band different from the £300+ band?
+
+Does 2025’s upper tail look more like 2023 Q1, 2024 December, or a new structure?
+
+1. Main 2025 price-band finding
+
+2025 has a very clear two-tail structure:
+
+Negative prices:
+high wind
+very low gas
+strongly negative imbalance
+low interconnector levels
+
+Extreme positive prices:
+very low wind
+very high gas
+positive imbalance
+high evening-peak share
+some low-interconnector exposure
+
+So 2025 is not random. It has a clear surplus regime and a clear scarcity regime.
+
+2. Negative-price regime in 2025
+
+Negative-price band:
+
+periods: 1121
+avg_price: -16.4235
+avg_imbalance: -506.0298
+avg_wind: 11918.355 MW
+avg_gas: 3183.7333 MW
+avg_interconnectors: 1218.2712 MW
+share_imbalance_lt_minus_150: 0.8698
+share_wind_gt_10000: 0.6869
+share_wind_gt_12000: 0.5112
+share_gas_lt_5000: 0.9376
+share_evening_peak: 0.0375
+
+This is a very clean surplus fingerprint.
+
+Research note:
+
+Negative prices in 2025 were not just slightly low-price periods. They were structurally different from normal prices: strongly negative imbalance, high wind, very low gas generation, and low evening-peak exposure.
+
+Paper interpretation:
+
+The 2025 negative-price regime was primarily a surplus-balancing regime, characterised by high wind output, low gas generation and strongly negative imbalance. The very low evening-peak share suggests negative prices were not typically formed during demand-tight peak conditions, but during surplus periods.
+
+3. Normal price regime: 0 to 100
+periods: 10803
+annual_share: 0.6166
+avg_price: 66.5475
+avg_imbalance: -125.45
+avg_wind: 8145.1911 MW
+avg_gas: 8310.5946 MW
+avg_interconnectors: 3557.4613 MW
+
+This is the dominant 2025 regime.
+
+Research note:
+
+Most 2025 periods sat in the £0–100/MWh range. This regime had moderately negative imbalance, moderate-to-high wind, and moderate gas generation.
+
+This explains why average 2025 price was not as high as 2023, despite the extreme £2900 event.
+
+4. Stress entry: 100 to 150
+periods: 5128
+annual_share: 0.2927
+avg_imbalance: 214.7828
+avg_wind: 7128.6866 MW
+avg_gas: 10688.1901 MW
+share_imbalance_gt_150: 0.5322
+share_evening_peak: 0.2713
+
+This is where the market clearly moves from surplus/normal into stress.
+
+Research note:
+
+The £100–150/MWh band is the first clear stress-entry layer in 2025. Average imbalance flips strongly positive, gas generation rises, wind falls, and evening-peak share increases.
+
+This matches what we saw in 2023–2024: crossing above £100 is structurally meaningful.
+
+5. High-stress regime: 150 to 200
+periods: 400
+avg_imbalance: 289.9667
+avg_wind: 5366.2 MW
+avg_gas: 18556.475 MW
+share_gas_gt_15000: 0.7625
+share_gas_gt_20000: 0.5175
+share_evening_peak: 0.47
+
+This band is a real scarcity regime.
+
+Research note:
+
+By £150–200/MWh, 2025 prices are clearly associated with high gas generation, lower wind, positive imbalance and a much higher evening-peak share.
+
+This is the transition from broad stress to scarcity pricing.
+
+6. Near-spike regime: 200 to 250
+periods: 26
+avg_imbalance: 387.2849
+avg_wind: 2948.4231 MW
+avg_gas: 21871.8846 MW
+share_wind_lt_8000: 1.0
+share_gas_gt_15000: 0.9231
+share_gas_gt_20000: 0.8077
+share_evening_peak: 0.5385
+
+This is a very strong near-spike fingerprint.
+
+Research note:
+
+Near-spikes in 2025 already had very low wind, very high gas and strongly positive imbalance. They were not normal periods that randomly failed to spike; they were stressed scarcity states.
+
+This mirrors the earlier spike-vs-near-spike work.
+
+7. Spike regime: 250 to 300
+periods: 15
+avg_imbalance: 261.6613
+avg_wind: 2901.4667 MW
+avg_gas: 20910.8 MW
+share_wind_lt_8000: 1.0
+share_gas_gt_15000: 0.8
+share_gas_gt_20000: 0.8
+share_evening_peak: 0.6667
+
+This looks very similar to the near-spike regime.
+
+Research note:
+
+The £250–300/MWh band in 2025 is scarcity-driven, but its average imbalance is lower than the £200–250 band. This suggests the final move into spike territory was not purely imbalance magnitude; low wind, high gas and timing also mattered.
+
+8. Extreme spike regime: 300+
+periods: 27
+avg_price: 1296.0599
+max_price: 2900
+avg_imbalance: 289.4384
+avg_wind: 3034.1111 MW
+avg_gas: 22843.9259 MW
+share_wind_lt_8000: 1.0
+share_wind_lt_3000: 0.7037
+share_gas_gt_15000: 0.8519
+share_gas_gt_20000: 0.8148
+share_evening_peak: 0.6296
+share_interconnectors_lt_2500: 0.4074
+
+This is one of the most important 2025 results.
+
+Extreme spikes were almost entirely:
+
+low-wind
+high-gas
+positive-imbalance
+often evening-peak
+sometimes lower-interconnector-support
+
+Research note:
+
+The 2025 £300+ regime is a severe scarcity regime. Every £300+ period occurred with wind below 8000 MW, more than 70% occurred with wind below 3000 MW, and more than 81% occurred with gas above 20000 MW.
+
+This is very strong.
+
+9. Important 2025 transition pattern
+
+The progression is very clear:
+
+negative:
+imbalance -506, wind 11918, gas 3184
+
+0_to_100:
+imbalance -125, wind 8145, gas 8311
+
+100_to_150:
+imbalance +215, wind 7129, gas 10688
+
+150_to_200:
+imbalance +290, wind 5366, gas 18556
+
+200_to_250:
+imbalance +387, wind 2948, gas 21872
+
+250_to_300:
+imbalance +262, wind 2901, gas 20911
+
+300_plus:
+imbalance +289, wind 3034, gas 22844
+
+So the structural movement is:
+
+surplus → normal → positive imbalance stress → low-wind/high-gas scarcity → extreme scarcity
+
+Research note:
+
+2025 confirms that price bands represent distinct system states, not arbitrary price buckets.
+
+10. What this adds to the 2023–2025 story
+
+2025 now has a very clean interpretation:
+
+Negative-price side:
+high-wind, low-gas, negative-imbalance surplus regime
+
+Upper-tail side:
+low-wind, high-gas, positive-imbalance scarcity regime
+
+Annual structure:
+mixed-tail year because both regimes occurred frequently enough to matter
+
+Paper-ready sentence:
+
+The 2025 price-band structure shows a pronounced bifurcation between surplus and scarcity regimes. Negative prices were associated with high wind output, low gas generation and strongly negative imbalance, while £300+/MWh periods were associated with uniformly low wind, high gas generation, positive imbalance and elevated evening-peak exposure. This confirms that 2025 was a mixed-tail year, combining frequent surplus pricing with severe scarcity episodes.
+
+1. Big result: the three-year price-setting structure is now visible
+
+Across 2023–2025, the price bands show a consistent broad pattern:
+
+negative prices
+= high wind + low gas + strongly negative imbalance
+
+£0–100
+= normal / softer system state
+
+£100–150
+= stress-entry regime
+
+£150–200
+= high-stress regime
+
+£200–250
+= near-spike scarcity regime
+
+£250–300
+= ordinary spike regime
+
+£300+
+= extreme scarcity regime
+
+But the strength of each layer differs by year.
+
+That is exactly what this paper is about.
+
+2. Negative-price regime: increasingly important lower tail
+
+Negative-price periods:
+
+2023: 849
+2024: 1,073
+2025: 1,121
+
+Negative-price annual share:
+
+2023: 4.85%
+2024: 6.11%
+2025: 6.40%
+
+Negative-price fingerprints are very consistent:
+
+2023 avg wind: 11,943.7 MW | avg gas: 3,552.8 MW | avg imbalance: -448.5
+2024 avg wind: 11,604.4 MW | avg gas: 2,900.8 MW | avg imbalance: -415.9
+2025 avg wind: 11,918.4 MW | avg gas: 3,183.7 MW | avg imbalance: -506.0
+
+Research note:
+
+Negative prices form under a very stable surplus fingerprint across all three years: high wind, very low gas and strongly negative imbalance. What changes is frequency: the lower tail becomes more frequent from 2023 to 2025.
+
+Paper interpretation:
+
+The lower tail is not random volatility. It is a repeated surplus-balancing regime that became more frequent after 2023.
+
+3. Normal regime: £0–100 dominates, but less so in 2023
+
+Annual share of £0–100:
+
+2023: 48.21%
+2024: 69.42%
+2025: 61.66%
+
+This is important:
+
+2024 had the largest normal-price share.
+2023 had the smallest normal-price share.
+2025 sat between them.
+
+Research note:
+
+The very large £0–100 share in 2024 helps explain why 2024 had the lowest average annual price and the quietest broad upper-tail profile.
+
+4. Stress-entry regime: £100–150
+
+Annual share of £100–150:
+
+2023: 30.50%
+2024: 23.59%
+2025: 29.27%
+
+Average imbalance in this band:
+
+2023: +151.4
+2024: +229.6
+2025: +214.8
+
+Research note:
+
+The £100–150 band is the first clear stress-entry layer across all three years. It is where average imbalance turns positive and gas generation rises relative to normal prices.
+
+This supports our earlier conclusion:
+
+crossing £100/MWh is a real structural transition
+5. High-stress regime: £150–200
+
+This band is where 2024 and 2025 become more thermally intense than 2023.
+
+Average gas in £150–200:
+
+2023: 11,625 MW
+2024: 19,968 MW
+2025: 18,556 MW
+
+Share gas > 15,000 MW:
+
+2023: 0.2977
+2024: 0.8852
+2025: 0.7625
+
+Research note:
+
+In 2024 and 2025, prices above £150 were much more tightly linked to high gas generation than in 2023. This suggests upper-tail stress became more thermally concentrated after 2023.
+
+This is a strong cross-year finding.
+
+6. Near-spike regime: £200–250
+
+Average wind:
+
+2023: 7,491.6 MW
+2024: 2,695.2 MW
+2025: 2,948.4 MW
+
+Average gas:
+
+2023: 14,318.4 MW
+2024: 23,071.3 MW
+2025: 21,871.9 MW
+
+Share wind < 8,000 MW:
+
+2023: 0.5916
+2024: 1.0000
+2025: 1.0000
+
+Research note:
+
+Near-spikes in 2024 and 2025 were already severe low-wind/high-gas states. In 2023, near-spikes were stressed but less physically extreme on average.
+
+This is important because it says:
+
+2024/2025 near-spikes were scarcity states that did not always convert into extreme spikes
+7. Ordinary spike regime: £250–300
+
+Average gas:
+
+2023: 18,833.1 MW
+2024: 24,537.0 MW
+2025: 20,910.8 MW
+
+Share wind < 8,000 MW:
+
+2023: 0.8182
+2024: 1.0000
+2025: 1.0000
+
+Share evening peak:
+
+2023: 0.6566
+2024: 0.4286
+2025: 0.6667
+
+Research note:
+
+The £250–300 band is low-wind/high-gas dominated in all three years, but the timing layer differs. 2023 and 2025 have stronger evening-peak association than 2024.
+
+8. Extreme spike regime: £300+
+
+This is probably the most important upper-tail comparison.
+
+£300+ periods:
+
+2023: 21
+2024: 17
+2025: 27
+
+Maximum price:
+
+2023: £1950
+2024: £669.212
+2025: £2900
+
+Average gas:
+
+2023: 20,037.5 MW
+2024: 24,821.9 MW
+2025: 22,843.9 MW
+
+Average wind:
+
+2023: 5,293.5 MW
+2024: 1,676.7 MW
+2025: 3,034.1 MW
+
+Share wind < 8,000 MW:
+
+2023: 0.9048
+2024: 1.0000
+2025: 1.0000
+
+Share gas > 20,000 MW:
+
+2023: 0.7143
+2024: 0.8824
+2025: 0.8148
+
+Share evening peak:
+
+2023: 0.8571
+2024: 0.4706
+2025: 0.6296
+
+Research note:
+
+The extreme-spike regime is low-wind/high-gas dominated in all three years, but the shape differs. 2023 extreme spikes were most evening-peak concentrated. 2024 extreme spikes were the most physically severe in terms of low wind and high gas. 2025 had the most £300+ periods and the highest maximum price, suggesting a severe but more mixed extreme-tail structure.
+
+2023:
+Broad scarcity year.
+High average price.
+Many £250+ events.
+Extreme spikes strongly evening-peak concentrated.
+
+2024:
+Quiet normal-price year for most periods.
+Upper tail was rare but highly physical: very low wind and very high gas.
+Stress concentrated late in the year.
+
+2025:
+Mixed-tail year.
+Most negative-price periods.
+More £300+ periods than 2023 or 2024.
+Highest maximum price.
+Extreme scarcity coexisted with frequent surplus pricing.
+
+The three-year price-band comparison shows that GB imbalance prices are set through repeated but year-specific system states. Negative prices form consistently under high-wind, low-gas and strongly negative-imbalance conditions, with their frequency increasing from 2023 to 2025. The £100–150/MWh band marks a transition into positive-imbalance stress, while prices above £150/MWh increasingly reflect low-wind, high-gas scarcity. Extreme £300+/MWh prices are low-wind/high-gas dominated in all years, but the timing and severity differ: 2023 was most evening-peak concentrated, 2024 was most physically severe in low-wind/high-gas terms, and 2025 combined frequent negative-price periods with the largest single price event and the highest number of £300+/MWh periods.
+
+Main transition findings
+1. Negative → normal price transition is consistent across all years
+2023: imbalance +263, wind -4713, gas +5820
+2024: imbalance +340, wind -3963, gas +4924
+2025: imbalance +381, wind -3773, gas +5127
+
+This is very clean.
+
+Research note:
+The movement out of negative prices is consistently driven by a shift away from surplus conditions: imbalance becomes much less negative, wind falls sharply, and gas generation rises strongly.
+
+Paper meaning:
+Negative prices are not isolated anomalies. They sit at the bottom of a structured surplus regime, and the exit from that regime is marked by lower wind, higher gas and less negative imbalance.
+
+2. £0–100 → £100–150 is the main stress-entry transition
+2023: imbalance +336, gas +1498
+2024: imbalance +305, gas +3223
+2025: imbalance +340, gas +2378
+
+This confirms our earlier finding across all three years.
+
+Research note:
+The £100/MWh threshold is structurally meaningful. Across 2023, 2024 and 2025, moving above £100 corresponds to a large positive shift in imbalance and a rise in gas generation.
+
+Paper meaning:
+The £100–150 band should be treated as the first stress-entry regime, not merely a higher normal-price band.
+
+3. £100–150 → £150–200 differs strongly by year
+2023: wind +1410, gas +754
+2024: wind -2542, gas +8920
+2025: wind -1762, gas +7868
+
+This is a major cross-year contrast.
+
+Research note:
+In 2024 and 2025, the move into £150–200 is a clear physical scarcity transition: wind falls sharply and gas rises sharply. In 2023, this transition is less physically scarcity-like and may reflect a different stress structure, with imbalance and pricing conditions playing a larger role.
+
+Paper meaning:
+After the first stress-entry layer, the pathway into higher stress is not identical across years. 2024 and 2025 become much more thermally dominated above £150.
+
+4. £150–200 → £200–250 is especially severe in 2025
+2023: wind -579, gas +2693, imbalance +63
+2024: wind -1469, gas +3104, imbalance -18
+2025: wind -2418, gas +3315, imbalance +97
+
+2025 has the largest wind drop and strong gas increase here.
+
+Research note:
+The 2025 move from high stress into near-spike territory shows a very clear scarcity escalation: wind falls sharply, gas rises, and imbalance increases.
+
+Paper meaning:
+2025’s near-spike regime was not accidental. It emerged from a strong low-wind/high-gas transition.
+
+5. £200–250 → £250–300 is not always a simple escalation
+2023: wind -1990, gas +4515, evening share +0.354
+2024: imbalance -118, wind -581, gas +1466
+2025: imbalance -126, wind -47, gas -961
+
+This is important.
+
+Research note:
+In 2023, moving from near-spike to £250–300 was a clear scarcity and timing escalation: wind fell sharply, gas rose sharply, and evening-peak share jumped. In 2024 and 2025, this transition is less straightforward, suggesting the £250–300 band may not be the final scarcity layer in those years.
+
+Paper meaning:
+The simple assumption that every higher band means every driver increases is wrong. The route into ordinary spike prices differs by year.
+
+6. £250–300 → £300+ is the extreme-tail separator
+
+This is the most important upper-tail transition.
+
+2023: price +237, gas +1204, evening share +0.201, imbalance -44
+2024: price +175, imbalance +253, wind -438, interconnectors -852
+2025: price +1024, gas +1933, imbalance +28
+
+Research note:
+The final step into £300+ differs across years:
+
+2023: stronger evening-peak concentration and higher gas
+2024: large imbalance escalation plus falling wind and lower interconnector support
+2025: very large price escalation with further gas increase, but without a big evening/timing increase
+
+Paper meaning:
+Extreme price formation is year-specific. The final extreme-tail jump is not caused by one universal driver.
+
+Big paper conclusion from this table
+
+This table supports one of your strongest arguments:
+
+GB imbalance price formation is regime-dependent and transition-dependent. The market does not move from normal prices to spikes through one fixed pathway. Instead, different years show different escalation routes: 2023 relied more on evening-peak amplification and Q1 compound scarcity; 2024’s upper tail was more physical and interconnector-sensitive; 2025 combined surplus regimes with sharp scarcity jumps, including the largest maximum price in the sample.
+
+How this fits the paper structure
+
+This table belongs under:
+
+B. Stress transition
+C. Spike realization
+D. Dynamic formation
+
+Specifically:
+
+Price-band table = what each price regime looks like
+Transition table = how the system moves between regimes
+Event/REMIT table = what external constraints coincided with major episodes
+
+That is a strong methodological chain.
+
+Core interpretation
+1. Broad stress is highest in 2023
+
+For price >= 100:
+
+2023: 8220 periods, probability 0.4694
+2024: 4299 periods, probability 0.2447
+2025: 5596 periods, probability 0.3194
+
+So 2023 had the broadest elevated-price environment. 2024 was much quieter, and 2025 sat in between.
+
+2. 2024 and 2025 become physically severe much faster
+
+At price >= 200, wind and gas conditions become very extreme:
+
+2024: avg_wind 2047 MW, avg_gas 24284 MW
+2025: avg_wind 2972 MW, avg_gas 22046 MW
+2023: avg_wind 7151 MW, avg_gas 15111 MW
+
+This is important. It means 2024 and 2025 did not have as much broad stress as 2023, but when prices did move high, they moved under much more severe low-wind/high-gas conditions.
+
+3. 2025 has the strongest extreme-tail count
+
+For price >= 300:
+
+2023: 21 periods
+2024: 17 periods
+2025: 27 periods
+
+So 2025 has the highest number of £300+ periods, even though 2023 has the highest number of £250+ periods.
+
+4. Evening peak differs by year
+
+At price >= 300:
+
+2023: share_evening_peak 0.8571
+2024: share_evening_peak 0.4706
+2025: share_evening_peak 0.6296
+
+This supports the idea that 2023 extreme prices were especially evening-peak amplified, while 2024 and 2025 extreme prices were more physically scarcity-driven and less purely evening-centred.
+
+Research note
+
+This table strengthens the main Paper 1 argument:
+
+Price severity layers are not arbitrary. As the threshold rises, the market moves from broad stress into physical scarcity, but the pathway differs by year. 2023 shows broad and evening-amplified scarcity; 2024 shows rare but highly physical scarcity; 2025 shows a mixed-tail year with the highest extreme-price count.
+
+Main interpretation
+1. Evening peak is still the main 2025 risk window
+
+At price >= 250:
+
+evening_peak: 27 periods out of 42 total £250+ periods
+
+That means:
+
+64.3% of 2025 £250+ periods occurred during evening peak
+
+At price >= 300:
+
+evening_peak: 17 periods out of 27 total £300+ periods
+
+That means:
+
+63.0% of 2025 £300+ periods occurred during evening peak
+
+So 2025 is clearly evening-amplified, but not exclusively evening-driven.
+
+Research note:
+2025 sits between 2023 and 2024. It is not as evening-dominated as 2023, but evening peak remains the most important time-band for extreme prices.
+
+2. No night-time severe price events
+
+At price >= 200, >=250, and >=300:
+
+night: 0 periods
+
+This is very clean.
+
+Research note:
+Night-time periods can move above £100 and £150, but the severe scarcity layers in 2025 did not occur overnight.
+
+Paper meaning:
+Severe 2025 price formation required more than low wind/high gas alone; it also needed demand/timing pressure.
+
+3. Morning, midday and afternoon still matter for 2025 extremes
+
+At price >= 300:
+
+morning_ramp: 3 periods
+midday: 4 periods
+afternoon: 3 periods
+evening_peak: 17 periods
+late_evening: 0 periods
+
+This matters because the 2025 extreme tail was not purely a classic evening-peak story.
+
+Research note:
+The existence of morning, midday and afternoon £300+ periods suggests that some 2025 extreme events were linked to broader scarcity or asset availability conditions, not just evening demand peak.
+
+This will be important when we later investigate the January 2025 £2900 event.
+
+4. Evening peak has the highest £250+ and £300+ probability
+
+For price >= 250:
+
+evening_peak probability: 0.0092
+afternoon probability: 0.0027
+midday probability: 0.0024
+morning_ramp probability: 0.0010
+late_evening probability: 0.0003
+night probability: 0.0000
+
+For price >= 300:
+
+evening_peak probability: 0.0058
+afternoon probability: 0.0021
+midday probability: 0.0014
+morning_ramp probability: 0.0010
+night / late_evening: 0.0000
+
+This confirms timing amplification.
+
+Research note:
+Evening peak is the highest-risk window for 2025 upper-tail pricing, but midday and afternoon events show that structural scarcity can also break through outside evening peak.
+
+5. Physical scarcity is present across all severe time bands
+
+At price >= 300, every non-empty time band has:
+
+share_wind_lt_8000 = 1.0
+share_gas_gt_15000 = 1.0
+share_gas_gt_20000 = 1.0
+
+For:
+
+morning_ramp
+midday
+afternoon
+evening_peak
+
+That is very strong.
+
+Research note:
+The 2025 £300+ regime is physically scarce across time bands. Timing changes the probability, but low wind and high gas are universal features of the severe-price state.
+
+6. Evening peak £300+ events are more imbalance-driven
+
+At price >= 300:
+
+evening_peak avg_imbalance: 378.1113
+morning_ramp avg_imbalance: 125.1578
+midday avg_imbalance: 135.5916
+afternoon avg_imbalance: 156.3681
+
+This is important.
+
+Research note:
+Evening-peak extreme events in 2025 were much more imbalance-stressed than non-evening extreme events. This suggests that evening peak acts as an imbalance amplifier on top of the physical scarcity background.
+
+Paper wording:
+
+In 2025, extreme prices outside evening peak still occurred under low-wind/high-gas scarcity, but evening-peak extreme prices were associated with much stronger positive imbalance.
+
+Paper-ready interpretation
+
+The 2025 threshold-by-time-band analysis shows that timing remained a major amplifier of upper-tail price formation. Evening peak accounted for 64.3% of £250+/MWh periods and 63.0% of £300+/MWh periods, despite representing only one of six time bands. No £200+/MWh events occurred overnight. However, £300+/MWh events also appeared during morning ramp, midday and afternoon periods, indicating that the 2025 extreme tail was not purely an evening-peak phenomenon. Across all non-empty £300+/MWh time bands, wind generation was below 8000 MW and gas generation exceeded 20000 MW, confirming a physical scarcity background. Evening-peak extreme events were distinguished by substantially higher positive imbalance, suggesting that timing amplified scarcity through imbalance pressure.
+
+Initial interpretation from what we have
+1. Evening peak is consistently the highest-risk window
+
+At price >= 250:
+
+2023 evening_peak: 83 periods, probability 0.0284
+2024 evening_peak: 11 periods, probability 0.0038
+2025 evening_peak: 27 periods, probability 0.0092
+
+So:
+
+2023 had the strongest evening-peak spike risk
+2024 had much lower spike risk
+2025 returned to stronger evening-peak risk than 2024, but still below 2023
+
+This fits the paper story perfectly.
+
+2. Night is not an important severe-price window
+
+At price >= 300:
+
+2023 night: 0 periods
+2024 night: 0 periods
+2025 night: 0 periods
+
+At price >= 250:
+
+2023 night: 2 periods
+2024 night: 0 periods
+2025 night: 0 periods
+
+Research note:
+
+Night periods can enter mild or moderate stress, but extreme scarcity pricing is not normally a night-time phenomenon in this sample.
+
+3. 2023 was most evening-dominated
+
+At price >= 300:
+
+2023 evening_peak: 18 out of 21 £300+ periods
+
+That is:
+
+85.7%
+
+This confirms our earlier finding that 2023 extreme spikes were highly evening-peak amplified.
+
+4. 2024 was less evening-dominated
+
+At price >= 300:
+
+2024 morning_ramp: 5
+2024 midday: 3
+2024 afternoon: 1
+2024 evening_peak: 8
+2024 late_evening: 0
+2024 night: 0
+
+So 2024 had a more spread-out extreme tail, even though evening peak still had the highest single count.
+
+Research note:
+
+2024’s extreme-price events were not purely evening-driven. This supports the idea that 2024 upper-tail events were more physically scarcity-driven across selected periods.
+
+5. 2025 sits between 2023 and 2024
+
+From the previous 2025 table:
+
+2025 £300+:
+morning_ramp: 3
+midday: 4
+afternoon: 3
+evening_peak: 17
+late_evening: 0
+night: 0
+
+So:
+
+2025 is less evening-dominated than 2023,
+but more evening-concentrated than 2024.
+
+This is a strong cross-year timing conclusion.
+
+Paper-ready interpretation
+
+The threshold-by-time-band comparison shows that timing acts as an amplifier rather than a standalone cause of extreme imbalance prices. Evening peak is the dominant high-risk window across all three years, particularly in 2023 where 18 of 21 £300+/MWh periods occurred during the evening peak. However, 2024 and 2025 also show morning, midday and afternoon extreme-price periods, indicating that severe physical scarcity can break through outside the evening peak. Night-time periods do not contribute materially to the extreme tail, with no £300+/MWh night events in any year.
+
+Across 2023–2025, evening peak remained the most important high-risk window for upper-tail imbalance prices, but the degree of timing concentration varied by year. The 2023 extreme tail was highly evening-peak dominated, while 2024 and 2025 also produced morning, midday and afternoon extreme-price periods, indicating that physical scarcity can override normal timing patterns when system conditions are sufficiently tight.
+
+2025 is not one simple year. It has seven internal regimes:
+
+1. jan_spike_stress
+2. feb_mar_broad_stress
+3. apr_may_surplus_shift
+4. jun_mixed_tail
+5. jul_sep_surplus
+6. oct_mixed_transition
+7. nov_dec_quiet
+Key interpretation
+1. January = main upper-tail shock regime
+rows: 1488
+avg_price: 123.8734
+max_price: 2900
+£250+ periods: 23
+£300+ periods: 19
+
+January alone produced:
+
+23 of 42 total £250+ periods
+19 of 27 total £300+ periods
+
+So January is the main 2025 extreme-price regime.
+
+Research note:
+The 2025 extreme tail is heavily concentrated in January, especially for £300+ events.
+
+2. February–March = broad stress without spike realization
+£100+ periods: 1249
+£150+ periods: 172
+£250+ periods: 0
+£300+ periods: 0
+
+This is important.
+
+It shows stress existed, but it did not convert into spikes.
+
+Research note:
+February–March had broad elevated-price conditions but lacked the final scarcity trigger needed for £250+/£300+ realization.
+
+3. April–May = surplus shift
+negative periods: 239
+£250+ periods: 0
+avg_gas: 7058.388
+avg_wind: 5968.8268
+
+This is the transition away from winter stress into lower-price/surplus conditions.
+
+Research note:
+April–May marks the shift from broad stress into surplus/downward-price structure.
+
+4. June = mixed-tail regime
+negative periods: 227
+£250+ periods: 6
+£300+ periods: 4
+max_price: 423.85
+
+This is a key 2025 finding.
+
+June had both:
+
+high negative-price exposure
+and
+renewed upper-tail spike activity
+
+Research note:
+June is one of the clearest examples of mixed-tail volatility: surplus conditions and spike events occurring in the same regime period.
+
+5. July–September = surplus-heavy summer
+negative periods: 361
+£250+ periods: 1
+£300+ periods: 0
+avg_gas: 7091.9099
+
+This is mainly a lower-tail/surplus regime.
+
+Research note:
+July–September was not a major scarcity regime. It was mostly surplus-heavy, with limited upper-tail activity.
+
+6. October = mixed transition
+negative periods: 100
+£250+ periods: 12
+£300+ periods: 4
+max_price: 487
+
+October is very important because it looks like an autumn transition stress month.
+
+Research note:
+October 2025 combines negative-price exposure with renewed upper-tail stress. This makes it comparable to a mixed transition regime rather than a simple quiet month.
+
+7. November–December = quiet late-year regime
+£250+ periods: 0
+£300+ periods: 0
+negative periods: 51
+avg_wind: 11282.237
+max_price: 247.3104
+
+This is surprising and useful.
+
+Unlike 2024, where December was a stress month, 2025 finished quietly.
+
+Research note:
+Late 2025 did not repeat the 2024 December stress pattern. High wind and softer upper-tail conditions suppressed spike realization.
+
+Main paper conclusion from this table
+
+This is the clean sentence:
+
+The 2025 regime fingerprint shows a mixed-tail annual architecture. January dominated the extreme upper tail, June and October produced mixed-tail volatility, July–September were surplus-heavy, and November–December were comparatively quiet. This differs from 2023’s broad Q1 scarcity structure and 2024’s late-year physical scarcity structure.
+
+1. 2023: Q1 compound scarcity architecture
+
+The main stress regime is:
+
+2023_q1_compound_scarcity
+
+Key figures:
+
+rows: 4314
+avg_price: 132.5373
+max_price: 1950
+£250+ periods: 111
+£300+ periods: 18
+
+Out of the full 2023 total:
+
+2023 total £250+ periods: 120
+2023 Q1 £250+ periods: 111
+
+So:
+
+92.5% of 2023 £250+ periods occurred in Q1
+
+And:
+
+2023 total £300+ periods: 21
+2023 Q1 £300+ periods: 18
+
+So:
+
+85.7% of 2023 £300+ periods occurred in Q1
+Interpretation
+
+2023 was not evenly stressed across the year. It was dominated by a Q1 compound scarcity block.
+
+Paper wording:
+
+The 2023 upper tail was concentrated in a Q1 compound scarcity regime, which contained 92.5% of annual £250+/MWh periods and 85.7% of annual £300+/MWh periods.
+
+2. 2024: late-year physical scarcity architecture
+
+The main stress regimes are:
+
+2024_oct_nov_transition
+2024_dec_physical_scarcity
+
+December is especially important:
+
+2024_dec_physical_scarcity
+rows: 1488
+avg_price: 86.2649
+max_price: 590.4504
+£250+ periods: 14
+£300+ periods: 11
+
+Out of 2024 total:
+
+2024 total £250+ periods: 24
+December £250+ periods: 14
+
+So:
+
+58.3% of 2024 £250+ periods occurred in December
+
+And:
+
+2024 total £300+ periods: 17
+December £300+ periods: 11
+
+So:
+
+64.7% of 2024 £300+ periods occurred in December
+Interpretation
+
+2024 was quiet for most of the year, but the upper tail returned late in the year.
+
+Paper wording:
+
+Unlike 2023, 2024 did not show broad Q1 scarcity. Its upper-tail risk was concentrated in late-year transition and December physical scarcity regimes.
+
+3. 2025: mixed-tail scarcity/surplus architecture
+
+The 2025 structure is more complex.
+
+Main upper-tail regime:
+
+2025_jan_spike_stress
+
+Key figures:
+
+rows: 1488
+avg_price: 123.8734
+max_price: 2900
+£250+ periods: 23
+£300+ periods: 19
+
+Out of 2025 total:
+
+2025 total £250+ periods: 42
+January £250+ periods: 23
+
+So:
+
+54.8% of 2025 £250+ periods occurred in January
+
+And:
+
+2025 total £300+ periods: 27
+January £300+ periods: 19
+
+So:
+
+70.4% of 2025 £300+ periods occurred in January
+
+But 2025 also has mixed-tail regimes:
+
+2025_jun_mixed_tail:
+negative periods: 227
+£250+ periods: 6
+£300+ periods: 4
+
+2025_oct_mixed_transition:
+negative periods: 100
+£250+ periods: 12
+£300+ periods: 4
+Interpretation
+
+2025 was not a broad scarcity year like 2023 and not only a late-year physical scarcity year like 2024. It combined:
+
+January upper-tail shock
+June mixed-tail volatility
+summer surplus conditions
+October mixed transition
+quiet November–December
+
+Paper wording:
+
+2025 shows a mixed-tail architecture. The extreme upper tail was concentrated in January, while June and October combined negative-price exposure with renewed spike activity. This makes 2025 structurally different from both 2023 and 2024.
+
+4. Important contrast: December 2024 vs November–December 2025
+
+This is a strong finding.
+
+2024_dec_physical_scarcity:
+£250+ periods: 14
+£300+ periods: 11
+max price: 590.4504
+
+2025_nov_dec_quiet:
+£250+ periods: 0
+£300+ periods: 0
+max price: 247.3104
+
+So late-year conditions did not repeat.
+
+Paper note:
+
+December stress was not structurally persistent year-to-year. December 2024 was a physical scarcity regime, while November–December 2025 was a quiet high-wind regime with no £250+/MWh realization.
+
+5. Paper-ready architecture paragraph
+
+You can use this later:
+
+The regime fingerprint comparison shows that GB imbalance price formation differed structurally across the thre
+
+Key research finding from this table
+
+For 2025, the strongest price-stress evidence is concentrated around:
+
+8 January 2025
+20 January 2025
+22 January 2025
+30 June 2025
+1 July 2025
+13–15 October 2025
+22 October 2025
+
+These are the most important candidate dates for external checks.
+
+Very important observation
+
+The table shows that some events are duplicated across event types.
+
+Example:
+
+2025_extreme_spike_cluster_2
+2025_positive_spike_cluster_2
+2025_large_upward_jump_366
+2025_large_downward_reversal_374
+
+All relate to the same major price episode on 8 January 2025.
+
+That is not wrong. It means the same episode had:
+
+extreme spike behaviour
+positive spike behaviour
+large upward jump behaviour
+large downward reversal behaviour
+
+So for the paper, we should not treat every row as a separate case study. We need to group them into event windows.
+
+The main event windows to study
+1. 8 January 2025: primary extreme spike case
+
+This is the strongest event in the full 2025 dataset.
+
+Key facts:
+
+Max price: £2900/MWh
+Main cluster: 14:30–18:30
+Average price in cluster: ~£2644/MWh
+Average gas: ~25,003 MW
+Average wind: ~2,575 MW
+Average imbalance: ~329 MWh
+
+Paper interpretation:
+
+The 8 January 2025 episode represents the clearest 2025 upper-tail stress event, combining very high gas generation, very low wind output and positive system imbalance. The event also showed sharp intraday price discontinuity, with prices moving from £600/MWh to £2900/MWh and later reversing sharply.
+
+2. 20 January 2025: evening scarcity event
+
+Key facts:
+
+Max price: ~£678/MWh
+Time: 16:30–17:30
+Time band: evening peak
+Average gas: ~26,911 MW
+Average wind: ~2,143 MW
+Interconnectors: ~1,909 MW
+
+Paper interpretation:
+
+The 20 January event shows a more conventional evening scarcity pattern: low wind, very high gas generation and lower interconnector support during the evening peak.
+
+3. 22 January 2025: morning ramp scarcity event
+
+Key facts:
+
+Max price: £450/MWh
+Time: 06:30–07:00
+Time band: morning ramp
+Average wind: ~115 MW
+Average gas: ~25,772 MW
+
+This is important because wind was extremely low.
+
+Paper interpretation:
+
+The 22 January event illustrates that scarcity conditions were not limited to evening peaks. Morning ramp periods also produced extreme pricing when wind output was exceptionally low and gas generation was already very high.
+
+4. 30 June 2025: mixed-tail event
+
+Key facts:
+
+Max price: £423.85/MWh
+Time: 17:00–18:30
+Regime: jun_mixed_tail
+Average imbalance: ~657 MWh
+Average interconnectors: ~1,040 MW
+
+This one is very important for the 2025 story because it is not just gas/wind. The imbalance and low interconnector support matter strongly.
+
+Paper interpretation:
+
+The 30 June event supports the mixed-tail interpretation of 2025. It occurred outside the January stress regime and was driven by strong positive imbalance, low wind and reduced interconnector support.
+
+5. October 2025: renewed autumn stress
+
+Important dates:
+
+13 October 2025
+14 October 2025
+15 October 2025
+22 October 2025
+
+These show that stress returned in autumn, but not as strongly as January.
+
+Paper interpretation:
+
+October 2025 marked a renewed mixed-transition phase, with several short upper-tail events linked to low wind, high gas and positive imbalance conditions.
+
+This means we now have a strong shortlist for the paper:
+
+8 positive / near-spike cases
+Jan 8 extreme £2900/MWh event
+Jan 20 scarcity spike
+Jan 22 morning ramp scarcity
+Jun 30 mixed-tail spike
+Jul 1 near-spike
+Oct 13 autumn spike
+Oct 14 evening spike
+Oct 22 evening spike
+4 negative-price cases
+Mar 30 negative cluster
+Apr 5 negative cluster
+Jun 22 negative cluster
+Sep 6 negative cluster
+
+This is very useful because the paper can now say:
+
+The 2025 extension shows a mixed-tail system architecture: upper-tail scarcity events remained concentrated around low-wind/high-gas/positive-imbalance episodes, while lower-tail negative-price clusters became increasingly visible under high-wind/negative-imbalance/surplus conditions.
+
+Now the next step is to create a paper-ready case-study interpretation table. This will convert your technical case-window table into a clean table with:
+
+case label
+event type
+price behaviour
+internal driver summary
+regime meaning
+paper interpretation
+
+This is now a paper-ready case-study table. It separates 2025 into:
+
+Positive upper-tail cases
+
+Jan 8 extreme spike — main 2025 shock case
+Jan 20 evening scarcity
+Jan 22 morning ramp scarcity
+Jun 30 mixed-tail summer spike
+Jul 1 near-spike continuation
+Oct 13 autumn spike
+Oct 14 evening spike
+Oct 22 evening spike
+
+Negative lower-tail cases
+
+Mar 30 negative-price cluster
+Apr 5 negative-price cluster
+Jun 22 negative-price cluster
+Sep 6 negative-price cluster
+Key paper finding from this table
+
+For 2025, the market did not behave like a simple scarcity-only year.
+
+It had a mixed-tail structure:
+
+January = major upper-tail scarcity stress
+Spring/summer = strong negative-price/lower-tail exposure
+June = both negative-price risk and positive spike risk
+October = renewed upper-tail transition stress
+Nov-Dec = comparatively quieter despite some near-stress events
+
+It confirms that 2025 REMIT evidence should not be presented as “one outage caused one price spike.” Instead, your result says:
+
+All 12 2025 case-study windows occurred during a repeated external availability background.
+
+That means the REMIT layer is useful, but it is a structural/contextual layer, not the primary causal explanation.
+
+What this means in simple terms
+
+Your internal market data is still the main explanation:
+
+wind + gas generation + imbalance + interconnectors + time band
+
+The REMIT data adds this extra layer:
+
+During those stressed price windows, GB also had repeated material asset availability issues across major generation/interconnector/storage/consumption-related assets.
+
+But because many assets appear repeatedly across the year, we cannot say:
+
+DRAX caused this spike.
+NGIFA caused this spike.
+KGL caused this spike.
+
+Instead, we say:
+
+These price events occurred against a repeated external availability background, which may have reinforced scarcity or surplus conditions, but the event-level price formation is still best explained by internal market regime conditions.
+
+That is academically much safer.
+
+Important conclusion from your result
+
+Because the classification count is:
+
+repeated_background_external_context    12
+
+Your paper can now say:
+
+Across all twelve selected 2025 case-study windows, REMIT filtering identified repeated material availability events. However, the dominant assets recurred across multiple case windows rather than appearing uniquely in one event. This indicates that REMIT evidence should be interpreted as a persistent external availability backdrop rather than direct single-event causality.
+
+This is a strong methodological finding.
+
+How to use this in the paper
+
+Use it as a separate subsection:
+
+External availability context from REMIT
+
+Suggested wording:
+
+The REMIT overlay was used to test whether selected price-event windows coincided with material asset availability events. The analysis found that all twelve 2025 case-study windows had material REMIT context after filtering for high- and medium-materiality events. However, the dominant REMIT assets appeared repeatedly across multiple case windows. This means the REMIT evidence does not support a simple one-event, one-outage causal explanation. Instead, it suggests that 2025 imbalance price stress occurred against a repeated external availability background, while the immediate price formation remained primarily linked to internal system conditions such as low wind, high gas generation, net imbalance, interconnector support and time-of-day demand stress.
+
+This is the clean academic interpretation.
+
 1. Introduction
 
 Following the descriptive and rule-based analysis of the January 2023 pilot sample, a formal probabilistic modelling stage was introduced using logistic regression. The purpose of this stage was to move beyond threshold rules and estimate spike probability directly as a function of key market variables.

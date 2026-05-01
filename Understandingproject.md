@@ -1252,3 +1252,263 @@ All £250+ spikes happened under high gas and low wind conditions.
 
 Q: What is the cross-year insight?
 2023 had broader stress; 2024 had fewer but more physically extreme spike conditions.
+
+Q: Did this table confirm evening peak matters?
+Yes, especially for 2023.
+
+Q: Did it show the same pattern in 2024?
+Partly, but 2024 is less evening-dominated at the top end.
+
+Q: Is this a new paper insight?
+Yes. It gives us a cross-year difference in spike realization mechanics.
+
+Q: What is the cleanest wording?
+2023 had an evening-amplified spike structure. 2024 had a more physically severe, active-period distributed spike structure.
+
+Q: Why is night important?
+Because it provides the contrast. Even under stress, night rarely converts into extreme prices.
+
+Q: Did this confirm the regime framework?
+Yes. Very strongly.
+
+Q: What is the strongest 2023 result?
+111 of 120 £250+ spikes occurred in Q1 stress.
+
+Q: What is the strongest 2024 result?
+All £250+ spikes occurred in Oct-Nov transition and December stress.
+
+Q: Does this mean Apr-Sep is irrelevant?
+No. Apr-Sep is important as a quiet baseline. It shows what non-stress conditions look like.
+
+Q: Does December 2023 contradict the dec_windy label?
+No. The overall December regime was windy and low-price, but isolated stress events still occurred under very low wind and high gas.
+
+Q: Did we find real asset events?
+Yes.
+
+Q: Did we prove causality?
+No, not fully. But we found strong associations.
+
+Q: Is this useful for the paper?
+Very useful. This is the case-study layer.
+
+Q: Is the 7 March 2023 event now explainable?
+Yes, much better than before.
+
+Q: Should we continue pulling all 23 windows now?
+Not yet. First build the impact table and interpret the four main case-study dates properly
+
+This table now answers your question:
+
+“If a gas turbine shut off or wind asset went into maintenance, did price jump, and what were wind, gas, imbalance and interconnector flows at that moment?”
+
+The answer is:
+
+Yes, for the main shortlisted cases, major price events coincided with REMIT-reported asset/interconnector unavailability, and the internal system state at those times was already stressed.
+
+Q: Is the 2025 dataset valid?
+Yes. It has the expected 17,520 rows, no missing timestamps, no duplicates, and full-year coverage.
+
+Q: Is 2025 ready for analysis?
+Yes.
+
+Q: What is the first important 2025 signal?
+Negative prices are high: 1,121 periods.
+
+Q: Should we jump straight into REMIT events for 2025?
+No. First build monthly and regime summaries, just like we did for 2023 and 2024.
+
+Q: What is the next table?
+2025_monthly_regime_summary.csv.
+
+Q: Is 2025 more like 2023 or 2024?
+Not clearly either. It has more spikes than 2024 but far fewer than 2023. It also has more negative-price periods than both.
+Q: What is the biggest 2025 event so far?
+January, with a max price of £2900/MWh. This needs event-level investigation later.
+Q: Is 2025 only a negative-price year?
+No. It has 42 £250+ periods and 27 £300+ periods, so upper-tail risk remains important.
+Q: Why is June important?
+Because June combines high negative-price frequency with some spike events, suggesting dual-tail volatility.
+Q: What should we do before REMIT for 2025?
+Build 2023–2024–2025 comparison tables first, so we know which 2025 regimes deserve REMIT investigation.
+
+Q: What was the most important 2023 case?
+7 March 2023, £1950/MWh. It combined low wind, high gas, positive imbalance, evening peak, reduced interconnector support and REMIT-reported availability stress.
+
+Q: What was the most important 2024 case?
+There were three important ones: 14 Oct, 11 Dec and 12 Dec. October was imbalance-amplified; December was more physical scarcity / low wind / high gas.
+
+Q: Did REMIT prove outage causality?
+No. It supports association, not single-asset causality.
+
+Q: What is the strongest cross-year difference?
+2023 had Q1 compound scarcity. 2024 had late-year, more gas/physical scarcity centred stress.
+
+Q: Where does interconnector analysis fit?
+It appears both statistically in the interconnector tables and directly in REMIT case studies, especially 7 March 2023 and 12 December 2024.
+
+Q: What is still missing before 2025 comparison is complete?
+We need to run the same structured analyses on 2025: regime summary, price bands, thresholds, time bands, regime groups, event candidates and later REMIT cases.
+
+Q: Is 2025 more like 2023 or 2024?
+Neither fully. It is a mixed-tail year.
+
+Q: Why mixed-tail?
+Because it has the highest negative-price count and the highest maximum price in the three-year sample.
+
+Q: Is 2025 more extreme than 2023?
+Not broadly. 2023 has more £250+ periods. But 2025 has the highest max price and more £300+ periods.
+
+Q: Does higher average wind reduce all spike risk?
+No. 2025 had the highest average wind, highest negative-price frequency, and still the largest maximum price. That supports the idea that surplus regimes and scarcity events can coexist in the same year.
+
+Q: Why monthly comparison now?
+Because yearly averages do not show whether 2025’s extreme behaviour came from one month or many months.
+
+Q: Why add monthly_regime_label?
+It gives us a quick classification that can later evolve into a scenario framework.
+
+Q: Is this machine learning?
+No. This is structured rule-based labelling. It prepares the ground for future ML/scenario classification.
+
+Q: Is 2025 more like 2023 or 2024?
+Neither. It is a mixed-tail year.
+
+Q: What is the biggest new 2025 insight?
+2025 has both the highest single max price and the most negative-price periods across the three-year sample.
+
+Q: Which 2025 months matter most?
+January, June, September and October.
+
+Q: Why January?
+It is the only 2025 major spike month and contains the £2900/MWh event.
+
+Q: Why June?
+It is a mixed-tail month: high negative-price frequency and several spike events.
+
+Q: Why September?
+It is a negative-price dominant month, helping explain the record annual negative-price count.
+
+Q: Why October?
+It is another mixed-tail month and may be comparable to October 2024’s transition stress.
+
+Q: What next?
+Build the 2025 price-band driver table.
+
+Q: Why split £250–300 and £300+ separately?
+Because 2025 has 27 £300+ periods. Since 2025’s maximum price is £2900/MWh, we need to separate ordinary spikes from extreme spikes.
+
+Q: Why include negative-price indicators?
+Because 2025 has the highest negative-price count in the three-year sample.
+
+Q: Why include interconnector and evening peak shares?
+Because earlier work showed timing and interconnector context can strongly change spike risk.
+
+Q: What comes after this?
+After interpreting this table, we build the combined:
+
+outputs/tables/2023_2024_2025_price_band_driver_comparison.csv
+
+Q: What is the most important 2025 price-band result?
+The £300+ band is extremely low-wind/high-gas driven: wind below 8000 MW in 100% of periods and gas above 20000 MW in 81.48% of periods.
+
+Q: Are negative prices structurally different from normal prices?
+Yes. Negative prices have much higher wind, much lower gas, and much more negative imbalance than the 0–100 band.
+
+Q: Does high wind eliminate spike risk in 2025?
+No. 2025 had many negative-price periods, but also the highest max price in the three-year sample. Surplus and scarcity risk coexist in the same year.
+
+Q: Is imbalance the only driver of 2025 spikes?
+No. The £250–300 band has lower average imbalance than the £200–250 band. Extreme prices appear to require a broader scarcity context: low wind, high gas, timing, and possibly interconnector/availability stress.
+
+Q: Is the negative-price regime consistent across years?
+Yes. It consistently has high wind, low gas and strongly negative imbalance.
+
+Q: Is £100/MWh still an important threshold?
+Yes. Across all three years, £100–150 is where imbalance turns positive and stress begins.
+
+Q: What changes after £150/MWh?
+Gas generation rises sharply, wind falls, and evening-peak share generally increases.
+
+Q: Which year had the broadest spike regime?
+2023, because it had 120 £250+ periods.
+
+Q: Which year had the most severe single event?
+2025, with a maximum price of £2900/MWh.
+
+Q: Which year had the most physically extreme £300+ regime?
+2024 had the lowest average wind and highest average gas in the £300+ band.
+
+Q: Which year is the clearest mixed-tail year?
+2025, because it has the most negative-price periods and the highest number of £300+ periods.
+
+Q&A
+
+Q: What is the most stable transition across all years?
+Negative → £0–100 and £0–100 → £100–150. These consistently show imbalance rising, wind falling and gas increasing.
+
+Q: What is the most year-specific transition?
+£250–300 → £300+. The final move into the extreme tail differs strongly across 2023, 2024 and 2025.
+
+Q: Does every higher price band mean imbalance always increases?
+No. In some transitions, especially £200–250 → £250–300, imbalance falls in 2024 and 2025.
+
+Q: Does every higher price band mean wind always falls?
+Mostly, but not always. In 2023, wind rises from £100–150 to £150–200, and in 2025 wind slightly rises from £250–300 to £300+. This tells us price-setting is multi-factor, not single-driver.
+
+Q: Why cumulative thresholds instead of price bands?
+Because thresholds answer: “What do all periods above this severity level look like?”
+
+Q: Why include both wind < 8000 and wind < 3000?
+Because £300+ in 2025 looked extremely low-wind. Wind < 3000 helps separate severe scarcity from normal low-wind periods.
+
+Q: Why include gas > 20000?
+Because 2025 upper-tail periods had very high gas generation. This gives a stronger thermal-scarcity marker than gas > 15000.
+
+Q: Is the combined threshold table complete now?
+Yes.
+
+Q: What does it add beyond the price-band table?
+It shows cumulative severity layers: all periods above £100, £150, £200, £250 and £300.
+
+Q: What is the most important finding?
+2025 has the most £300+ periods, while 2023 has the broadest stress and most £250+ periods.
+
+Q: Is 2025 extreme pricing evening-driven?
+Partly. Evening peak is the dominant risk window, but not the only one.
+
+Q: Did any severe 2025 events happen at night?
+No. There were no £200+, £250+ or £300+ night periods.
+
+Q: What is the strongest 2025 timing result?
+Evening peak had 17 of 27 £300+ periods and 27 of 42 £250+ periods.
+
+Q: What is the strongest physical result?
+Every £300+ period across morning, midday, afternoon and evening occurred with wind below 8000 MW and gas above 20000 MW.
+
+Q: Is timing important?
+Yes. Evening peak is consistently the most dangerous window.
+
+Q: Does evening peak explain everything?
+No. 2024 and 2025 also had non-evening £300+ events.
+
+Q: Which year was most evening-peak dominated?
+2023.
+
+Q: Which year had the most physically spread extreme tail?
+2024.
+
+Q: Where does 2025 sit?
+Between 2023 and 2024: evening peak is dominant, but not exclusive.
+
+Q: What is the most important 2025 regime?
+January, because it contains most of the £300+ events and the £2900/MWh maximum price.
+
+Q: What is the most interesting 2025 regime?
+June and October, because they combine negative-price exposure with upper-tail spike activity.
+
+Q: What is the quietest regime?
+November–December, because there are no £250+ or £300+ periods.
+
+Q: What does this prove?
+2025 was a mixed-tail year, not a broad scarcity year like 2023 and not a late-year stress year like 2024.

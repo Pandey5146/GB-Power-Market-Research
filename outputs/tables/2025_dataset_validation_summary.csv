@@ -1,0 +1,2 @@
+year,total_rows,expected_rows,missing_timestamps,duplicate_timestamps,null_timestamps,min_time,max_time,spike_250_count,spike_300_count,near_spike_200_to_250_count,negative_price_count,avg_price,avg_imbalance,avg_wind,avg_gas,avg_interconnectors
+2025,17520,17520,0,0,0,2025-01-01 00:00:00+00:00,2025-12-31 23:30:00+00:00,42,27,26,1121,80.5644,-39.0008,8005.5629,8965.7001,3418.7654

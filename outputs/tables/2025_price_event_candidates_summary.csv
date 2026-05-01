@@ -1,0 +1,7 @@
+year,event_type,event_count,max_price,min_price,avg_duration_hours
+2025,extreme_spike_cluster,10,2900.0,300.0,1.35
+2025,large_downward_reversal,58,2900.0,-18.9899,0.5
+2025,large_upward_jump,78,2900.0,86.0,0.5
+2025,near_spike_cluster,16,248.54,200.0,0.8125
+2025,negative_price_cluster,303,-0.04,-95.0,1.8498
+2025,positive_spike_cluster,16,2900.0,250.0,1.3125
