@@ -8,7 +8,7 @@ The research asks whether high-price spikes and negative-price events are caused
 
 The full working paper is available here:
 
-📄 `paper/GB_Power_Market_Extreme_Price_Regimes_2023_2025_Working_Paper_v1.pdf`
+📄 [Read the full working paper](paper/GB_Power_Market_Extreme_Price_Regimes_2023_2025_Working_Paper_v1.pdf)
 
 ## Key findings
 
